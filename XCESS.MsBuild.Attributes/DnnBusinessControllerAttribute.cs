@@ -17,5 +17,12 @@ namespace XCESS.MsBuild.Attributes
     [Serializable]
     public sealed class DnnBusinessControllerAttribute : Attribute
     {
+        /// <summary>
+        /// Gets or sets the name of the package.
+        /// </summary>
+        /// <value>
+        /// The name of the package.
+        /// </value>
+        public string PackageName { get; set; }
     }
 }

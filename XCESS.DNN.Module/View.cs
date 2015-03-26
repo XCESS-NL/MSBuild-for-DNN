@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnPackages.cs" company="XCESS expertise center b.v.">
+// <copyright file="View.cs" company="XCESS expertise center b.v.">
 //   Copyright (c) 2014 XCESS expertise center b.v. 
 //   
 //   The software is owned by XCESS expertise center b.v. and is protected by 
@@ -12,34 +12,20 @@
 //   T. +31-33-4335151, I. http://www.xcess.nl
 // </copyright>
 // <summary>
-//   Defines the DnnPackages type.
+//   Defines the View type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace XCESS.MsBuild.Tasks.Entities
+namespace XCESS.DNN.Module
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Xml.Serialization;
-    using Microsoft.Build.Framework;
+    using XCESS.MsBuild.Attributes;
 
     /// <summary>
     /// </summary>
-    [Serializable]
-    [XmlRoot("packages")]
-    public class DnnPackages
+    [DnnModuleControl(Key = DnnModuleControlKeys.View, ControlType = DnnControlType.View)]
+    [DnnModulePermission("XEC_TEST_MODULE", "XEC_MOD", "Test Module Moderator Permission")]
+    [DnnModulePermission("XEC_TEST_MODULE", "XEC_CAT", "Test Module Modify Categories permission")]
+    public class View
     {
-        public DnnPackages()
-        {
-            this.Packages = new List<DnnPackage>();
-        }
-
-        public DnnPackages(List<DnnPackage> packages)
-        {
-            this.Packages = packages;
-        }
-
-        [XmlElement("package")]
-        public List<DnnPackage> Packages { get; private set; }
     }
 }

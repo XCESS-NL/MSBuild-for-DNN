@@ -22,7 +22,7 @@ namespace XCESS.MsBuild.Attributes
 
     /// <summary>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]   // Current version of XCESS MsBuild only supports a single package
     public sealed class DnnPackageAttribute : Attribute
     {
         #region [ Constructors ]
@@ -41,6 +41,7 @@ namespace XCESS.MsBuild.Attributes
             }
 
             this.Name = name;
+            this.PackageType = DnnPackageType.Module;
         }
 
         #endregion

@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyCompanyAttribute.cs" />
+    <Compile Include="AssemblyCompanyInfoAttribute.cs" />
     <Compile Include="DnnAzureCompliantAttribute.cs" />
     <Compile Include="DnnBusinessControllerAttribute.cs" />
     <Compile Include="DnnComponentType.cs" />

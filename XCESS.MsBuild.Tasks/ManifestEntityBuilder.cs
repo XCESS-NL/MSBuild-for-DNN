@@ -23,6 +23,7 @@ namespace XCESS.MsBuild.Tasks
     using System.Linq;
     using System.Reflection;
     using System.Xml.Serialization;
+    using Microsoft.Build.Framework;
     using XCESS.MsBuild.Tasks.Entities;
     using XCESS.MsBuild.Tasks.Reflection;
 
@@ -35,17 +36,18 @@ namespace XCESS.MsBuild.Tasks
         #region [ Constructors ]
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ManifestEntityBuilder{TManifest}"/> class.
+        /// Initializes a new instance of the <see cref="ManifestEntityBuilder{TManifest}" /> class.
         /// </summary>
         /// <param name="manifestAssembly">The manifest assembly.</param>
-        public ManifestEntityBuilder(string manifestAssembly)
+        /// <param name="sourceFiles">The source files.</param>
+        public ManifestEntityBuilder(string manifestAssembly, ITaskItem[] sourceFiles)
         {
             var assembly = Assembly.LoadFrom(manifestAssembly);
 
             var dnnManifest = new DnnManifest
                                   {
                                       Content = new DnnPackages(
-                                          ReflectPackages.Parse(assembly)
+                                          ReflectPackages.Parse(assembly, sourceFiles)
                                                          .ToList())
                                   };
 
@@ -54,12 +56,6 @@ namespace XCESS.MsBuild.Tasks
             {
                 serializer.Serialize(stream, dnnManifest.Content);
             }
-
-            var moduleControls = ReflectModuleControls.Parse(assembly, dnnManifest.Content.Packages);
-
-            var exportedTypes = assembly.GetExportedTypes()
-                                        .OfType<Type>()
-                                        .ToList();
 
             this.Manifest = dnnManifest as TManifest;
         }

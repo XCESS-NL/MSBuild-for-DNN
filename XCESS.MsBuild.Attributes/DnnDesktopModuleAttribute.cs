@@ -32,18 +32,7 @@ namespace XCESS.MsBuild.Attributes
         /// </summary>
         /// <param name="moduleName">Name of the module.</param>
         public DnnDesktopModuleAttribute(string moduleName)
-            : this(moduleName, moduleName)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DnnDesktopModuleAttribute"/> class.
-        /// </summary>
-        /// <param name="moduleName">Name of the module.</param>
-        /// <param name="friendlyName">Name of the friendly.</param>
-        public DnnDesktopModuleAttribute(string moduleName, string friendlyName)
-        {
-            this.FriendlyName = friendlyName;
             this.ModuleName = moduleName;
         }
         
@@ -60,12 +49,20 @@ namespace XCESS.MsBuild.Attributes
         public string FolderName { get; set; }
 
         /// <summary>
-        /// Gets the name of the friendly.
+        /// Gets or sets a value indicating whether this instance is admin.
         /// </summary>
         /// <value>
-        /// The name of the friendly.
+        ///   <c>true</c> if this instance is admin; otherwise, <c>false</c>.
         /// </value>
-        public string FriendlyName { get; private set; }
+        public bool IsAdmin { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is premium.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is premium; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsPremium { get; set; }
 
         /// <summary>
         /// Gets the name of the module.

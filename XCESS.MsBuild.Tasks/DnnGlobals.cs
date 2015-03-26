@@ -30,6 +30,6 @@ namespace XCESS.MsBuild.Tasks
         /// <summary>
         /// The web control extension.
         /// </summary>
-        public const string WebControlExtension = ".ascx";
+        public const string UserControlFileExtension = ".ascx";
     }
 }
