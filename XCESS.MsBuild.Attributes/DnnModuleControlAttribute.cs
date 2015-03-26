@@ -29,33 +29,28 @@ namespace XCESS.MsBuild.Attributes
         #region [ Constructors ]
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleControlAttribute"/> class.
+        /// Initializes a new instance of the <see cref="DnnModuleControlAttribute" /> class.
         /// </summary>
-        public DnnModuleControlAttribute()
-            : this(string.Empty, DnnControlType.View)
+        /// <param name="key">The key.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="type">The type.</param>
+        public DnnModuleControlAttribute(string key, string title, DnnControlType controlType)
+            : this(key, title, controlType, true, true)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleControlAttribute"/> class.
+        /// Initializes a new instance of the <see cref="DnnModuleControlAttribute" /> class.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <param name="type">The type.</param>
-        public DnnModuleControlAttribute(string key, DnnControlType type)
-            : this(key, type, true, true)
+        /// <param name="title">The title.</param>
+        /// <param name="controlType">Type of the control.</param>
+        /// <param name="supportsPartialRendering">If set to <c>true</c> [supports partial rendering].</param>
+        /// <param name="supportsPopups">If set to <c>true</c> [supports popups].</param>
+        public DnnModuleControlAttribute(string key, string title, DnnControlType controlType, bool supportsPartialRendering, bool supportsPopups)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleControlAttribute"/> class.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="type">The type.</param>
-        /// <param name="supportsPartialRendering">if set to <c>true</c> [supports partial rendering].</param>
-        /// <param name="supportsPopups">if set to <c>true</c> [supports popups].</param>
-        public DnnModuleControlAttribute(string key, DnnControlType type, bool supportsPartialRendering, bool supportsPopups)
-        {
-            this.ControlType = type;
+            this.ControlTitle = title;
+            this.ControlType = controlType;
             this.Key = key;
             this.SupportsPartialRendering = supportsPartialRendering;
             this.SupportsPopups = supportsPopups;
@@ -112,6 +107,14 @@ namespace XCESS.MsBuild.Attributes
         /// The module definition.
         /// </value>
         public string ModuleDefinition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the package to which this control belongs.
+        /// </summary>
+        /// <value>
+        /// The name of the package.
+        /// </value>
+        public string PackageName { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the module control (.ascx) supports partial rendering. Partial rendering in DNN is accomplished by wrapping the module control in an AJAX Update Panel. This property is enabled (<c>true</c>) by default.

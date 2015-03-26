@@ -32,14 +32,19 @@ namespace XCESS.MsBuild.Tasks.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="DnnModuleDefinitions"/> class.
         /// </summary>
-        public DnnModuleDefinitions()
+        internal DnnModuleDefinitions()
         {
-            this.Definitions = new List<DnnModuleDefinition>();
+            this.moduleDefinitions = new List<DnnModuleDefinition>() { new DnnModuleDefinition() };
         }
         
         #endregion
 
         #region [ Properties ]
+
+        /// <summary>
+        /// The module definitions.
+        /// </summary>
+        private readonly List<DnnModuleDefinition> moduleDefinitions;
 
         /// <summary>
         /// Gets or sets the definitions.
@@ -48,7 +53,18 @@ namespace XCESS.MsBuild.Tasks.Entities
         /// The definitions.
         /// </value>
         [XmlElement("moduleDefinition")]
-        public List<DnnModuleDefinition> Definitions { get; set; }
+        public List<DnnModuleDefinition> Definitions
+        {
+            get
+            {
+                return this.moduleDefinitions;
+            }
+            // ReSharper disable once ValueParameterNotUsed
+            set
+            {
+                // Ignored...
+            }
+        }
 
         #endregion
     }

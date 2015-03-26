@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnPackages.cs" company="XCESS expertise center b.v.">
+// <copyright file="DnnModuleControls.cs" company="XCESS expertise center b.v.">
 //   Copyright (c) 2014 XCESS expertise center b.v. 
 //   
 //   The software is owned by XCESS expertise center b.v. and is protected by 
@@ -12,7 +12,7 @@
 //   T. +31-33-4335151, I. http://www.xcess.nl
 // </copyright>
 // <summary>
-//   Defines the DnnPackages type.
+//   Defines the DnnModuleControls type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -21,25 +21,51 @@ namespace XCESS.MsBuild.Tasks.Entities
     using System;
     using System.Collections.Generic;
     using System.Xml.Serialization;
-    using Microsoft.Build.Framework;
 
     /// <summary>
     /// </summary>
     [Serializable]
-    [XmlRoot("packages")]
-    public class DnnPackages
+    public class DnnModuleControls
     {
-        public DnnPackages()
+        #region [ Constructors ]
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnModuleControls"/> class.
+        /// </summary>
+        internal DnnModuleControls()
         {
-            this.Packages = new List<DnnPackage>();
+            this.moduleControlItems = new List<DnnModuleControl>();
+        }
+        
+        #endregion
+
+        #region [ Properties ]
+
+        /// <summary>
+        /// The module control items.
+        /// </summary>
+        private readonly List<DnnModuleControl> moduleControlItems;
+
+        /// <summary>
+        /// Gets or sets the module controls.
+        /// </summary>
+        /// <value>
+        /// The module controls.
+        /// </value>
+        [XmlElement("moduleControl")]
+        public List<DnnModuleControl> Items
+        {
+            get
+            {
+                return this.moduleControlItems;
+            }
+            // ReSharper disable once ValueParameterNotUsed
+            set
+            {
+                // Ignored...
+            }
         }
 
-        public DnnPackages(List<DnnPackage> packages)
-        {
-            this.Packages = packages;
-        }
-
-        [XmlElement("package")]
-        public List<DnnPackage> Packages { get; private set; }
+        #endregion
     }
 }

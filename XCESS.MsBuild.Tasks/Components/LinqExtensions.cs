@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReflectModuleDefinitions.cs" company="XCESS expertise center b.v.">
+// <copyright file="LinqExtensions.cs" company="XCESS expertise center b.v.">
 //   Copyright (c) 2014 XCESS expertise center b.v. 
 //   
 //   The software is owned by XCESS expertise center b.v. and is protected by 
@@ -12,22 +12,32 @@
 //   T. +31-33-4335151, I. http://www.xcess.nl
 // </copyright>
 // <summary>
-//   Defines the ReflectModuleDefinitions type.
+//   Defines the LinqExtensions type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace XCESS.MsBuild.Tasks.Reflection
+namespace XCESS.MsBuild.Tasks.Components
 {
+    using System;
     using System.Collections.Generic;
-    using XCESS.MsBuild.Attributes;
 
-    /// <summary>
-    /// </summary>
-    internal class ReflectModuleDefinitions
+    public static class LinqExtensions
     {
-        public IEnumerable<DnnDesktopModuleAttribute> GetExplicitModuleDefinitions()
+        /// <summary>
+        /// Fors the each.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="act">The act.</param>
+        /// <returns></returns>
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> act)
         {
-            return null;
+            foreach (T element in source)
+            {
+                act(element);
+            }
+
+            return source;
         }
     }
 }

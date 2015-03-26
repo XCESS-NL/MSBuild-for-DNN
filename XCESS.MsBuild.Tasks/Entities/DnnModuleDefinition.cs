@@ -27,10 +27,10 @@ namespace XCESS.MsBuild.Tasks.Entities
     /// <remarks>
     /// <![CDATA[
     /// <moduleDefinition>
-    ///  <friendlyName/>
-    ///  <defaultCacheTime/>
-    ///  <moduleControls/>
-    ///  <permissions/>
+    ///   <friendlyName/>
+    ///   <defaultCacheTime/>
+    ///   <moduleControls/>
+    ///   <permissions/>
     /// </moduleDefinition>
     /// ]]>
     /// </remarks>
@@ -43,7 +43,7 @@ namespace XCESS.MsBuild.Tasks.Entities
         public DnnModuleDefinition()
         {
             this.DefaultCacheTime = -1;
-            this.ModuleControls = new List<DnnModuleControl>();
+            this.ModuleControls = new DnnModuleControls();
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace XCESS.MsBuild.Tasks.Entities
         /// The module controls.
         /// </value>
         [XmlElement("moduleControls")]
-        public List<DnnModuleControl> ModuleControls { get; set; }
+        public DnnModuleControls ModuleControls { get; set; }
 
         //[XmlElement("permissions")]
         //public List<DnnModulePermission> Permissions { get; set; }

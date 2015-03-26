@@ -20,8 +20,6 @@ namespace XCESS.MsBuild.Tasks
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
     using System.Xml.Serialization;
     using XCESS.MsBuild.Attributes;
     using XCESS.MsBuild.Tasks.Entities;
@@ -31,51 +29,15 @@ namespace XCESS.MsBuild.Tasks
     [Serializable]
     public class DnnModuleControl
     {
-        public const string DefaultControlExtension = ".ascx";
-
         #region [ Constructors ]
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleControl"/> class.
+        /// Prevents a default instance of the <see cref="DnnModuleControl"/> class from being created.
         /// </summary>
-        public DnnModuleControl()
+        private DnnModuleControl()
         {
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleControl"/> class.
-        /// </summary>
-        /// <param name="ownerType">Type of the owner.</param>
-        /// <param name="moduleControl">The module control.</param>
-        /// <param name="desktopModule">The desktop module.</param>
-        /// <param name="packages">The packages.</param>
-        public DnnModuleControl(Type ownerType, DnnModuleControlAttribute moduleControl, DnnDesktopModuleAttribute desktopModule, IEnumerable<DnnPackage> packages)
-        {
-            if (packages == null || !packages.Any())
-            {
-                // TODO: Localize
-                throw new NotSupportedException("No packages found!");
-            }
-
-            if ((packages.Count() > 1) && (desktopModule == null))
-            {
-                // TODO: Localize
-                throw new NotSupportedException("When more than one (1) package is defined, each control should be assigned to a desktopmodule with the DesktopModule attribute.");
-            }
-
-            // NOTE: use the package name (with dots replaced by underscores) as default folder name for the module control(s).
-            var package = packages.FirstOrDefault();
-            var moduleControlsFolder = (desktopModule != null) ? desktopModule.FolderName : package.Name.Replace('.', '_');
-
-            this.ControlSource = Path.Combine(DnnGlobals.DnnDesktopModuleFolder, moduleControlsFolder, moduleControl.SubFolder ?? string.Empty, ownerType.Name + DnnGlobals.WebControlExtension);
-            this.ControlTitle = moduleControl.ControlTitle;
-            this.ControlType = moduleControl.ControlType;
-            this.HelpUrl = moduleControl.HelpUrl;
-            this.Key = moduleControl.Key;
-            this.SupportsPartialRendering = moduleControl.SupportsPartialRendering;
-            this.SupportsPopups = moduleControl.SupportsPopups;
-        }
-        
+     
         #endregion
 
         #region [ Properties ]
@@ -145,11 +107,17 @@ namespace XCESS.MsBuild.Tasks
 
         #endregion
 
-        public static DnnModuleControl FromAttribute(DnnModuleControlAttribute attribute, Type controlType, IEnumerable<DnnPackage> packages)
+        public static DnnModuleControl FromAttribute(DnnModuleControlAttribute attribute, Type controlType, string userControlFilePath, IEnumerable<DnnPackage> packages)
         {
-            var moduleControl = new DnnModuleControl() { ControlType = attribute.ControlType, ControlTitle = attribute.ControlTitle, Key = attribute.Key };
-
-            return moduleControl;
+            return new DnnModuleControl()
+                       {
+                           ControlSource = userControlFilePath,
+                           ControlTitle = attribute.ControlTitle,
+                           ControlType = attribute.ControlType,
+                           Key = attribute.Key,
+                           SupportsPartialRendering = attribute.SupportsPartialRendering,
+                           SupportsPopups = attribute.SupportsPopups
+                       };
         }
     }
 }

@@ -23,6 +23,7 @@ namespace XCESS.MsBuild.Tasks.Entities
 
     /// <summary>
     /// </summary>
+    [XmlInclude(typeof(DnnComponentModule))]
     [XmlInclude(typeof(DnnComponentScript))]
     [XmlRoot("component")]
     public abstract class DnnComponent

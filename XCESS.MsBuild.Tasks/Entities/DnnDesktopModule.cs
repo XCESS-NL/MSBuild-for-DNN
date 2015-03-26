@@ -20,6 +20,7 @@ namespace XCESS.MsBuild.Tasks.Entities
 {
     using System;
     using System.Xml.Serialization;
+    using XCESS.MsBuild.Attributes;
 
     /// <summary>
     /// </summary>
@@ -42,6 +43,27 @@ namespace XCESS.MsBuild.Tasks.Entities
     [Serializable]
     public class DnnDesktopModule
     {
+        #region [ Constructors ]
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="DnnDesktopModule"/> class from being created.
+        /// </summary>
+        private DnnDesktopModule()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnDesktopModule" /> class.
+        /// </summary>
+        /// <param name="moduleName">Name of the module.</param>
+        public DnnDesktopModule(string moduleName)
+        {
+            this.ModuleDefinitions = new DnnModuleDefinitions();
+            this.ModuleName = moduleName;
+        }
+
+        #endregion
+
         /// <summary>
         /// Gets or sets the fully qualified name of the class that includes the extension methods (search, import/export, ...) as required by DNN.
         /// </summary>
@@ -103,6 +125,12 @@ namespace XCESS.MsBuild.Tasks.Entities
         /// <value>
         /// The module definitions.
         /// </value>
+        [XmlElement("moduleDefinitions")]
         public DnnModuleDefinitions ModuleDefinitions { get; set; }
+
+        public static DnnDesktopModule FromAttribute(DnnDesktopModuleAttribute attribute)
+        {
+            return new DnnDesktopModule(attribute.ModuleName) { FolderName = attribute.FolderName, IsAdmin = attribute.IsAdmin, IsPremium = attribute.IsPremium };
+        }
     }
 }

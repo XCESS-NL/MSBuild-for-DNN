@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D046DB10-5A07-422A-94E2-3D7CEBC27F8C}</ProjectGuid>
+    <ProjectGuid>{10B0DEE6-D637-4577-B554-61676B852EA0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XCESS.MsBuild.Tasks</RootNamespace>
-    <AssemblyName>XCESS.MsBuild.Tasks</AssemblyName>
+    <RootNamespace>XCESS.DNN.Module</RootNamespace>
+    <AssemblyName>XCESS.DNN.Module</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -33,7 +33,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,51 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\LinqExtensions.cs" />
-    <Compile Include="DnnGlobals.cs" />
-    <Compile Include="Entities\DnnComponent.cs" />
-    <Compile Include="Entities\DnnComponentAssembly.cs" />
-    <Compile Include="Entities\DnnComponentCleanup.cs" />
-    <Compile Include="Entities\DnnComponentModule.cs" />
-    <Compile Include="Entities\DnnComponents.cs" />
-    <Compile Include="Entities\DnnComponentScript.cs" />
-    <Compile Include="Entities\DnnDesktopModule.cs" />
-    <Compile Include="Entities\DnnLicense.cs" />
-    <Compile Include="Entities\DnnManifest.cs" />
-    <Compile Include="Entities\DnnManifestType.cs" />
-    <Compile Include="Entities\DnnModuleControls.cs" />
-    <Compile Include="Entities\DnnModuleDefinition.cs" />
-    <Compile Include="Entities\DnnModuleDefinitions.cs" />
-    <Compile Include="Entities\DnnModulePermission.cs" />
-    <Compile Include="Entities\DnnOwner.cs" />
-    <Compile Include="Entities\DnnPackage.cs" />
-    <Compile Include="Entities\DnnPackages.cs" />
-    <Compile Include="Entities\FileInfo.cs" />
-    <Compile Include="IManifest.cs" />
-    <Compile Include="ManifestEntityBuilder.cs" />
-    <Compile Include="Entities\DnnModuleControl.cs" />
-    <Compile Include="Reflection\PackageExtensions.cs" />
-    <Compile Include="Reflection\ReflectComponentModules.cs" />
+    <Compile Include="FeatureController.cs" />
+    <Compile Include="View.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ManifestFileBuilder.cs" />
-    <Compile Include="Reflection\ReflectPackages.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XCESS.MsBuild.Attributes\XCESS.MsBuild.Attributes.csproj">
       <Project>{c83f191e-5e56-4e0e-b720-e73b1dede0a3}</Project>
       <Name>XCESS.MsBuild.Attributes</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

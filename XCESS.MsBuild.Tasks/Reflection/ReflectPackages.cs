@@ -21,8 +21,10 @@ namespace XCESS.MsBuild.Tasks.Reflection
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
+    using Microsoft.Build.Framework;
     using XCESS.MsBuild.Attributes;
     using XCESS.MsBuild.Tasks.Entities;
 
@@ -39,11 +41,43 @@ namespace XCESS.MsBuild.Tasks.Reflection
         private ReflectPackages(Assembly assembly)
         {
             this.Assembly = assembly;
+
+            // Determine the DNN bin folder
+            var index = this.Assembly.Location.IndexOf(DnnGlobals.DnnDesktopModuleFolder, StringComparison.InvariantCultureIgnoreCase);
+            this.DnnAssemblyPath = Path.Combine(this.Assembly.Location.Substring(0, index), "bin");
+
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
         }
-        
+
+        private Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var fileNameParts = args.Name.Split(',');
+            if (fileNameParts.First().StartsWith("dotnetnuke", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var assemblyToLoad = Path.Combine(this.DnnAssemblyPath, fileNameParts.First() + ".dll");
+                return Assembly.LoadFrom(assemblyToLoad);
+            }
+
+            return args.RequestingAssembly;
+        }
+
         #endregion
 
-        private Assembly Assembly { get; set; }
+        /// <summary>
+        /// Gets or sets the assembly.
+        /// </summary>
+        /// <value>
+        /// The assembly.
+        /// </value>
+        protected Assembly Assembly { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DNN assembly path.
+        /// </summary>
+        /// <value>
+        /// The DNN assembly path.
+        /// </value>
+        protected string DnnAssemblyPath { get; set; }
 
         /// <summary>
         /// Creates the package from attribute.
@@ -69,6 +103,7 @@ namespace XCESS.MsBuild.Tasks.Reflection
         public IEnumerable<DnnPackage> GetPackages()
         {
             var packages = default(IEnumerable<DnnPackage>);
+
             var packageAttributes = this.Assembly.GetCustomAttributes(typeof(DnnPackageAttribute), false)
                                         .OfType<DnnPackageAttribute>();
 
@@ -87,12 +122,18 @@ namespace XCESS.MsBuild.Tasks.Reflection
             return packages;
         }
 
-        public static IEnumerable<DnnPackage> Parse(Assembly assembly)
+        /// <summary>
+        /// Parses the specified assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="sourceFiles">The source files.</param>
+        /// <returns></returns>
+        public static IEnumerable<DnnPackage> Parse(Assembly assembly, ITaskItem[] sourceFiles)
         {
             var packageReflector = new ReflectPackages(assembly);
             var packages = packageReflector.GetPackages();
 
-            var moduleControls = ReflectModuleControls.Parse(assembly, packages);
+            ReflectComponentModules.AssignComponents(assembly, packages, sourceFiles);
 
             return packages;
         }
