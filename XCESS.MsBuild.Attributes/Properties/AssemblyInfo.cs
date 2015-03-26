@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 [assembly: AssemblyCompany("XCESS Expertise Center b.v., The Netherlands")]
-[assembly: AssemblyProduct("XCESS.MsBuild")]
+[assembly: AssemblyProduct("XCESS MSBuild-for-DNN")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
