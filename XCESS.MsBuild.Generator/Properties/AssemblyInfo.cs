@@ -1,16 +1,37 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="XCESS expertise center b.v.">
+//   Copyright (c) 2014 XCESS expertise center b.v. 
+//   
+//   The software is owned by XCESS expertise center b.v. and is protected by 
+//   the Dutch copyright laws and international treaty provisions. 
+//   You are allowed to make copies of the software solely for backup or archival purposes. 
+//   You may not lease, rent, export or sublicense the software. 
+//   You may not reverse engineer, decompile, disassemble or create derivative works from the software.
+//   
+//   XCESS expertise center b.v., Storkstraat 19, 3833 LB Leusden, The Netherlands
+//   T. +31-33-4335151, I. http://www.xcess.nl
+// </copyright>
+// <summary>
+//   AssemblyInfo.cs
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DNNtc.Generator")]
+[assembly: AssemblyTitle("XCESS.MsBuild.Generator")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DNNtc.Generator")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+#if (DEBUG)
+[assembly: AssemblyConfiguration("DEBUG")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
+[assembly: AssemblyCompany("XCESS Expertise Center b.v., The Netherlands")]
+[assembly: AssemblyProduct("XCESS MSBuild-for-DNN")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
