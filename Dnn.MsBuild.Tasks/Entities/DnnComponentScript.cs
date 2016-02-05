@@ -16,28 +16,23 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Xml.Serialization;
 using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
     /// <summary>
     /// </summary>
-    [Serializable]
     public class DnnComponentScript : DnnComponent
     {
+        #region Constructors
+
         /// <summary>
-        /// Gets or sets the type of the component.
+        /// Initializes a new instance of the <see cref="DnnComponentScript"/> class.
         /// </summary>
-        /// <value>
-        /// The type of the component.
-        /// </value>
-        [XmlAttribute("type")]
-        public override DnnComponentType ComponentType
-        {
-            get { return DnnComponentType.Script; }
-            set { }
-        }
+        internal DnnComponentScript()
+            : base(DnnComponentType.Script)
+        {}
+
+        #endregion
     }
 }

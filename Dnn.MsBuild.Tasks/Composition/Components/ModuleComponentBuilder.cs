@@ -25,37 +25,33 @@ using Dnn.MsBuild.Tasks.Extensions;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Installer.MsBuild;
 
-namespace Dnn.MsBuild.Tasks.Composition
+namespace Dnn.MsBuild.Tasks.Composition.Components
 {
-    internal class ModuleComponentBuilder : IBuilder
+    internal class ModuleComponentBuilder : ComponentBuilder<DnnComponentModule>
     {
-        #region Implementation of IBuilder
+        #region Overrides of ComponentBuilder<DnnComponentModule>
 
-        public IManifestElement Build(IManifestData data)
+        protected override DnnComponentModule BuildElement()
         {
-            var component = new DnnComponentModule
-                            {
-                                // Only a single DesktopModule per module component
-                                DesktopModule = this.GetOrCreateDesktopModule(data)
-                            };
+            // Only a single DesktopModule per module component
+            var component = new DnnComponentModule(this.GetOrCreateDesktopModule());
+            component.DesktopModule.ModuleDefinitions.AddRange(this.GetModuleDefinitions());
 
-            component.DesktopModule.ModuleDefinitions.AddRange(this.GetModuleDefinitions(data));
-           
             return component;
         }
 
         #endregion
 
-        private DnnDesktopModule GetOrCreateDesktopModule(IManifestData data)
+        private DnnDesktopModule GetOrCreateDesktopModule()
         {
             var desktopModule = new DnnDesktopModule();
 
             // Only a single desktop module is allowed per package.
-            var desktopModuleAttribute = data.ExportedTypes.GetCustomAttribute<DnnDesktopModuleAttribute>();
+            var desktopModuleAttribute = this.Input.ExportedTypes.GetCustomAttribute<DnnDesktopModuleAttribute>();
             desktopModule.FolderName = desktopModule.FolderName
-                                                    .FirstNotEmpty(desktopModuleAttribute?.FolderName, data.Package?.Folder);
+                                                    .FirstNotEmpty(desktopModuleAttribute?.FolderName, this.Input.Package?.Folder);
             desktopModule.ModuleName = desktopModule.ModuleName
-                                                    .FirstNotEmpty(desktopModuleAttribute?.ModuleName, data.Package?.Name);
+                                                    .FirstNotEmpty(desktopModuleAttribute?.ModuleName, this.Input.Package?.Name);
 
             if (desktopModuleAttribute != null)
             {
@@ -63,7 +59,7 @@ namespace Dnn.MsBuild.Tasks.Composition
                 desktopModule.IsPremium = desktopModuleAttribute.IsPremium;
             }
 
-            var type = data.ExportedTypes.FirstOrDefault(arg => arg.HasAttribute<DnnBusinessControllerAttribute>());
+            var type = this.Input.ExportedTypes.FirstOrDefault(arg => arg.HasAttribute<DnnBusinessControllerAttribute>());
             // ReSharper disable once InvertIf
             if (type != null)
             {
@@ -79,11 +75,11 @@ namespace Dnn.MsBuild.Tasks.Composition
             return desktopModule;
         }
 
-        private IEnumerable<DnnModuleDefinition> GetModuleDefinitions(IManifestData data)
+        private IEnumerable<DnnModuleDefinition> GetModuleDefinitions()
         {
             var moduleDefinitions = new Dictionary<string, DnnModuleDefinition>();
 
-            var moduleControlTypes = data.ExportedTypes.Where(arg => arg.HasAttribute<DnnModuleControlAttribute>());
+            var moduleControlTypes = this.Input.ExportedTypes.Where(arg => arg.HasAttribute<DnnModuleControlAttribute>());
             moduleControlTypes.ForEach(arg =>
                                        {
                                            var moduleControlAttribtute = arg.GetCustomAttribute<DnnModuleControlAttribute>();
@@ -98,7 +94,7 @@ namespace Dnn.MsBuild.Tasks.Composition
                                            var moduleDefinition = moduleDefinitions[moduleDefinitionName];
 
                                            var userControlFilePath = string.Empty;
-                                           var moduleControl = DnnModuleControl.CreateFromAttribute(moduleControlAttribtute, data.UserControls.TryGetValue(arg.FullName, out userControlFilePath) ? userControlFilePath : arg.FullName);
+                                           var moduleControl = DnnModuleControl.CreateFromAttribute(moduleControlAttribtute, this.Input.UserControls.TryGetValue(arg.FullName, out userControlFilePath) ? userControlFilePath : arg.FullName);
                                            moduleDefinition.ModuleControls.Add(moduleControl);
 
                                            var permissionAttribute = arg.GetCustomAttribute<DnnModulePermissionAttribute>();

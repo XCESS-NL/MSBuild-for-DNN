@@ -16,6 +16,7 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
+using Dnn.MsBuild.Tasks.Composition.Packages;
 using Dnn.MsBuild.Tasks.Entities;
 
 namespace Dnn.MsBuild.Tasks.Composition

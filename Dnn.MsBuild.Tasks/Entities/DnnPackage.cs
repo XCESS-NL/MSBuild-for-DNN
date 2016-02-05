@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Xml.Serialization;
 using Dnn.MsBuild.Tasks.Composition;
+using Dnn.MsBuild.Tasks.Extensions;
 using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Entities
@@ -197,7 +198,7 @@ namespace Dnn.MsBuild.Tasks.Entities
             get
             {
                 var version = this.Version ?? DefaultVersion;
-                return string.Format(CultureInfo.InvariantCulture, "{0:D2}.{1:D2}.{2:D2}", version.Major, version.Minor, version.Revision);
+                return version.ToDnnVersionString();
             }
             // ReSharper disable once ValueParameterNotUsed
             set { }

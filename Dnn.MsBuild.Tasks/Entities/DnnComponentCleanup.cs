@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Dnn.MsBuild.Tasks.Extensions;
 using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Entities
@@ -45,27 +46,23 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="DnnComponentCleanup"/> class.
         /// </summary>
-        public DnnComponentCleanup()
+        internal DnnComponentCleanup()
+            : base(DnnComponentType.Cleanup)
         {
             this.Files = new List<FileInfo>();
         }
 
         #endregion
 
-        #region Overrides of DnnComponent
-
         /// <summary>
-        /// Gets or sets the type of the component.
+        /// Gets or sets the files.
         /// </summary>
         /// <value>
-        /// The type of the component.
+        /// The files.
         /// </value>
-        public override DnnComponentType ComponentType { get; set; }
-
-        #endregion
-
-        [XmlElement("files")]
-        public IList<FileInfo> Files { get; set; }
+        [XmlArray("files")]
+        [XmlArrayItem("file")]
+        public List<FileInfo> Files { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -73,7 +70,14 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// <value>
         /// The version.
         /// </value>
-        [XmlAttribute("version")]
+        [XmlIgnore]
         public Version Version { get; set; }
+
+        [XmlElement("version")]
+        public string VersionString
+        {
+            get { return this.Version.ToDnnVersionString(); }
+            set { }
+        }
     }
 }

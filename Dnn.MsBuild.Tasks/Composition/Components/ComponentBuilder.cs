@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnComponentAssembly.cs" company="XCESS expertise center bv">
+// <copyright file="ComponentBuilder.cs" company="XCESS expertise center bv">
 //   Copyright (c) 2016 XCESS expertise center bv
 //   
 //   The software is owned by XCESS and is protected by 
@@ -16,36 +16,35 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
-using DotNetNuke.Services.Installer.MsBuild;
-
-namespace Dnn.MsBuild.Tasks.Entities
+namespace Dnn.MsBuild.Tasks.Composition.Components
 {
-    /// <summary>
-    /// </summary>
-    /// <remarks>
-    /// <![CDATA[
-    /// <component type="Assembly">
-    ///     <assemblies>
-    ///         <assembly [Action="UnRegister"]>
-    ///             <path></path>
-    ///             <name></name>
-    ///             <version></version>
-    ///         </assembly>
-    ///     </assemblies>
-    /// </component>
-    /// ]]>
-    /// </remarks>
-    public class DnnComponentAssembly : DnnComponent
+    internal abstract class ComponentBuilder<TOutput> : IBuilder, IBuilder<TOutput>
+        where TOutput : IManifestElement
     {
-        #region Constructors
+        protected TOutput Output { get; set; }
 
-        /// <summary>
-        /// Prevents a default instance of the <see cref="DnnComponentAssembly"/> class from being created.
-        /// </summary>
-        internal DnnComponentAssembly()
-            : base(DnnComponentType.Assembly)
-        {}
+        protected IManifestData Input { get; set; }
+
+        #region Implementation of IBuilder
+
+        IManifestElement IBuilder.Build(IManifestData data)
+        {
+            return this.Build(data);
+        }
 
         #endregion
+
+        #region Implementation of IBuilder<TOutput>
+
+        public TOutput Build(IManifestData inputData)
+        {
+            this.Input = inputData;
+            this.Output = this.BuildElement();
+            return this.Output;
+        }
+
+        #endregion
+
+        protected abstract TOutput BuildElement();
     }
 }

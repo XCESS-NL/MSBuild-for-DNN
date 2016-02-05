@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnComponentAssembly.cs" company="XCESS expertise center bv">
+// <copyright file="DnnComponentResourceFile.cs" company="XCESS expertise center bv">
 //   Copyright (c) 2016 XCESS expertise center bv
 //   
 //   The software is owned by XCESS and is protected by 
@@ -20,30 +20,15 @@ using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
-    /// <summary>
-    /// </summary>
-    /// <remarks>
-    /// <![CDATA[
-    /// <component type="Assembly">
-    ///     <assemblies>
-    ///         <assembly [Action="UnRegister"]>
-    ///             <path></path>
-    ///             <name></name>
-    ///             <version></version>
-    ///         </assembly>
-    ///     </assemblies>
-    /// </component>
-    /// ]]>
-    /// </remarks>
-    public class DnnComponentAssembly : DnnComponent
+    public class DnnComponentResourceFile : DnnComponent
     {
         #region Constructors
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnComponentAssembly"/> class from being created.
+        /// Initializes a new instance of the <see cref="DnnComponentResourceFile"/> class.
         /// </summary>
-        internal DnnComponentAssembly()
-            : base(DnnComponentType.Assembly)
+        internal DnnComponentResourceFile()
+            : base(DnnComponentType.ResourceFile)
         {}
 
         #endregion

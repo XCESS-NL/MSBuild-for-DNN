@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnComponentAssembly.cs" company="XCESS expertise center bv">
+// <copyright file="AssemblyComponentBuilder.cs" company="XCESS expertise center bv">
 //   Copyright (c) 2016 XCESS expertise center bv
 //   
 //   The software is owned by XCESS and is protected by 
@@ -16,35 +16,19 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
-using DotNetNuke.Services.Installer.MsBuild;
+using Dnn.MsBuild.Tasks.Entities;
 
-namespace Dnn.MsBuild.Tasks.Entities
+namespace Dnn.MsBuild.Tasks.Composition.Components
 {
-    /// <summary>
-    /// </summary>
-    /// <remarks>
-    /// <![CDATA[
-    /// <component type="Assembly">
-    ///     <assemblies>
-    ///         <assembly [Action="UnRegister"]>
-    ///             <path></path>
-    ///             <name></name>
-    ///             <version></version>
-    ///         </assembly>
-    ///     </assemblies>
-    /// </component>
-    /// ]]>
-    /// </remarks>
-    public class DnnComponentAssembly : DnnComponent
+    internal class AssemblyComponentBuilder : ComponentBuilder<DnnComponentAssembly>
     {
-        #region Constructors
+        #region Overrides of ComponentBuilder<DnnComponentAssembly>
 
-        /// <summary>
-        /// Prevents a default instance of the <see cref="DnnComponentAssembly"/> class from being created.
-        /// </summary>
-        internal DnnComponentAssembly()
-            : base(DnnComponentType.Assembly)
-        {}
+        protected override DnnComponentAssembly BuildElement()
+        {
+            // TODO: Provide Implementation
+            return new DnnComponentAssembly();
+        }
 
         #endregion
     }

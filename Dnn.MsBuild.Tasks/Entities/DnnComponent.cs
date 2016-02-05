@@ -24,11 +24,35 @@ namespace Dnn.MsBuild.Tasks.Entities
 {
     /// <summary>
     /// </summary>
+    [XmlInclude(typeof(DnnComponentAssembly))]
+    [XmlInclude(typeof(DnnComponentCleanup))]
     [XmlInclude(typeof(DnnComponentModule))]
+    [XmlInclude(typeof(DnnComponentResourceFile))]
     [XmlInclude(typeof(DnnComponentScript))]
     [XmlRoot("component")]
     public abstract class DnnComponent : IManifestElement
     {
+        #region Constructors
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="DnnComponent"/> class from being created.
+        /// </summary>
+        private DnnComponent()
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnComponent"/> class.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        protected DnnComponent(DnnComponentType type)
+        {
+            this._componentType = type;
+        }
+
+        #endregion
+
+        private readonly DnnComponentType _componentType;
+
         /// <summary>
         /// Gets or sets the type of the component.
         /// </summary>
@@ -36,6 +60,11 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// The type of the component.
         /// </value>
         [XmlAttribute("type")]
-        public abstract DnnComponentType ComponentType { get; set; }
+        public DnnComponentType ComponentType
+        {
+            get { return this._componentType; }
+            // ReSharper disable once ValueParameterNotUsed
+            set { }
+        }
     }
 }

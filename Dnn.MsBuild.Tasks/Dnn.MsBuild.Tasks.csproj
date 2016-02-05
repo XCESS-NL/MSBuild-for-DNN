@@ -46,24 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composition\Components\AssemblyComponentBuilder.cs" />
+    <Compile Include="Composition\Components\ResourceFileComponentBuilder.cs" />
+    <Compile Include="Composition\Components\ScriptComponentBuilder.cs" />
+    <Compile Include="Entities\DnnComponentResourceFile.cs" />
     <Compile Include="Entities\DnnSupportedFeature.cs" />
     <Compile Include="Entities\DnnSupportedFeatureType.cs" />
     <Compile Include="Extensions\LinqExtensionMethods.cs" />
-    <Compile Include="Composition\ComponentBuilder.cs" />
+    <Compile Include="Composition\Components\ComponentBuilder.cs" />
     <Compile Include="Composition\IBuilder.cs" />
     <Compile Include="Composition\IManifestData.cs" />
     <Compile Include="Composition\IManifestElement.cs" />
     <Compile Include="Composition\IPackageData.cs" />
     <Compile Include="Composition\ManifestBuilder.cs" />
-    <Compile Include="Composition\ModuleComponentBuilder.cs" />
-    <Compile Include="Composition\ModulePackageBuilder.cs" />
-    <Compile Include="Composition\PackageBuilder.cs" />
+    <Compile Include="Composition\Components\ModuleComponentBuilder.cs" />
+    <Compile Include="Composition\Packages\ModulePackageBuilder.cs" />
+    <Compile Include="Composition\Packages\PackageBuilder.cs" />
     <Compile Include="Composition\PackageData.cs" />
     <Compile Include="Entities\DnnComponent.cs" />
     <Compile Include="Entities\DnnComponentAssembly.cs" />
     <Compile Include="Entities\DnnComponentCleanup.cs" />
     <Compile Include="Entities\DnnComponentModule.cs" />
-    <Compile Include="Entities\DnnComponents.cs" />
     <Compile Include="Entities\DnnComponentScript.cs" />
     <Compile Include="Entities\DnnDesktopModule.cs" />
     <Compile Include="Entities\DnnLicense.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="Entities\FileInfo.cs" />
     <Compile Include="Extensions\StringExtensionMethods.cs" />
     <Compile Include="Extensions\TypeExtensionMethods.cs" />
+    <Compile Include="Extensions\VersionExtensionMethods.cs" />
     <Compile Include="IManifest.cs" />
     <Compile Include="ManifestEntityBuilder.cs" />
     <Compile Include="Entities\DnnModuleControl.cs" />

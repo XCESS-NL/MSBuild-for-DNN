@@ -43,36 +43,30 @@ namespace Dnn.MsBuild.Tasks.Entities
     ///   </component>
     /// ]]>
     /// </remarks>
-    [Serializable]
     public class DnnComponentModule : DnnComponent
     {
-        [XmlAttribute("type")]
-        public override DnnComponentType ComponentType
-        {
-            get { return DnnComponentType.Module; }
-            set { }
-        }
-
-        [XmlElement("desktopModule")]
-        public DnnDesktopModule DesktopModule { get; set; }
-
         #region Constructors
 
         /// <summary>
         /// Prevents a default instance of the <see cref="DnnComponentModule"/> class from being created.
         /// </summary>
-        internal DnnComponentModule()
-        {}
+        private DnnComponentModule()
+            : base(DnnComponentType.Module)
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DnnComponentModule"/> class.
         /// </summary>
         /// <param name="desktopModule">The desktop module.</param>
-        public DnnComponentModule(DnnDesktopModule desktopModule)
+        internal DnnComponentModule(DnnDesktopModule desktopModule)
+            : base(DnnComponentType.Module)
         {
             this.DesktopModule = desktopModule;
         }
 
         #endregion
+
+        [XmlElement("desktopModule")]
+        public DnnDesktopModule DesktopModule { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnComponentAssembly.cs" company="XCESS expertise center bv">
+// <copyright file="VersionExtensionMethods.cs" company="XCESS expertise center bv">
 //   Copyright (c) 2016 XCESS expertise center bv
 //   
 //   The software is owned by XCESS and is protected by 
@@ -16,36 +16,16 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
-using DotNetNuke.Services.Installer.MsBuild;
+using System;
+using System.Globalization;
 
-namespace Dnn.MsBuild.Tasks.Entities
+namespace Dnn.MsBuild.Tasks.Extensions
 {
-    /// <summary>
-    /// </summary>
-    /// <remarks>
-    /// <![CDATA[
-    /// <component type="Assembly">
-    ///     <assemblies>
-    ///         <assembly [Action="UnRegister"]>
-    ///             <path></path>
-    ///             <name></name>
-    ///             <version></version>
-    ///         </assembly>
-    ///     </assemblies>
-    /// </component>
-    /// ]]>
-    /// </remarks>
-    public class DnnComponentAssembly : DnnComponent
+    public static class VersionExtensionMethods
     {
-        #region Constructors
-
-        /// <summary>
-        /// Prevents a default instance of the <see cref="DnnComponentAssembly"/> class from being created.
-        /// </summary>
-        internal DnnComponentAssembly()
-            : base(DnnComponentType.Assembly)
-        {}
-
-        #endregion
+        public static string ToDnnVersionString(this Version source)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0:D2}.{1:D2}.{2:D2}", source.Major, source.Minor, source.Revision);
+        }
     }
 }

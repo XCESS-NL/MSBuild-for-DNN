@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ComponentBuilder.cs" company="XCESS expertise center bv">
+// <copyright file="ScriptComponentBuilder.cs" company="XCESS expertise center bv">
 //   Copyright (c) 2016 XCESS expertise center bv
 //   
 //   The software is owned by XCESS and is protected by 
@@ -16,15 +16,18 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
-namespace Dnn.MsBuild.Tasks.Composition
-{
-    internal class ComponentBuilder : IBuilder
-    {
-        #region Implementation of IBuilder
+using Dnn.MsBuild.Tasks.Entities;
 
-        public IManifestElement Build(IManifestData data)
+namespace Dnn.MsBuild.Tasks.Composition.Components
+{
+    internal class ScriptComponentBuilder : ComponentBuilder<DnnComponentScript>
+    {
+        #region Overrides of ComponentBuilder<DnnComponentScript>
+
+        protected override DnnComponentScript BuildElement()
         {
-            return null;
+            // TODO: Provide implementation
+            return new DnnComponentScript();
         }
 
         #endregion
