@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnn.MsBuild.Tasks", "XCESS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnn.MsBuild.Generator", "XCESS.MsBuild.Generator\Dnn.MsBuild.Generator.csproj", "{21E8D9EE-426D-4933-B029-7AB08343C3F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XCESS.DNN.TestModule", "Website\DesktopModules\XCESS.DNN.TestModule\XCESS.DNN.TestModule.csproj", "{7FB40D2D-118D-4E83-82DB-A95B79EB3A68}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
