@@ -49,8 +49,8 @@
     <Compile Include="Composition\Components\AssemblyComponentBuilder.cs" />
     <Compile Include="Composition\Components\ResourceFileComponentBuilder.cs" />
     <Compile Include="Composition\Components\ScriptComponentBuilder.cs" />
-    <Compile Include="Composition\Packages\ModulePackageBuilder.cs" />
-    <Compile Include="Composition\Packages\PackageBuilder.cs" />
+    <Compile Include="Composition\DnnPackages\ModulePackageBuilder.cs" />
+    <Compile Include="Composition\DnnPackages\PackageBuilder.cs" />
     <Compile Include="Entities\DnnComponentResourceFile.cs" />
     <Compile Include="Entities\DnnSupportedFeature.cs" />
     <Compile Include="Entities\DnnSupportedFeatureType.cs" />
