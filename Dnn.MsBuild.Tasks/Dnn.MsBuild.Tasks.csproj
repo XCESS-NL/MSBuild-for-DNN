@@ -46,23 +46,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Composition\Components\AssemblyComponentBuilder.cs" />
-    <Compile Include="Composition\Components\ResourceFileComponentBuilder.cs" />
-    <Compile Include="Composition\Components\ScriptComponentBuilder.cs" />
+    <Compile Include="Composition\BaseBuilder.cs" />
+    <Compile Include="Composition\Component\AssemblyComponentBuilder.cs" />
+    <Compile Include="Composition\Component\ResourceFileComponentBuilder.cs" />
+    <Compile Include="Composition\Component\ScriptComponentBuilder.cs" />
     <Compile Include="Composition\Package\ModulePackageBuilder.cs" />
     <Compile Include="Composition\Package\PackageBuilder.cs" />
+    <Compile Include="Entities\DnnComponentResourceFiles.cs" />
+    <Compile Include="Entities\DnnComponentScripts.cs" />
+    <Compile Include="Entities\FileTypes\AssemblyFileInfo.cs" />
     <Compile Include="Entities\DnnComponentResourceFile.cs" />
     <Compile Include="Entities\DnnSupportedFeature.cs" />
     <Compile Include="Entities\DnnSupportedFeatureType.cs" />
+    <Compile Include="Entities\FileTypes\IFileInfo.cs" />
+    <Compile Include="Entities\FileTypes\ScriptFileInfo.cs" />
+    <Compile Include="Entities\FileTypes\ScriptType.cs" />
+    <Compile Include="Entities\Internal\IProjectFileData.cs" />
+    <Compile Include="Entities\Internal\LicenseInfo.cs" />
+    <Compile Include="Entities\Internal\ProjectFileData.cs" />
+    <Compile Include="Entities\FileTypes\ResourceFileInfo.cs" />
     <Compile Include="Extensions\LinqExtensionMethods.cs" />
-    <Compile Include="Composition\Components\ComponentBuilder.cs" />
+    <Compile Include="Composition\Component\ComponentBuilder.cs" />
     <Compile Include="Composition\IBuilder.cs" />
-    <Compile Include="Composition\IManifestData.cs" />
+    <Compile Include="Entities\Internal\ITaskData.cs" />
     <Compile Include="Composition\IManifestElement.cs" />
     <Compile Include="Composition\IPackageData.cs" />
-    <Compile Include="Composition\ManifestBuilder.cs" />
-    <Compile Include="Composition\Components\ModuleComponentBuilder.cs" />
-    <Compile Include="Composition\PackageData.cs" />
+    <Compile Include="Composition\Manifest\ManifestBuilder.cs" />
+    <Compile Include="Composition\Component\ModuleComponentBuilder.cs" />
+    <Compile Include="Entities\Internal\TaskData.cs" />
     <Compile Include="Entities\DnnComponent.cs" />
     <Compile Include="Entities\DnnComponentAssembly.cs" />
     <Compile Include="Entities\DnnComponentCleanup.cs" />
@@ -77,21 +88,23 @@
     <Compile Include="Entities\DnnOwner.cs" />
     <Compile Include="Entities\DnnPackage.cs" />
     <Compile Include="Entities\DnnPackageDependency.cs" />
-    <Compile Include="Entities\FileInfo.cs" />
+    <Compile Include="Entities\FileTypes\FileInfo.cs" />
     <Compile Include="Extensions\StringExtensionMethods.cs" />
     <Compile Include="Extensions\TypeExtensionMethods.cs" />
     <Compile Include="Extensions\VersionExtensionMethods.cs" />
-    <Compile Include="IManifest.cs" />
-    <Compile Include="ManifestEntityBuilder.cs" />
+    <Compile Include="Composition\IManifest.cs" />
+    <Compile Include="BuildManifestTask.cs" />
     <Compile Include="Entities\DnnModuleControl.cs" />
+    <Compile Include="Parsers\XmlVSProjectFileParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ManifestFileBuilder.cs" />
-    <Compile Include="UserControlParser.cs" />
+    <Compile Include="Parsers\UserControlParser.cs" />
+    <Compile Include="Tokens\LicenseTokenReplace.cs" />
+    <Compile Include="Tokens\ReleaseNotesTokenReplace.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -105,7 +118,9 @@
       <Name>Dnn.MsBuild.Attributes</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

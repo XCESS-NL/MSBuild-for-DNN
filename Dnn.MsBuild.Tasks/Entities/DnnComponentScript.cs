@@ -1,38 +1,73 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnComponentScript.cs" company="XCESS expertise center bv">
-//   Copyright (c) 2016 XCESS expertise center bv
-//   
-//   The software is owned by XCESS and is protected by 
-//   the Dutch copyright laws and international treaty provisions.
-//   You are allowed to make copies of the software solely for backup or archival purposes.
-//   You may not lease, rent, export or sublicense the software.
-//   You may not reverse engineer, decompile, disassemble or create derivative works from the software.
-//   
-//   Owned by XCESS expertise center b.v., Storkstraat 19, 3833 LB Leusden, The Netherlands
-//   T. +31-33-4335151, E. info@xcess.nl, I. http://www.xcess.nl
+// <copyright file="DnnComponentScript.cs" company="XCESS expertise center b.v.">
+//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+// 
+//     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+//     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
+//     the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+//     to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+//     The above copyright notice and this permission notice shall be included in all copies or substantial portions 
+//     of the Software.
+// 
+//     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+//     TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+//     THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+//     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+//     DEALINGS IN THE SOFTWARE.
 // </copyright>
-// <summary>
-//   
-// </summary>
-//  --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Xml;
+using Dnn.MsBuild.Tasks.Entities.FileTypes;
 using DotNetNuke.Services.Installer.MsBuild;
+using System.Xml.Serialization;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
     /// <summary>
     /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/script-component
+    /// <![CDATA[
+    /// <component type="Script">
+    ///   <scripts>
+    ///     <basePath />
+    ///     <script[type="Install | UnInstall"]>
+    ///       <path />
+    ///       <name />
+    ///       <version />
+    ///     </script>
+    ///   </scripts>
+    /// </component>
+    /// ]]>
+    /// </remarks>
     public class DnnComponentScript : DnnComponent
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentScript"/> class.
+        /// Prevents a default instance of the <see cref="DnnComponentScript"/> class from being created.
         /// </summary>
-        internal DnnComponentScript()
+        private DnnComponentScript()
             : base(DnnComponentType.Script)
         {}
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnComponentScript"/> class.
+        /// </summary>
+        /// <param name="basePath">The base path.</param>
+        /// <param name="scripts">The scripts.</param>
+        internal DnnComponentScript(string basePath, IEnumerable<ScriptFileInfo> scripts)
+            : this()
+        {
+            this.Scripts = new DnnComponentScripts(basePath, scripts);
+        }
+
         #endregion
+
+        [XmlElement("scripts")]
+        public DnnComponentScripts Scripts { get; set; }
     }
 }

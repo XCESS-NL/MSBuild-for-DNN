@@ -1,12 +1,30 @@
-﻿using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PackageBuilder.cs" company="XCESS expertise center b.v.">
+//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+// 
+//     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+//     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
+//     the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+//     to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+//     The above copyright notice and this permission notice shall be included in all copies or substantial portions 
+//     of the Software.
+// 
+//     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+//     TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+//     THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+//     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+//     DEALINGS IN THE SOFTWARE.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.Reflection;
-using Dnn.MsBuild.Tasks.Components;
 using Dnn.MsBuild.Tasks.Entities;
 using DotNetNuke.Services.Installer.MsBuild;
 
-namespace Dnn.MsBuild.Tasks.Composition.Packages
+namespace Dnn.MsBuild.Tasks.Composition.Package
 {
-    internal abstract class PackageBuilder : IBuilder<DnnPackage>
+    internal abstract class PackageBuilder : BaseBuilder<DnnPackage>
     {
         #region Constructors
 
@@ -15,43 +33,25 @@ namespace Dnn.MsBuild.Tasks.Composition.Packages
         /// </summary>
         /// <param name="packageType">Type of the package.</param>
         protected PackageBuilder(DnnPackageType packageType)
+            : base(new DnnPackage(packageType))
+        {}
+
+        #endregion
+
+        #region Overrides of BaseBuilder<DnnPackage>
+
+        protected override void OnComponentCreated(IManifestElement component)
         {
-            this.ComponentBuilders = new List<IBuilder>();
-            this.Package = new DnnPackage(packageType);
+            var componentToAdd = component as DnnComponent;
+            if (componentToAdd != null)
+            {
+                this.Element.Components.Add(componentToAdd);
+            }
         }
 
         #endregion
 
-        protected IList<IBuilder> ComponentBuilders { get; }
-
-        protected DnnPackage Package { get; }
-
-        #region Implementation of IBuilder
-
-        /// <summary>
-        /// Builds a package from the given data
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <returns></returns>
-        public DnnPackage Build(IManifestData data)
-        {
-            this.BuildElement(data);
-            data.Package = this.Package;
-            this.ComponentBuilders.ForEach(builder =>
-                                           {
-                                               var component = builder.Build(data) as DnnComponent;
-                                               if (component != null)
-                                               {
-                                                   this.Package.Components.Add(component);
-                                               }
-                                           });
-
-            return this.Package;
-        }
-
-        #endregion
-
-        protected abstract void BuildElement(IManifestData data);
+        #region PackageBuilder Creator
 
         /// <summary>
         /// Creates a concrete DnnPackage builder from the assembly. By default a ModulePackageBuilder is created, unless the assembly defines the DnnPackage attribute.
@@ -69,5 +69,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Packages
                     return new ModulePackageBuilder();
             }
         }
+
+        #endregion
     }
 }

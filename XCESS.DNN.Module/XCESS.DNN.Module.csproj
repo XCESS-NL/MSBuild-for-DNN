@@ -87,6 +87,24 @@
     <Content Include="Settings.ascx" />
     <Content Include="View.ascx" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\View.ascx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\Settings.ascx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Install\01.00.00.SqlDataProvider" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Install\01.00.01.SqlDataProvider" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Install\01.02.00.SqlDataProvider" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Install\Uninstall.SqlDataProvider" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v14.0\WebApplications\Microsoft.WebApplication.targets" />

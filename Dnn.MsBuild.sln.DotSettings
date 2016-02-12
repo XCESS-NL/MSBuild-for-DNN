@@ -1,0 +1,26 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">--------------------------------------------------------------------------------------------------------------------&#xD;
+&lt;copyright file="$FILENAME$" company="XCESS expertise center b.v."&gt;&#xD;
+    Copyright (c) $CREATED_YEAR$-$CURRENT_YEAR$ XCESS expertise center b.v.&#xD;
+&#xD;
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated &#xD;
+    documentation files (the "Software"), to deal in the Software without restriction, including without limitation &#xD;
+    the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and &#xD;
+    to permit persons to whom the Software is furnished to do so, subject to the following conditions:&#xD;
+&#xD;
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions &#xD;
+    of the Software.&#xD;
+&#xD;
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED &#xD;
+    TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL &#xD;
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF &#xD;
+    CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER &#xD;
+    DEALINGS IN THE SOFTWARE.&#xD;
+&lt;/copyright&gt;&#xD;
+--------------------------------------------------------------------------------------------------------------------&#xD;
+</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=B3470006450DED40ACFBCFB8E7654211/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=B3470006450DED40ACFBCFB8E7654211/AbsolutePath/@EntryValue">D:\Projects\MsBuild\Website\DesktopModules\Dnn.MsBuild.sln.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=B3470006450DED40ACFBCFB8E7654211/RelativePath/@EntryValue"></s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileB3470006450DED40ACFBCFB8E7654211/@KeyIndexDefined">True</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileB3470006450DED40ACFBCFB8E7654211/RelativePriority/@EntryValue">1</s:Double></wpf:ResourceDictionary>

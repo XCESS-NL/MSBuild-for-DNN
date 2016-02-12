@@ -1,25 +1,25 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnPackage.cs" company="XCESS expertise center bv">
-//   Copyright (c) 2016 XCESS expertise center bv
-//   
-//   The software is owned by XCESS and is protected by 
-//   the Dutch copyright laws and international treaty provisions.
-//   You are allowed to make copies of the software solely for backup or archival purposes.
-//   You may not lease, rent, export or sublicense the software.
-//   You may not reverse engineer, decompile, disassemble or create derivative works from the software.
-//   
-//   Owned by XCESS expertise center b.v., Storkstraat 19, 3833 LB Leusden, The Netherlands
-//   T. +31-33-4335151, E. info@xcess.nl, I. http://www.xcess.nl
+// <copyright file="DnnPackage.cs" company="XCESS expertise center b.v.">
+//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+// 
+//     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+//     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
+//     the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+//     to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+//     The above copyright notice and this permission notice shall be included in all copies or substantial portions 
+//     of the Software.
+// 
+//     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+//     TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+//     THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+//     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+//     DEALINGS IN THE SOFTWARE.
 // </copyright>
-// <summary>
-//   
-// </summary>
-//  --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Reflection;
 using System.Xml.Serialization;
 using Dnn.MsBuild.Tasks.Composition;
 using Dnn.MsBuild.Tasks.Extensions;
@@ -51,31 +51,6 @@ namespace Dnn.MsBuild.Tasks.Entities
     {
         public static readonly Version DefaultVersion = new Version(0, 0, 0);
 
-        #region Constructors
-
-        /// <summary>
-        /// Prevents a default instance of the <see cref="DnnPackage" /> class from being created.
-        /// </summary>
-        internal DnnPackage()
-        {
-            this.Components = new List<DnnComponent>();
-            this.Owner = new DnnOwner();
-            this.Dependencies = new List<DnnPackageDependency>();
-            this.PackageType = DnnPackageType.Module;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DnnPackage"/> class.
-        /// </summary>
-        /// <param name="packageType">Type of the package.</param>
-        internal DnnPackage(DnnPackageType packageType)
-            : this()
-        {
-            this.PackageType = packageType;
-        }
-
-        #endregion
-
         /// <summary>
         /// Gets or sets a value indicating whether [azure compatible].
         /// </summary>
@@ -93,15 +68,6 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// </value>
         [XmlElement("description")]
         public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the folder.
-        /// </summary>
-        /// <value>
-        /// The folder.
-        /// </value>
-        [XmlIgnore]
-        public string Folder { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the friendly.
@@ -131,15 +97,6 @@ namespace Dnn.MsBuild.Tasks.Entities
         public DnnLicense License { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the owner.
         /// </summary>
         /// <value>
@@ -147,15 +104,6 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// </value>
         [XmlElement("owner")]
         public DnnOwner Owner { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the package.
-        /// </summary>
-        /// <value>
-        /// The type of the package.
-        /// </value>
-        [XmlAttribute("type")]
-        public DnnPackageType PackageType { get; set; }
 
         /// <summary>
         /// Gets or sets the components.
@@ -183,15 +131,6 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// <value>
         /// The version.
         /// </value>
-        [XmlIgnore]
-        public Version Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
         [XmlAttribute("version")]
         public string VersionString
         {
@@ -203,5 +142,68 @@ namespace Dnn.MsBuild.Tasks.Entities
             // ReSharper disable once ValueParameterNotUsed
             set { }
         }
+
+
+        /// <summary>
+        /// Gets or sets the folder.
+        /// </summary>
+        /// <value>
+        /// The folder.
+        /// </value>
+        [XmlIgnore]
+        public string Folder { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the package.
+        /// </summary>
+        /// <value>
+        /// The type of the package.
+        /// </value>
+        [XmlAttribute("type")]
+        public DnnPackageType PackageType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version.
+        /// </summary>
+        /// <value>
+        /// The version.
+        /// </value>
+        [XmlIgnore]
+        public Version Version { get; set; }
+
+        #region Constructors
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="DnnPackage" /> class from being created.
+        /// </summary>
+        internal DnnPackage()
+        {
+            this.Components = new List<DnnComponent>();
+            this.Owner = new DnnOwner();
+            this.Dependencies = new List<DnnPackageDependency>();
+            this.PackageType = DnnPackageType.Module;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnPackage"/> class.
+        /// </summary>
+        /// <param name="packageType">Type of the package.</param>
+        internal DnnPackage(DnnPackageType packageType)
+            : this()
+        {
+            this.PackageType = packageType;
+        }
+
+        #endregion
     }
 }

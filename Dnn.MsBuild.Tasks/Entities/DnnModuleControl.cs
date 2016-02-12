@@ -1,20 +1,22 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnModuleControl.cs" company="XCESS expertise center bv">
-//   Copyright (c) 2016 XCESS expertise center bv
-//   
-//   The software is owned by XCESS and is protected by 
-//   the Dutch copyright laws and international treaty provisions.
-//   You are allowed to make copies of the software solely for backup or archival purposes.
-//   You may not lease, rent, export or sublicense the software.
-//   You may not reverse engineer, decompile, disassemble or create derivative works from the software.
-//   
-//   Owned by XCESS expertise center b.v., Storkstraat 19, 3833 LB Leusden, The Netherlands
-//   T. +31-33-4335151, E. info@xcess.nl, I. http://www.xcess.nl
+// <copyright file="DnnModuleControl.cs" company="XCESS expertise center b.v.">
+//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+// 
+//     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+//     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
+//     the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+//     to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+//     The above copyright notice and this permission notice shall be included in all copies or substantial portions 
+//     of the Software.
+// 
+//     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+//     TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+//     THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+//     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+//     DEALINGS IN THE SOFTWARE.
 // </copyright>
-// <summary>
-//   
-// </summary>
-//  --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Xml.Serialization;
