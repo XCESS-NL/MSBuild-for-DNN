@@ -18,8 +18,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Reflection;
 using Dnn.MsBuild.Tasks.Entities;
+using Dnn.MsBuild.Tasks.Entities.Internal;
+using Dnn.MsBuild.Tasks.Extensions;
 using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Composition.Package
@@ -40,6 +43,15 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
 
         #region Overrides of BaseBuilder<DnnPackage>
 
+        protected override void BuildElement(ITaskData data)
+        {
+            this.SetPackageCoreAttributes(data);
+            this.SetPackageLicense(data);
+            this.SetPackageOwner(data);
+            this.SetPackageDependencies(data);
+            this.SetPackageReleaseNotes(data);
+        }
+
         protected override void OnComponentCreated(IManifestElement component)
         {
             var componentToAdd = component as DnnComponent;
@@ -50,6 +62,110 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         }
 
         #endregion
+
+        /// <summary>
+        /// Sets the package core attributes.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        protected virtual void SetPackageCoreAttributes(ITaskData data)
+        {
+            var assemblyName = data.Assembly.GetName();
+
+            var packageAttribute = data.Assembly.GetCustomAttribute<DnnPackageAttribute>();
+            var assemblyTitle = data.Assembly.GetCustomAttribute<AssemblyTitleAttribute>();
+            var assemblyDescription = data.Assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
+
+            this.Element.Name = this.Element
+                                    .Name
+                                    .FirstNotEmpty(packageAttribute?.Name,
+                                                   assemblyTitle?.Title,
+                                                   assemblyName.Name);
+            this.Element.FriendlyName = this.Element
+                                            .FriendlyName
+                                            .FirstNotEmpty(packageAttribute?.FriendlyName,
+                                                           packageAttribute?.Name,
+                                                           assemblyTitle?.Title,
+                                                           assemblyName.Name);
+
+            this.Element.Description = this.Element
+                                           .Description
+                                           .FirstNotEmpty(packageAttribute?.Description,
+                                                          assemblyDescription?.Description,
+                                                          assemblyTitle?.Title,
+                                                          assemblyName.Name);
+
+            this.Element.IconFileName = packageAttribute?.IconFileName;
+
+            this.Element.Version = assemblyName.Version;
+        }
+
+        /// <summary>
+        /// Sets the package dependencies.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        protected virtual void SetPackageDependencies(ITaskData data)
+        {
+            data.ExportedTypes.ForEach(this.TestPackageDependencyAttribteAndAddMatching);
+        }
+
+        /// <summary>
+        /// Sets the package license.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        protected virtual void SetPackageLicense(ITaskData data)
+        {
+            // TODO: Provide Implementation
+        }
+
+        /// <summary>
+        /// Sets the package owner.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        protected virtual void SetPackageOwner(ITaskData data)
+        {
+            var companyAttribute = data.Assembly.GetCustomAttribute<AssemblyCompanyAttribute>();
+            this.Element.Owner.Organisation = this.Element
+                                                  .Owner
+                                                  .Organisation
+                                                  .FirstNotEmpty(companyAttribute?.Company);
+
+            var companyInfoAttribute = data.Assembly.GetCustomAttribute<AssemblyOwnerInfoAttribute>();
+            // ReSharper disable once InvertIf
+            if (companyInfoAttribute != null)
+            {
+                this.Element.Owner.Email = companyInfoAttribute?.EmailAddress;
+                this.Element.Owner.Name = companyInfoAttribute?.Name;
+                this.Element.Owner.Url = companyInfoAttribute?.Url;
+            }
+        }
+
+        /// <summary>
+        /// Sets the package release notes.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        protected virtual void SetPackageReleaseNotes(ITaskData data)
+        {
+            // TODO: Provide Implementation
+        }
+
+        /// <summary>
+        /// Adds the package dependency.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        private void AddPackageDependency(DnnPackageDependencyAttribute attribute)
+        {
+            this.Element.Dependencies.Add(DnnPackageDependency.FromAttribute(attribute));
+        }
+
+        /// <summary>
+        /// Tests the package dependency attribte and add matching.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        private void TestPackageDependencyAttribteAndAddMatching(Type type)
+        {
+            var attributes = type.GetCustomAttributes<DnnPackageDependencyAttribute>();
+            attributes.ForEach(this.AddPackageDependency);
+        }
 
         #region PackageBuilder Creator
 
@@ -63,6 +179,9 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             var attribute = assembly.GetCustomAttribute<DnnPackageAttribute>();
             switch (attribute?.PackageType)
             {
+                case DnnPackageType.Auth_System:
+                    return new AuthenticationProviderPackageBuilder();
+
                 // ReSharper disable once RedundantCaseLabel
                 case DnnPackageType.Module:
                 default:

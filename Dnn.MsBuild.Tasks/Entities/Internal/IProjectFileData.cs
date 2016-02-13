@@ -23,7 +23,7 @@ using Dnn.MsBuild.Tasks.Entities.FileTypes;
 
 namespace Dnn.MsBuild.Tasks.Entities.Internal
 {
-    internal interface IProjectFileData
+    public interface IProjectFileData
     {
         string BasePath { get; }
 

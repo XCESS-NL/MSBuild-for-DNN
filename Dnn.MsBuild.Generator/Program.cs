@@ -22,7 +22,6 @@ using System;
 using System.IO;
 using Dnn.MsBuild.Tasks;
 using Dnn.MsBuild.Tasks.Entities;
-using XCESS.MsBuild.Generator;
 
 namespace Dnn.MsBuild.Generator
 {
@@ -33,22 +32,26 @@ namespace Dnn.MsBuild.Generator
         private static void Main(string[] args)
         {
             var setup = AppDomain.CurrentDomain.SetupInformation;
-            
+
             // Determine the website root
             var index = setup.ApplicationBase.IndexOf($"\\{DesktopModulesFolderName}\\");
             var websiteBase = setup.ApplicationBase.Substring(0, index);
-
-            var assembly = Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.Module\bin\XCESS.DNN.Module.dll");
             var dnnAssemblyPath = Path.Combine(websiteBase, "bin");
 
-            var projectFile = Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.Module\XCESS.DNN.Module.csproj");
-            var sourceFiles = new FileTaskItem[]
-                              {
-                                  new FileTaskItem(Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.Module\view.ascx")),
-                                  new FileTaskItem(Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.Module\settings.ascx"))
-                              };
+            // Build DNN module
+            BuildManifest(dnnAssemblyPath,
+                          Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.Module\bin\XCESS.DNN.Module.dll"),
+                          Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.Module\XCESS.DNN.Module.csproj"));
 
-            var entityBuilder = new BuildManifestTask<DnnManifest>(projectFile, assembly, dnnAssemblyPath, sourceFiles);
+            // Build DNN Authentication Provider
+            BuildManifest(dnnAssemblyPath,
+                          Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.AuthenticationProvider\bin\XCESS.DNN.AuthenticationProvider.dll"),
+                          Path.Combine(websiteBase, DesktopModulesFolderName, @"XCESS.DNN.AuthenticationProvider\XCESS.DNN.AuthenticationProvider.csproj"));
+        }
+
+        private static void BuildManifest(string dnnAssemblyPath, string assemblyName, string projectFile)
+        {
+            var entityBuilder = new BuildManifestTask<DnnManifest>(projectFile, assemblyName, dnnAssemblyPath);
             entityBuilder.Build();
         }
     }

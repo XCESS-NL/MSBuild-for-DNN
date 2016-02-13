@@ -35,8 +35,9 @@ namespace DotNetNuke.Services.Installer.MsBuild
         /// Initializes a new instance of the <see cref="DnnPackageAttribute" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
+        /// <param name="packageType">Type of the package.</param>
         /// <exception cref="System.ArgumentException">The package name cannot be null or an empty string.;name.</exception>
-        public DnnPackageAttribute(string name)
+        public DnnPackageAttribute(string name, DnnPackageType packageType = DnnPackageType.Module)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -45,7 +46,7 @@ namespace DotNetNuke.Services.Installer.MsBuild
             }
 
             this.Name = name;
-            this.PackageType = DnnPackageType.Module;
+            this.PackageType = packageType;
         }
 
         #endregion

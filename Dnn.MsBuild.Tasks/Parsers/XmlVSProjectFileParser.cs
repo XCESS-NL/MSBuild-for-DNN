@@ -29,7 +29,7 @@ using Dnn.MsBuild.Tasks.Extensions;
 
 namespace Dnn.MsBuild.Tasks.Parsers
 {
-    internal class XmlVsProjectFileParser
+    internal class XmlVsProjectFileParser : IProjectFileParser
     {
         #region Constructors
 
@@ -51,6 +51,8 @@ namespace Dnn.MsBuild.Tasks.Parsers
         protected IList<AssemblyFileInfo> References { get; }
 
         protected IList<IFileInfo> ResourceFiles { get; }
+
+        #region Implementation of IProjectFileParser
 
         public IProjectFileData Parse(string fileName)
         {
@@ -74,6 +76,8 @@ namespace Dnn.MsBuild.Tasks.Parsers
                 throw;
             }
         }
+
+        #endregion
 
         protected virtual void FindAndParseItemGroups(XmlElement node)
         {

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ModulePackageBuilder.cs" company="XCESS expertise center b.v.">
+// <copyright file="AuthenticationProviderPackageBuilder.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -23,26 +23,24 @@ using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Composition.Package
 {
-    internal class ModulePackageBuilder : PackageBuilder
+    internal class AuthenticationProviderPackageBuilder : PackageBuilder
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModulePackageBuilder"/> class.
+        /// Initializes a new instance of the <see cref="PackageBuilder" /> class.
         /// </summary>
-        public ModulePackageBuilder()
-            : base(DnnPackageType.Module)
+        public AuthenticationProviderPackageBuilder()
+            : base(DnnPackageType.Auth_System)
         {
             // TODO: Move always present component builders to the base class
 
-            // A DNN module package typically contains the following components:
-            // 1. Component Module          (required)
-            // 2. Component Assembly        (required)
-            // 3. Component Script          (optional)
-            // 4. Component ResourceFile    (required)
-            this.ComponentBuilders.Add(new ModuleComponentBuilder());
+            // A DNN Authentication Provider package typically contains the following components:
+            // 1. Component AuthenticationSystem    (required)
+            // 2. Component Assembly                (required)
+            // 4. Component ResourceFile            (required)
+            this.ComponentBuilders.Add(new AuthenticationSystemComponentBuilder());
             this.ComponentBuilders.Add(new AssemblyComponentBuilder());
-            this.ComponentBuilders.Add(new ScriptComponentBuilder());
             this.ComponentBuilders.Add(new ResourceFileComponentBuilder());
         }
 

@@ -80,7 +80,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Component
         {
             var moduleDefinitions = new Dictionary<string, DnnModuleDefinition>();
 
-            var userControls = this.Input.ProjectFileData?.UserControls ?? this.Input.UserControls;
+            var userControls = this.Input.ProjectFileData?.UserControls;
             // ReSharper disable once InvertIf
             if (userControls != null)
             {

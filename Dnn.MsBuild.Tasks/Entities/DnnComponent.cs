@@ -27,6 +27,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <summary>
     /// </summary>
     [XmlInclude(typeof(DnnComponentAssembly))]
+    [XmlInclude(typeof(DnnComponentAuthenticationSystem))]
     [XmlInclude(typeof(DnnComponentCleanup))]
     [XmlInclude(typeof(DnnComponentModule))]
     [XmlInclude(typeof(DnnComponentResourceFile))]

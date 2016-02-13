@@ -20,9 +20,9 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using DotNetNuke.Services.Installer.MsBuild;
 
-[assembly: AssemblyProduct("XCESS.DNN.Module")]
-[assembly: AssemblyTitle("MsBuild Test Module")]
-[assembly: AssemblyDescription("A DNN module for demonstration purposes of the XCESS DNN MsBuild.")] // Description in DNN manifest
+[assembly: AssemblyProduct("XCESS.DNN.AuthenticationProvider")]
+[assembly: AssemblyTitle("MsBuild Test Authentication Provider")]
+[assembly: AssemblyDescription("A DNN AuthenticationProvider for demonstration purposes of the XCESS DNN MsBuild.")] // Description in DNN manifest
 #if (DEBUG)
 
 [assembly: AssemblyConfiguration("DEBUG")]
@@ -30,12 +30,12 @@ using DotNetNuke.Services.Installer.MsBuild;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: DnnPackage("XCESS.DNN.Module")]
+[assembly: DnnPackage("XCESS.DNN.AuthenticationProvider", DnnPackageType.Auth_System)]
 [assembly: DnnAzureCompliant(true)]
 [assembly: AssemblyCompany("XCESS expertise center b.v.")] // Organisation in DNN manifest
 [assembly: AssemblyOwnerInfo("XCESS", "info@xcess.nl", "http://www.xcess.nl")] // Email and url in DNN manifest
 
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -47,7 +47,7 @@ using DotNetNuke.Services.Installer.MsBuild;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("d9553526-3106-4d95-8b6b-fe2e561bc0a7")]
+[assembly: Guid("391D4CDA-1C14-4B66-A146-D54E7D578D49")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -60,5 +60,5 @@ using DotNetNuke.Services.Installer.MsBuild;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("2.1.0.4")]
+[assembly: AssemblyFileVersion("2.1.0.4")]

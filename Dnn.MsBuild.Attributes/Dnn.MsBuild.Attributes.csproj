@@ -39,6 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyOwnerInfoAttribute.cs" />
+    <Compile Include="DnnAuthenticationControlAttribute.cs" />
+    <Compile Include="DnnAuthenticationControlType.cs" />
+    <Compile Include="DnnAuthenticationTypeAttribute.cs" />
     <Compile Include="DnnAzureCompliantAttribute.cs" />
     <Compile Include="DnnBaseModuleControlAttribute.cs" />
     <Compile Include="DnnBusinessControllerAttribute.cs" />

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ModulePackageBuilder.cs" company="XCESS expertise center b.v.">
+// <copyright file="DnnComponentAuthenticationSystem.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,34 +18,25 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Dnn.MsBuild.Tasks.Composition.Component;
+using System.Xml.Serialization;
 using DotNetNuke.Services.Installer.MsBuild;
 
-namespace Dnn.MsBuild.Tasks.Composition.Package
+namespace Dnn.MsBuild.Tasks.Entities
 {
-    internal class ModulePackageBuilder : PackageBuilder
+    public class DnnComponentAuthenticationSystem : DnnComponent
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModulePackageBuilder"/> class.
+        /// Initializes a new instance of the <see cref="DnnComponentAuthenticationSystem"/> class.
         /// </summary>
-        public ModulePackageBuilder()
-            : base(DnnPackageType.Module)
-        {
-            // TODO: Move always present component builders to the base class
-
-            // A DNN module package typically contains the following components:
-            // 1. Component Module          (required)
-            // 2. Component Assembly        (required)
-            // 3. Component Script          (optional)
-            // 4. Component ResourceFile    (required)
-            this.ComponentBuilders.Add(new ModuleComponentBuilder());
-            this.ComponentBuilders.Add(new AssemblyComponentBuilder());
-            this.ComponentBuilders.Add(new ScriptComponentBuilder());
-            this.ComponentBuilders.Add(new ResourceFileComponentBuilder());
-        }
+        public DnnComponentAuthenticationSystem()
+            : base(DnnComponentType.AuthenticationSystem)
+        { }
 
         #endregion
+
+        [XmlElement("authenticationService")]
+        public DnnAuthenticationService AuthenticationService { get; set; }
     }
 }

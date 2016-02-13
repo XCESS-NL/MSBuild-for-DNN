@@ -47,7 +47,7 @@ namespace Dnn.MsBuild.Tasks
         /// <param name="packageAssembly">The manifest assembly.</param>
         /// <param name="dnnAssemblyPath">The DNN assembly path.</param>
         /// <param name="sourceFiles">The source files.</param>
-        public BuildManifestTask(string projectFile, string packageAssembly, string dnnAssemblyPath, ITaskItem[] sourceFiles)
+        public BuildManifestTask(string projectFile, string packageAssembly, string dnnAssemblyPath)
         {
             // Gather the package data needed for building the manifest
             this.TaskData = new TaskData(packageAssembly, dnnAssemblyPath);
@@ -57,11 +57,6 @@ namespace Dnn.MsBuild.Tasks
 
             this.TaskData.ProjectFileData = this.GetProjectPackageData(projectFile);
             this.TaskData.ProjectFileData.UserControls = this.GetUserControls(this.TaskData.ProjectFileData);
-
-            if (!this.TaskData.ProjectFileData.UserControls.Any())
-            {
-                this.TaskData.UserControls = this.GetUserControls(sourceFiles);
-            }
         }
 
         #endregion

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ModulePackageBuilder.cs" company="XCESS expertise center b.v.">
+// <copyright file="JsonVsProjectFileParser.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,32 +18,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Dnn.MsBuild.Tasks.Composition.Component;
-using DotNetNuke.Services.Installer.MsBuild;
+using System;
+using Dnn.MsBuild.Tasks.Entities.Internal;
 
-namespace Dnn.MsBuild.Tasks.Composition.Package
+namespace Dnn.MsBuild.Tasks.Parsers
 {
-    internal class ModulePackageBuilder : PackageBuilder
+    internal class JsonVsProjectFileParser : IProjectFileParser
     {
-        #region Constructors
+        #region Implementation of IProjectFileParser
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ModulePackageBuilder"/> class.
-        /// </summary>
-        public ModulePackageBuilder()
-            : base(DnnPackageType.Module)
+        public IProjectFileData Parse(string fileName)
         {
-            // TODO: Move always present component builders to the base class
-
-            // A DNN module package typically contains the following components:
-            // 1. Component Module          (required)
-            // 2. Component Assembly        (required)
-            // 3. Component Script          (optional)
-            // 4. Component ResourceFile    (required)
-            this.ComponentBuilders.Add(new ModuleComponentBuilder());
-            this.ComponentBuilders.Add(new AssemblyComponentBuilder());
-            this.ComponentBuilders.Add(new ScriptComponentBuilder());
-            this.ComponentBuilders.Add(new ResourceFileComponentBuilder());
+            // Preparation for ASP 5 json project files
+            throw new NotImplementedException();
         }
 
         #endregion

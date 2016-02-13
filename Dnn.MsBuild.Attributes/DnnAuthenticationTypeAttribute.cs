@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ModulePackageBuilder.cs" company="XCESS expertise center b.v.">
+// <copyright file="DnnAuthenticationTypeAttribute.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,34 +18,36 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Dnn.MsBuild.Tasks.Composition.Component;
-using DotNetNuke.Services.Installer.MsBuild;
+using System;
 
-namespace Dnn.MsBuild.Tasks.Composition.Package
+// ReSharper disable once CheckNamespace
+namespace DotNetNuke.Services.Installer.MsBuild
 {
-    internal class ModulePackageBuilder : PackageBuilder
+    /// <summary>
+    /// </summary>
+    /// <seealso cref="DotNetNuke.Services.Installer.MsBuild.DnnManifestAttribute" />
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class DnnAuthenticationTypeAttribute : DnnManifestAttribute
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModulePackageBuilder"/> class.
+        /// Initializes a new instance of the <see cref="DnnAuthenticationTypeAttribute"/> class.
         /// </summary>
-        public ModulePackageBuilder()
-            : base(DnnPackageType.Module)
+        /// <param name="type">The type.</param>
+        public DnnAuthenticationTypeAttribute(string type)
         {
-            // TODO: Move always present component builders to the base class
-
-            // A DNN module package typically contains the following components:
-            // 1. Component Module          (required)
-            // 2. Component Assembly        (required)
-            // 3. Component Script          (optional)
-            // 4. Component ResourceFile    (required)
-            this.ComponentBuilders.Add(new ModuleComponentBuilder());
-            this.ComponentBuilders.Add(new AssemblyComponentBuilder());
-            this.ComponentBuilders.Add(new ScriptComponentBuilder());
-            this.ComponentBuilders.Add(new ResourceFileComponentBuilder());
+            this.Type = type;
         }
 
         #endregion
+
+        /// <summary>
+        /// Gets the authentication type.
+        /// </summary>
+        /// <value>
+        /// The type.
+        /// </value>
+        public string Type { get; }
     }
 }
