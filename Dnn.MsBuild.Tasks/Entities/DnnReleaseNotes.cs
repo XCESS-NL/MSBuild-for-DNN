@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnLicense.cs" company="XCESS expertise center b.v.">
+// <copyright file="DnnReleaseNotes.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,19 +18,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Xml.Serialization;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
-    /// <summary>
-    /// </summary>
-    public class DnnLicense
+    public class DnnReleaseNotes
     {
         /// <summary>
-        /// The default package license file name
+        /// The default package release notes file name
         /// </summary>
-        public const string DefaultFilePath = "license.txt";
+        public const string DefaultFilePath = "releaseNotes.txt";
 
         /// <summary>
         /// Gets or sets the file path.

@@ -85,16 +85,7 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// The name of the icon file.
         /// </value>
         [XmlElement("iconFile")]
-        public string IconFileName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the license.
-        /// </summary>
-        /// <value>
-        /// The license.
-        /// </value>
-        [XmlElement("license")]
-        public DnnLicense License { get; set; }
+        public string IconFilePath { get; set; }
 
         /// <summary>
         /// Gets or sets the owner.
@@ -106,14 +97,22 @@ namespace Dnn.MsBuild.Tasks.Entities
         public DnnOwner Owner { get; set; }
 
         /// <summary>
-        /// Gets or sets the components.
+        /// Gets or sets the license.
         /// </summary>
         /// <value>
-        /// The components.
+        /// The license.
         /// </value>
-        [XmlArray("components")]
-        [XmlArrayItem("component")]
-        public List<DnnComponent> Components { get; set; }
+        [XmlElement("license")]
+        public DnnLicense License { get; set; }
+
+        /// <summary>
+        /// Gets or sets the release notes.
+        /// </summary>
+        /// <value>
+        /// The release notes.
+        /// </value>
+        [XmlElement("releaseNotes")]
+        public DnnReleaseNotes ReleaseNotes { get; set; }
 
         /// <summary>
         /// Gets or sets the dependencies.
@@ -124,6 +123,16 @@ namespace Dnn.MsBuild.Tasks.Entities
         [XmlArray("dependencies")]
         [XmlArrayItem("dependency")]
         public List<DnnPackageDependency> Dependencies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the components.
+        /// </summary>
+        /// <value>
+        /// The components.
+        /// </value>
+        [XmlArray("components")]
+        [XmlArrayItem("component")]
+        public List<DnnComponent> Components { get; set; }
 
         /// <summary>
         /// Gets or sets the version.

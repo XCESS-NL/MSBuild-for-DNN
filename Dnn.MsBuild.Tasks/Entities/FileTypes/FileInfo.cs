@@ -25,7 +25,6 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
     /// <summary>
     /// </summary>
-    [Serializable]
     [XmlRoot("file")]
     public class FileInfo : IFileInfo
     {

@@ -84,6 +84,7 @@
     <Content Include="Login.ascx" />
     <Content Include="releasenotes.txt" />
     <Content Include="Settings.ascx" />
+    <Content Include="XCESS.DNN.AuthenticationProvider32.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\Settings.ascx.resx" />

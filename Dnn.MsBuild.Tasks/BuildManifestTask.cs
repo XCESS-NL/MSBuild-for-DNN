@@ -46,7 +46,6 @@ namespace Dnn.MsBuild.Tasks
         /// <param name="projectFile">The project file.</param>
         /// <param name="packageAssembly">The manifest assembly.</param>
         /// <param name="dnnAssemblyPath">The DNN assembly path.</param>
-        /// <param name="sourceFiles">The source files.</param>
         public BuildManifestTask(string projectFile, string packageAssembly, string dnnAssemblyPath)
         {
             // Gather the package data needed for building the manifest
@@ -71,17 +70,11 @@ namespace Dnn.MsBuild.Tasks
                 this.SerializeManifest(manifest);
             }
 
-            if (manifest != null)
-            {
-                this.SerializeManifest(manifest);
-            }
-
             return manifest;
         }
 
         private IManifest BuildManifest()
         {
-            // Build the manifest!
             var builder = new ManifestBuilder<TManifest>();
             return builder.Build(this.TaskData);
         }

@@ -58,6 +58,7 @@
     <Compile Include="Entities\DnnComponentAuthenticationSystem.cs" />
     <Compile Include="Entities\DnnComponentResourceFiles.cs" />
     <Compile Include="Entities\DnnComponentScripts.cs" />
+    <Compile Include="Entities\DnnReleaseNotes.cs" />
     <Compile Include="Entities\FileTypes\AssemblyFileInfo.cs" />
     <Compile Include="Entities\DnnComponentResourceFile.cs" />
     <Compile Include="Entities\DnnSupportedFeature.cs" />

@@ -19,6 +19,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using Dnn.MsBuild.Tasks.Entities;
 using Dnn.MsBuild.Tasks.Entities.Internal;
@@ -94,7 +96,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
                                                           assemblyTitle?.Title,
                                                           assemblyName.Name);
 
-            this.Element.IconFileName = packageAttribute?.IconFileName;
+            this.SetPackageIcon(data, packageAttribute);
 
             this.Element.Version = assemblyName.Version;
         }
@@ -108,13 +110,49 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             data.ExportedTypes.ForEach(this.TestPackageDependencyAttribteAndAddMatching);
         }
 
+        protected virtual void SetPackageIcon(ITaskData data, DnnPackageAttribute packageAttribute)
+        {
+            var iconFilePath = packageAttribute?.IconFileName;
+
+            if (string.IsNullOrWhiteSpace(iconFilePath))
+            {
+                iconFilePath = $"{data.Assembly.GetName().Name}32.png";
+            }
+
+            var iconFileFullPath = Path.Combine(data.ProjectFileData.BasePath, iconFilePath);
+            if (File.Exists(iconFileFullPath))
+            {
+                this.Element.IconFilePath = iconFilePath;
+            }
+        }
+
         /// <summary>
         /// Sets the package license.
         /// </summary>
         /// <param name="data">The data.</param>
         protected virtual void SetPackageLicense(ITaskData data)
         {
-            // TODO: Provide Implementation
+            var licenseFilePath = DnnLicense.DefaultFilePath;
+
+            var metaAttributeType = data.ExportedTypes.FirstOrDefault(arg => arg.HasAttribute<DnnPackageMetaAttribute>());
+            if (metaAttributeType != null)
+            {
+                var attribute = metaAttributeType.GetCustomAttribute<DnnPackageMetaAttribute>();
+                licenseFilePath = attribute.LicensePath;
+            }
+
+            var licenseFile = data.ProjectFileData
+                                  .ResourceFiles
+                                  .FirstOrDefault(arg => arg.Name.EndsWith(licenseFilePath, StringComparison.InvariantCultureIgnoreCase));
+
+            if (licenseFile != null)
+            {
+                // TODO: verify existance of license file
+                this.Element.License = new DnnLicense()
+                                       {
+                                           FilePath = licenseFile.Name
+                                       };
+            }
         }
 
         /// <summary>
@@ -145,7 +183,29 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         /// <param name="data">The data.</param>
         protected virtual void SetPackageReleaseNotes(ITaskData data)
         {
-            // TODO: Provide Implementation
+            var releaseNoteFilePath = DnnReleaseNotes.DefaultFilePath;
+
+            var metaAttributeType = data.ExportedTypes.FirstOrDefault(arg => arg.HasAttribute<DnnPackageMetaAttribute>());
+            if (metaAttributeType != null)
+            {
+                var attribute = metaAttributeType.GetCustomAttribute<DnnPackageMetaAttribute>();
+                releaseNoteFilePath = attribute.ReleaseNotesPath;
+            }
+
+            var licenseFile = data.ProjectFileData
+                                  .ResourceFiles
+                                  .FirstOrDefault(arg => arg.Name.EndsWith(releaseNoteFilePath, StringComparison.InvariantCultureIgnoreCase));
+
+            if (licenseFile != null)
+            {
+                // TODO: verify existance of license file
+                // TODO: Provide a mechanisme for multiple release notes (version dependant).
+                this.Element.ReleaseNotes = new DnnReleaseNotes()
+                                            {
+                                                FilePath = licenseFile.Name
+                                            };
+            }
+
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnLicense.cs" company="XCESS expertise center b.v.">
+// <copyright file="DnnPackageMetaAttribute.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,27 +18,34 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Xml.Serialization;
+using System.Threading;
 
-namespace Dnn.MsBuild.Tasks.Entities
+// ReSharper disable once CheckNamespace
+namespace DotNetNuke.Services.Installer.MsBuild
 {
-    /// <summary>
-    /// </summary>
-    public class DnnLicense
+    public class DnnPackageMetaAttribute : DnnManifestAttribute
     {
-        /// <summary>
-        /// The default package license file name
-        /// </summary>
-        public const string DefaultFilePath = "license.txt";
+        #region Constructors
 
         /// <summary>
-        /// Gets or sets the file path.
+        /// Initializes a new instance of the <see cref="DnnPackageMetaAttribute" /> class.
         /// </summary>
-        /// <value>
-        /// The file path.
-        /// </value>
-        [XmlAttribute("src")]
-        public string FilePath { get; set; }
+        /// <param name="licensePath">The license path.</param>
+        /// <param name="releaseNotesPath">The release notes path.</param>
+        /// <param name="versionSpecificReleaseNotes">if set to <c>true</c> [version specific release notes].</param>
+        public DnnPackageMetaAttribute(string licensePath, string releaseNotesPath, bool versionSpecificReleaseNotes)
+        {
+            this.LicensePath = licensePath;
+            this.ReleaseNotesPath = releaseNotesPath;
+            this.VersionSpecificReleaseNotes = versionSpecificReleaseNotes;
+        }
+
+        #endregion
+
+        public string LicensePath { get; set; }
+
+        public string ReleaseNotesPath { get; set; }
+
+        public bool VersionSpecificReleaseNotes { get; set; }
     }
 }

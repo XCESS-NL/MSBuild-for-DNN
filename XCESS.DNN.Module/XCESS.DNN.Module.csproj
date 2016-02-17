@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.txt" />
+    <Content Include="MyIcon32.png" />
     <Content Include="releasenotes.txt" />
     <Content Include="Settings.ascx" />
     <Content Include="View.ascx" />
