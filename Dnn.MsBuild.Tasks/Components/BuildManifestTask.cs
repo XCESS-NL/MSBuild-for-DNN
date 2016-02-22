@@ -23,22 +23,30 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 using Dnn.MsBuild.Tasks.Composition;
 using Dnn.MsBuild.Tasks.Composition.Manifest;
 using Dnn.MsBuild.Tasks.Entities.Internal;
 using Dnn.MsBuild.Tasks.Parsers;
-using Microsoft.Build.Framework;
 
-namespace Dnn.MsBuild.Tasks
+namespace Dnn.MsBuild.Tasks.Components
 {
     /// <summary>
     /// </summary>
     /// <typeparam name="TManifest">The type of the manifest.</typeparam>
-    public class BuildManifestTask<TManifest>
+    internal class BuildManifestTask<TManifest>
         where TManifest : IManifest, new()
     {
         #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BuildManifestTask{TManifest}"/> class.
+        /// </summary>
+        /// <param name="projectFile">The project file.</param>
+        /// <param name="packageAssembly">The package assembly.</param>
+        public BuildManifestTask(string projectFile, string packageAssembly)
+            : this(projectFile, packageAssembly, null)
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BuildManifestTask{TManifest}" /> class.
@@ -48,6 +56,11 @@ namespace Dnn.MsBuild.Tasks
         /// <param name="dnnAssemblyPath">The DNN assembly path.</param>
         public BuildManifestTask(string projectFile, string packageAssembly, string dnnAssemblyPath)
         {
+            if (string.IsNullOrWhiteSpace(dnnAssemblyPath))
+            {
+                dnnAssemblyPath = this.GetDnnAssemblyPathFromProjectFile(projectFile);
+            }
+
             // Gather the package data needed for building the manifest
             this.TaskData = new TaskData(packageAssembly, dnnAssemblyPath);
 
@@ -65,11 +78,6 @@ namespace Dnn.MsBuild.Tasks
         public IManifest Build()
         {
             var manifest = this.BuildManifest();
-            if (manifest != null)
-            {
-                this.SerializeManifest(manifest);
-            }
-
             return manifest;
         }
 
@@ -79,28 +87,24 @@ namespace Dnn.MsBuild.Tasks
             return builder.Build(this.TaskData);
         }
 
-        private void SerializeManifest(IManifest manifest)
+        private string GetDnnAssemblyPathFromProjectFile(string projectFile)
         {
-            var serializer = new XmlSerializer(manifest.GetType());
-            using (var stream = new StreamWriter(manifest.FileName))
+            var dnnAssemblyPath = string.Empty;
+            var desktopModuleRegex = new Regex(@"(?i)\bdesktopmodules\b");
+            var match = desktopModuleRegex.Match(projectFile);
+
+            if (match.Success)
             {
-                serializer.Serialize(stream, manifest);
+                dnnAssemblyPath = Path.Combine(projectFile.Substring(0, match.Index), "bin");
             }
+
+            return dnnAssemblyPath;
         }
 
         private IProjectFileData GetProjectPackageData(string projectFile)
         {
             var parser = new XmlVsProjectFileParser();
             return parser.Parse(projectFile);
-        }
-
-        private IDictionary<string, string> GetUserControls(ITaskItem[] sourceFiles)
-        {
-            var parser = new UserControlParser();
-            var userControlFiles = sourceFiles.Select(arg => arg.ItemSpec)
-                                              .ToList();
-
-            return parser.Parse(userControlFiles);
         }
 
         private IDictionary<string, string> GetUserControls(IProjectFileData projectFileData)

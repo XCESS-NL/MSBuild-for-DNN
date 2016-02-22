@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IManifestData.cs" company="XCESS expertise center b.v.">
+// <copyright file="SerializeManifestTask.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,28 +18,22 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
+using System.IO;
+using System.Xml.Serialization;
 using Dnn.MsBuild.Tasks.Composition;
 
-namespace Dnn.MsBuild.Tasks.Entities.Internal
+namespace Dnn.MsBuild.Tasks.Components
 {
-    internal interface ITaskData
+    internal class SerializeManifestTask<TManifest>
+        where TManifest : IManifest, new()
     {
-        Assembly Assembly { get; }
-
-        string DnnAssemblyPath { get; }
-
-        string DnnManifestExtension { get; }
-
-        IEnumerable<Type> ExportedTypes { get; }
-
-        IPackageData Package { get; set; }
-
-        IProjectFileData ProjectFileData { get; set; }
-
-        IDictionary<string, string> UserControls { get; set; }
+        public void Execute(IManifest manifest)
+        {
+            var serializer = new XmlSerializer(manifest.GetType());
+            using (var stream = new StreamWriter(manifest.FileName))
+            {
+                serializer.Serialize(stream, manifest);
+            }
+        }
     }
 }

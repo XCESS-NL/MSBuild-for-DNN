@@ -32,6 +32,8 @@ namespace Dnn.MsBuild.Tasks.Entities
     [XmlRoot("dotnetnuke")]
     public class DnnManifest : IManifest, IManifestElement
     {
+        public const string DefaultManifestExtension = "dnn";
+
         #region Constructors
 
         /// <summary>
@@ -39,6 +41,7 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// </summary>
         public DnnManifest()
         {
+            this.Extension = DefaultManifestExtension;
             this.Packages = new List<DnnPackage>();
             this.Type = DnnManifestType.Package;
             this.Version = DnnManifestPackageVersion;
@@ -46,11 +49,20 @@ namespace Dnn.MsBuild.Tasks.Entities
 
         #endregion
 
-        public const string DnnManifestFileNameFormat = "{0}_{1}.dnn5";
+        public const string DnnManifestFileNameFormat = "{0}_{1}.{2}";
 
         public const string DnnManifestPackageVersion = "5.0";
 
         private string _fileName = null;
+
+        /// <summary>
+        /// Gets or sets the manifest extension.
+        /// </summary>
+        /// <value>
+        /// The manifest extension.
+        /// </value>
+        [XmlIgnore]
+        public string Extension { get; set; }
 
         /// <summary>
         /// Gets or sets the content.
@@ -91,12 +103,13 @@ namespace Dnn.MsBuild.Tasks.Entities
         {
             get
             {
+                // ReSharper disable once InvertIf
                 if (string.IsNullOrWhiteSpace(this._fileName))
                 {
                     var package = this.Packages.FirstOrDefault();
                     if (package != null)
                     {
-                        this._fileName = string.Format(DnnManifestFileNameFormat, package.Name, package.VersionString);
+                        this._fileName = string.Format(DnnManifestFileNameFormat, package.Name, package.VersionString, this.Extension);
                     }
                 }
 

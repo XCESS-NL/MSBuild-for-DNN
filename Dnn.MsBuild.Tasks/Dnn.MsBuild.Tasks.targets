@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DnnMSBuildTasksPath Condition="'$(DnnMSBuildTasksPath)' == ''">$(MSBuildExtensionsPath)</DnnMSBuildTasksPath>
+    <DnnMSBuildTasksLib>$(DnnMSBuildTasksPath)\bin\Dnn.MsBuild.Tasks.dll</DnnMSBuildTasksLib>
+  </PropertyGroup>
+  
+  <UsingTask AssemblyFile="$(DnnMSBuildTasksLib)" TaskName="BuildDnnManifest" />
+
+  <Target Name="AfterBuild">
+    <CallTarget Targets="Debug;Release" />
+  </Target>
+
+  <!-- Release Target -->
+  <Target Name="Release" Condition="'$(ConfigurationName)'=='Release'">
+    <CallTarget Targets="RemovePreviousPackage" />
+    <CallTarget Targets="BuildManifest" />
+    <CallTarget Targets="CreatePackage" />
+    <CallTarget Targets="DeployToDnn" />
+  </Target>
+
+  <!-- Debug Target -->
+  <Target Name="Debug" Condition="'$(ConfigurationName)'=='Debug'">
+    <CallTarget Targets="BuildManifest" />
+    <CallTarget Targets="DeployToDnn" />
+  </Target>
+
+  <!-- Sub Targets -->
+  <Target Name="RemovePreviousPackage">
+    <Message Text="Remove previous package" />
+  </Target>
+
+  <!-- 
+    Target: BuildManifest
+    This target creates a DNN manifest file for the specified project file and target assembly.
+  -->
+  <Target Name="BuildManifest">
+    <CreateItem Include="$(MSBuildProjectDirectory)\$(OutputPath)$(AssemblyName).dll">
+      <Output TaskParameter="Include" ItemName="ProjectTargetAssembly"/>
+    </CreateItem>
+    <Message Importance="high" Text="Build DNN manifest" />
+    <Message Text="- project file: $(MSBuildProjectFullPath)" />
+    <Message Text="- project target: @(ProjectTargetAssembly)" />
+    <BuildDnnManifest
+      ProjectFile="$(MSBuildProjectFullPath)"
+      ProjectTargetAssembly="@(ProjectTargetAssembly)">
+    </BuildDnnManifest>
+  </Target>
+
+  <Target Name="CreatePackage">
+    <Message Text="Create package" />
+    <CallTarget Targets="CreateResourceFile" />
+  </Target>
+
+  <Target Name="CreateResourceFile">
+        
+  </Target>
+
+  <Target Name="DeployToDnn">
+    <Message Importance="high" Text="Deploy to DNN" />
+  </Target>
+</Project>

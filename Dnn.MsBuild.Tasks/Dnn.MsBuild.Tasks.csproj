@@ -35,9 +35,10 @@
   <ItemGroup>
     <Reference Include="DotNetNuke">
       <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildDnnManifest.cs" />
+    <Compile Include="Components\SerializeManifestTask.cs" />
     <Compile Include="Composition\BaseBuilder.cs" />
     <Compile Include="Composition\Component\AssemblyComponentBuilder.cs" />
     <Compile Include="Composition\Component\AuthenticationSystemComponentBuilder.cs" />
@@ -98,7 +101,7 @@
     <Compile Include="Extensions\TypeExtensionMethods.cs" />
     <Compile Include="Extensions\VersionExtensionMethods.cs" />
     <Compile Include="Composition\IManifest.cs" />
-    <Compile Include="BuildManifestTask.cs" />
+    <Compile Include="Components\BuildManifestTask.cs" />
     <Compile Include="Entities\DnnModuleControl.cs" />
     <Compile Include="Parsers\IProjectFileParser.cs" />
     <Compile Include="Parsers\JsonVsProjectFileParser.cs" />
@@ -126,6 +129,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Dnn.MsBuild.Tasks.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

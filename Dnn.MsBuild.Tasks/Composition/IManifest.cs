@@ -27,6 +27,8 @@ namespace Dnn.MsBuild.Tasks.Composition
     /// </summary>
     public interface IManifest : IManifestElement
     {
+        string Extension { get; set; }
+
         /// <summary>
         /// Gets the packages.
         /// </summary>
@@ -41,6 +43,6 @@ namespace Dnn.MsBuild.Tasks.Composition
         /// <value>
         /// The name of the file.
         /// </value>
-        string FileName { get; }
+        string FileName { get; set; }
     }
 }

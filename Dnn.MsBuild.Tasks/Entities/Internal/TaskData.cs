@@ -71,6 +71,14 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         public string DnnAssemblyPath { get; }
 
         /// <summary>
+        /// Gets the DNN manifest extension.
+        /// </summary>
+        /// <value>
+        /// The DNN manifest extension.
+        /// </value>
+        public string DnnManifestExtension { get; set; }
+
+        /// <summary>
         /// Gets the exported types.
         /// </summary>
         /// <value>
