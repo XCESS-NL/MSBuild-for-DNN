@@ -51,7 +51,7 @@ namespace Dnn.MsBuild.Tasks.Composition
 
         #region Implementation of IBuilder<out TElement>
 
-        public TElement Build(ITaskData data)
+        public virtual TElement Build(ITaskData data)
         {
             this.BuildElement(data);
 

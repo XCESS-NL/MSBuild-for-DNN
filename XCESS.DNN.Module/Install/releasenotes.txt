@@ -1,1 +1,18 @@
-﻿
+﻿<h3>Release notes</h3>
+<div class="License">
+	<h3>About [Package:FriendlyName]</h3>
+	<p class="Owner">
+		<b>Version [Package:Version]</b><br />
+		[Package:Description]
+	</p>
+	
+	<h4>Enhancements</h4>
+	<ul>
+		<li>None</li>
+	</ul>
+
+	<h4>Bug Fixes</h4>
+	<ul>
+		<li>None</li>
+	</ul>
+</div>

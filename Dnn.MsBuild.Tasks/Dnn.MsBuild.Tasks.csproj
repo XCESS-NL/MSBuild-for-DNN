@@ -57,8 +57,10 @@
     <Compile Include="Composition\Package\AuthenticationProviderPackageBuilder.cs" />
     <Compile Include="Composition\Package\ModulePackageBuilder.cs" />
     <Compile Include="Composition\Package\PackageBuilder.cs" />
+    <Compile Include="Composition\Package\ThemePackageBuilder.cs" />
     <Compile Include="Entities\DnnAuthenticationService.cs" />
     <Compile Include="Entities\DnnComponentAuthenticationSystem.cs" />
+    <Compile Include="Entities\DnnComponentConfig.cs" />
     <Compile Include="Entities\DnnComponentResourceFiles.cs" />
     <Compile Include="Entities\DnnComponentScripts.cs" />
     <Compile Include="Entities\DnnReleaseNotes.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="Entities\DnnComponentResourceFile.cs" />
     <Compile Include="Entities\DnnSupportedFeature.cs" />
     <Compile Include="Entities\DnnSupportedFeatureType.cs" />
+    <Compile Include="Entities\FileTypes\CleanupFileInfo.cs" />
     <Compile Include="Entities\FileTypes\IFileInfo.cs" />
     <Compile Include="Entities\FileTypes\ScriptFileInfo.cs" />
     <Compile Include="Entities\FileTypes\ScriptType.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="Composition\IManifest.cs" />
     <Compile Include="Components\BuildManifestTask.cs" />
     <Compile Include="Entities\DnnModuleControl.cs" />
+    <Compile Include="Parsers\CleanupFileParser.cs" />
     <Compile Include="Parsers\IProjectFileParser.cs" />
     <Compile Include="Parsers\JsonVsProjectFileParser.cs" />
     <Compile Include="Parsers\XmlVsProjectFileParser.cs" />

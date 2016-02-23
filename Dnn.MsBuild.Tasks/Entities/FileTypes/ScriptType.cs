@@ -22,8 +22,14 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
     public enum ScriptType
     {
+        /// <summary>
+        /// The script is an install script.
+        /// </summary>
         Install,
 
+        /// <summary>
+        /// The script in an uninstall script.
+        /// </summary>
         Uninstall
     }
 }

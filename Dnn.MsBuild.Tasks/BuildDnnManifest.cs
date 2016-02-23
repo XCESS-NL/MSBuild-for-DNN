@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BuildDnnManifestTask.cs" company="XCESS expertise center b.v.">
+// <copyright file="BuildDnnManifest.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -30,6 +30,40 @@ namespace Dnn.MsBuild.Tasks
     /// <seealso cref="Microsoft.Build.Utilities.Task" />
     public class BuildDnnManifest : Task
     {
+        private const string InstallZip = "_Install.zip";
+
+        #region Overrides of Task
+
+        /// <summary>
+        /// When overridden in a derived class, executes the task.
+        /// </summary>
+        /// <returns>
+        /// true if the task successfully executed; otherwise, false.
+        /// </returns>
+        public override bool Execute()
+        {
+            var taskResult = false;
+            var buildTask = new BuildManifestTask<DnnManifest>(this.ProjectFile, this.ProjectTargetAssembly, this.DnnAssemblyPath);
+            var manifest = buildTask.Build();
+
+            // ReSharper disable once AssignmentInConditionalExpression
+            // ReSharper disable once InvertIf
+            if (taskResult = (manifest != null))
+            {
+                manifest.Extension = this.DnnManifestExtension ?? DnnManifest.DefaultManifestExtension;
+
+                var serializeTask = new SerializeManifestTask<DnnManifest>();
+                serializeTask.Execute(manifest);
+
+                var fullExtension = "." + manifest.Extension;
+                this.InstallFileName = manifest.FileName.Replace(fullExtension, InstallZip);
+            }
+
+            return taskResult;
+        }
+
+        #endregion
+
         #region Task Properties
 
         /// <summary>
@@ -66,34 +100,14 @@ namespace Dnn.MsBuild.Tasks
         [Required]
         public string ProjectTargetAssembly { get; set; }
 
-        #endregion
-
-        #region Overrides of Task
-
         /// <summary>
-        /// When overridden in a derived class, executes the task.
+        /// Gets or sets the name of the install file.
         /// </summary>
-        /// <returns>
-        /// true if the task successfully executed; otherwise, false.
-        /// </returns>
-        public override bool Execute()
-        {
-            var taskResult = false;
-            var buildTask = new BuildManifestTask<DnnManifest>(this.ProjectFile, this.ProjectTargetAssembly, this.DnnAssemblyPath);
-            var manifest = buildTask.Build();
-
-            // ReSharper disable once AssignmentInConditionalExpression
-            // ReSharper disable once InvertIf
-            if (taskResult = (manifest != null))
-            {
-                manifest.Extension = this.DnnManifestExtension ?? DnnManifest.DefaultManifestExtension;
-
-                var serializeTask = new SerializeManifestTask<DnnManifest>();
-                serializeTask.Execute(manifest);
-            }
-
-            return taskResult;
-        }
+        /// <value>
+        /// The name of the install file.
+        /// </value>
+        [Output]
+        public string InstallFileName { get; set; }
 
         #endregion
     }

@@ -18,16 +18,44 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Xml.Serialization;
 
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
     /// <summary>
     /// </summary>
-    [XmlRoot("file")]
-    public class FileInfo : IFileInfo
+    public abstract class FileInfo : IFileInfo
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileInfo"/> class.
+        /// </summary>
+        protected FileInfo()
+            : this(null)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileInfo"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        protected FileInfo(string name)
+            : this(name, null)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileInfo"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="path">The path.</param>
+        protected FileInfo(string name, string path)
+        {
+            this.Name = name;
+            this.Path = path;
+        }
+
+        #endregion
+
         #region Implementation of IFileInfo
 
         /// <summary>

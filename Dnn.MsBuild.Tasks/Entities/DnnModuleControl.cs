@@ -26,6 +26,9 @@ namespace Dnn.MsBuild.Tasks.Entities
 {
     /// <summary>
     /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/module-component
+    /// </remarks>
     [Serializable]
     public class DnnModuleControl
     {

@@ -3,6 +3,8 @@
   <PropertyGroup>
     <DnnMSBuildTasksPath Condition="'$(DnnMSBuildTasksPath)' == ''">$(MSBuildExtensionsPath)</DnnMSBuildTasksPath>
     <DnnMSBuildTasksLib>$(DnnMSBuildTasksPath)\bin\Dnn.MsBuild.Tasks.dll</DnnMSBuildTasksLib>
+    <MsBuildWorkingFolder>$(MSBuildProjectDirectory)\MsBuild</MsBuildWorkingFolder>
+    <PackagingFolder>$(MSBuildProjectDirectory)\$(PackageFolder)</PackagingFolder>
   </PropertyGroup>
   
   <UsingTask AssemblyFile="$(DnnMSBuildTasksLib)" TaskName="BuildDnnManifest" />
@@ -22,6 +24,7 @@
   <!-- Debug Target -->
   <Target Name="Debug" Condition="'$(ConfigurationName)'=='Debug'">
     <CallTarget Targets="BuildManifest" />
+    <CallTarget Targets="CreatePackage" />
     <CallTarget Targets="DeployToDnn" />
   </Target>
 
@@ -53,7 +56,12 @@
   </Target>
 
   <Target Name="CreateResourceFile">
-        
+    <CreateItem Include="$(MsBuildWorkingFolder)\**\*.*">
+      <Output TaskParameter="Include" ItemName="ZipInstallFiles" />
+    </CreateItem>
+    <Zip Files="@(ZipInstallFiles)" 
+         WorkingDirectory="$(MsBuildWorkingFolder)"
+         ZipFileName="$(PackagingFolder)\resources.zip" />
   </Target>
 
   <Target Name="DeployToDnn">

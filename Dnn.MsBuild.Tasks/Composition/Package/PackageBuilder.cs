@@ -19,12 +19,15 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Dnn.MsBuild.Tasks.Composition.Component;
 using Dnn.MsBuild.Tasks.Entities;
 using Dnn.MsBuild.Tasks.Entities.Internal;
 using Dnn.MsBuild.Tasks.Extensions;
+using Dnn.MsBuild.Tasks.Parsers;
 using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Composition.Package
@@ -44,6 +47,16 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         #endregion
 
         #region Overrides of BaseBuilder<DnnPackage>
+
+        public override DnnPackage Build(ITaskData data)
+        {
+            var element = base.Build(data);
+
+            // Always add cleanup components. Multiple cleanup components can exist.
+            element?.Components.AddRange(this.AddCleanupComponents(data));
+
+            return element;
+        }
 
         protected override void BuildElement(ITaskData data)
         {
@@ -66,17 +79,35 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         #endregion
 
         /// <summary>
+        /// Adds the cleanup components.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        protected virtual IEnumerable<DnnComponent> AddCleanupComponents(ITaskData data)
+        {
+            var cleanupFileParser = new CleanupFileParser();
+            var cleanupFiles = cleanupFileParser.GetCleanupFiles(data.ProjectFileData.ResourceFiles);
+
+            var cleanupComponents = cleanupFiles.Select(arg => new DnnComponentCleanup(arg.Name, arg.Version))
+                                                .ToList();
+            return cleanupComponents;
+        }
+
+        /// <summary>
         /// Sets the package core attributes.
         /// </summary>
         /// <param name="data">The data.</param>
         protected virtual void SetPackageCoreAttributes(ITaskData data)
         {
-            var assemblyName = data.Assembly.GetName();
+            var assembly = data.Assembly;
+            var assemblyName = assembly.GetName();
+            
+            var packageAttribute = assembly.GetCustomAttribute<DnnPackageAttribute>();
+            var assemblyTitle = assembly.GetCustomAttribute<AssemblyTitleAttribute>();
+            var assemblyDescription = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
+            var azureCompliantAttribute = assembly.GetCustomAttribute<DnnAzureCompliantAttribute>();
 
-            var packageAttribute = data.Assembly.GetCustomAttribute<DnnPackageAttribute>();
-            var assemblyTitle = data.Assembly.GetCustomAttribute<AssemblyTitleAttribute>();
-            var assemblyDescription = data.Assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
-
+            this.Element.AzureCompatible = azureCompliantAttribute?.IsCompliant ?? false;
             this.Element.Name = this.Element
                                     .Name
                                     .FirstNotEmpty(packageAttribute?.Name,
@@ -110,6 +141,11 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             data.ExportedTypes.ForEach(this.TestPackageDependencyAttribteAndAddMatching);
         }
 
+        /// <summary>
+        /// Sets the package icon.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="packageAttribute">The package attribute.</param>
         protected virtual void SetPackageIcon(ITaskData data, DnnPackageAttribute packageAttribute)
         {
             var iconFilePath = packageAttribute?.IconFileName;
@@ -148,10 +184,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             if (licenseFile != null)
             {
                 // TODO: verify existance of license file
-                this.Element.License = new DnnLicense()
-                                       {
-                                           FilePath = licenseFile.Name
-                                       };
+                this.Element.License = new DnnLicense(Path.Combine(licenseFile.Path, licenseFile.Name));
             }
         }
 
@@ -192,18 +225,15 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
                 releaseNoteFilePath = attribute.ReleaseNotesPath;
             }
 
-            var licenseFile = data.ProjectFileData
+            var releaseFile = data.ProjectFileData
                                   .ResourceFiles
                                   .FirstOrDefault(arg => arg.Name.EndsWith(releaseNoteFilePath, StringComparison.InvariantCultureIgnoreCase));
 
-            if (licenseFile != null)
+            if (releaseFile != null)
             {
                 // TODO: verify existance of license file
                 // TODO: Provide a mechanisme for multiple release notes (version dependant).
-                this.Element.ReleaseNotes = new DnnReleaseNotes()
-                                            {
-                                                FilePath = licenseFile.Name
-                                            };
+                this.Element.ReleaseNotes = new DnnReleaseNotes(Path.Combine(releaseFile.Path, releaseFile.Name));
             }
 
         }

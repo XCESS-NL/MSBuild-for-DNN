@@ -18,6 +18,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using Dnn.MsBuild.Tasks.Entities;
 
@@ -27,6 +28,12 @@ namespace Dnn.MsBuild.Tasks.Composition
     /// </summary>
     public interface IManifest : IManifestElement
     {
+        /// <summary>
+        /// Gets or sets the extension.
+        /// </summary>
+        /// <value>
+        /// The extension.
+        /// </value>
         string Extension { get; set; }
 
         /// <summary>

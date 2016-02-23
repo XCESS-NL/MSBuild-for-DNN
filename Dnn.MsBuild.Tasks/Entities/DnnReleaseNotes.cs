@@ -29,6 +29,25 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// </summary>
         public const string DefaultFilePath = "releaseNotes.txt";
 
+        #region Constructors
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="DnnReleaseNotes"/> class from being created.
+        /// </summary>
+        private DnnReleaseNotes()
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnReleaseNotes"/> class.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        internal DnnReleaseNotes(string filePath)
+        {
+            this.FilePath = filePath;
+        }
+
+        #endregion
+
         /// <summary>
         /// Gets or sets the file path.
         /// </summary>

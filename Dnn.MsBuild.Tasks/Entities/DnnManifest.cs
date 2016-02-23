@@ -25,14 +25,19 @@ using Dnn.MsBuild.Tasks.Composition;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
-    // http://www.dnnsoftware.com/wiki/page/manifests
-    
     /// <summary>
     /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/page/manifests
+    /// </remarks>
     [XmlRoot("dotnetnuke")]
-    public class DnnManifest : IManifest, IManifestElement
+    public class DnnManifest : IManifest
     {
         public const string DefaultManifestExtension = "dnn";
+
+        public const string DnnManifestFileNameFormat = "{0}_{1}.{2}";
+
+        public const string DnnManifestPackageVersion = "5.0";
 
         #region Constructors
 
@@ -49,9 +54,7 @@ namespace Dnn.MsBuild.Tasks.Entities
 
         #endregion
 
-        public const string DnnManifestFileNameFormat = "{0}_{1}.{2}";
-
-        public const string DnnManifestPackageVersion = "5.0";
+        private string _extension = DefaultManifestExtension;
 
         private string _fileName = null;
 
@@ -62,7 +65,15 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// The manifest extension.
         /// </value>
         [XmlIgnore]
-        public string Extension { get; set; }
+        public string Extension
+        {
+            get { return this._extension;  }
+            set
+            {
+                this._extension = value;
+                this._fileName = null;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the content.

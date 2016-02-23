@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ResourceFileInfo.cs" company="XCESS expertise center b.v.">
+// <copyright file="CleanupFileInfo.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,44 +18,36 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
+using System;
 
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
     /// <summary>
     /// </summary>
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.FileTypes.FileInfo" />
-    public class ResourceFileInfo : FileInfo
+    public class CleanupFileInfo : FileInfo
     {
         #region Constructors
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="ResourceFileInfo"/> class from being created.
+        /// Prevents a default instance of the <see cref="CleanupFileInfo"/> class from being created.
         /// </summary>
-        private ResourceFileInfo()
+        private CleanupFileInfo()
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceFileInfo" /> class.
+        /// Initializes a new instance of the <see cref="CleanupFileInfo"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="path">The path.</param>
-        /// <param name="resourceFileName">Name of the resource file.</param>
-        public ResourceFileInfo(string name, string path, string resourceFileName = null)
-            : base(name, path)
+        /// <param name="version">The version.</param>
+        public CleanupFileInfo(string name, Version version)
+            : base(name)
         {
-            this.ResourceSourceFileName = resourceFileName;
+            this.Version = version;
         }
 
         #endregion
 
-        /// <summary>
-        /// Gets or sets the name of the resource source file.
-        /// </summary>
-        /// <value>
-        /// The name of the resource source file.
-        /// </value>
-        [XmlElement("sourceFileName")]
-        public string ResourceSourceFileName { get; set; }
+        public Version Version { get; set; }
     }
 }

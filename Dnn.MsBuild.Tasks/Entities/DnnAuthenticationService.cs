@@ -22,11 +22,27 @@ using System.Xml.Serialization;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    /// <summary>
+    /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/manifest-authenticationsystem-component
+    /// </remarks>
     public class DnnAuthenticationService
     {
-        private DnnAuthenticationService()
-        {}
+        #region Constructors
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="DnnAuthenticationService"/> class from being created.
+        /// </summary>
+        private DnnAuthenticationService()
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnAuthenticationService"/> class.
+        /// </summary>
+        /// <param name="loginControlSource">The login control source.</param>
+        /// <param name="logoffControlSource">The logoff control source.</param>
+        /// <param name="settingsControlSource">The settings control source.</param>
         public DnnAuthenticationService(string loginControlSource, string logoffControlSource, string settingsControlSource)
         {
             this.LoginControlSource = loginControlSource;
@@ -34,15 +50,41 @@ namespace Dnn.MsBuild.Tasks.Entities
             this.SettingsControlSource = settingsControlSource;
         }
 
+        #endregion
+
+        /// <summary>
+        /// Gets or sets the login control source.
+        /// </summary>
+        /// <value>
+        /// The login control source.
+        /// </value>
         [XmlElement("loginControlSrc")]
         public string LoginControlSource{ get; set; }
 
+        /// <summary>
+        /// Gets or sets the logoff control source.
+        /// </summary>
+        /// <value>
+        /// The logoff control source.
+        /// </value>
         [XmlElement("logoffControlSrc")]
         public string LogoffControlSource { get; set; }
 
+        /// <summary>
+        /// Gets or sets the settings control source.
+        /// </summary>
+        /// <value>
+        /// The settings control source.
+        /// </value>
         [XmlElement("settingsControlSrc")]
         public string SettingsControlSource { get; set; }
 
+        /// <summary>
+        /// Gets or sets the type.
+        /// </summary>
+        /// <value>
+        /// The type.
+        /// </value>
         [XmlElement("type")]
         public string Type { get; set; }
     }

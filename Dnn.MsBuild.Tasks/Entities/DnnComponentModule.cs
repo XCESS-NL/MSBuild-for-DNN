@@ -26,6 +26,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <summary>
     /// </summary>
     /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/module-component
     /// <![CDATA[
     /// <component type="Module">
     ///   <desktopModule>
@@ -44,6 +45,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// </component>
     /// ]]>
     /// </remarks>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentModule : DnnComponent
     {
         [XmlElement("desktopModule")]

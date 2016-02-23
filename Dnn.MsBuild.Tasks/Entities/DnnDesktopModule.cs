@@ -28,6 +28,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <summary>
     /// </summary>
     /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/module-component
     /// <![CDATA[
     /// <desktopModule>
     ///   <moduleName/>

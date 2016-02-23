@@ -47,11 +47,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Component
                                      .ToList();
 
             var component = new DnnComponentAssembly();
-            references.ForEach(arg => component.Assemblies.Add(new AssemblyFileInfo()
-                                                               {
-                                                                   Name = arg.Name + this.AssemblyExtension,
-                                                                   Path = this.DefaultAssemblyPath
-                                                               }));
+            references.ForEach(arg => component.Assemblies.Add(new AssemblyFileInfo(arg.Name + this.AssemblyExtension, this.DefaultAssemblyPath)));
             return component;
         }
 

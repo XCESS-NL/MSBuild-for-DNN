@@ -28,7 +28,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PackageBuilder" /> class.
+        /// Initializes a new instance of the <see cref="AuthenticationProviderPackageBuilder"/> class.
         /// </summary>
         public AuthenticationProviderPackageBuilder()
             : base(DnnPackageType.Auth_System)

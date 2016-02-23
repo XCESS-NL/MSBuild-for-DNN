@@ -19,15 +19,39 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Xml;
+using System.Xml.Serialization;
 using Dnn.MsBuild.Tasks.Entities.FileTypes;
 using DotNetNuke.Services.Installer.MsBuild;
-using System.Xml.Serialization;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    /// <summary>
+    /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/manifest-resourcefile-component
+    /// <![CDATA[
+    /// <component type="ResourceFile">
+    ///   <resourceFiles>
+    ///     <basePath />
+    ///     <resourceFile>
+    ///       <name/>
+    ///     </resourceFile>
+    ///   </resourceFiles>
+    /// </component>
+    /// ]]>
+    /// </remarks>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentResourceFile : DnnComponent
     {
+        /// <summary>
+        /// Gets or sets the resource files.
+        /// </summary>
+        /// <value>
+        /// The resource files.
+        /// </value>
+        [XmlElement("resourceFiles")]
+        public DnnComponentResourceFiles ResourceFiles { get; set; }
+
         #region Constructors
 
         /// <summary>
@@ -49,14 +73,5 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the resource files.
-        /// </summary>
-        /// <value>
-        /// The resource files.
-        /// </value>
-        [XmlElement("resourceFiles")]
-        public DnnComponentResourceFiles ResourceFiles { get; set; }
     }
 }

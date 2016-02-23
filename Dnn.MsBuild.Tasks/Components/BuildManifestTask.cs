@@ -113,7 +113,11 @@ namespace Dnn.MsBuild.Tasks.Components
             var parser = new UserControlParser();
             var userControlFiles = projectFileData.ResourceFiles
                                                   .Where(arg => arg.Name.EndsWith(UserControlParser.UserControlFileExtension))
-                                                  .Select(arg => Path.Combine(basePath, arg.Name))
+                                                  .Select(arg =>
+                                                          {
+                                                              var path = Path.Combine(basePath, arg.Path ?? string.Empty, arg.Name);
+                                                              return path;
+                                                          })
                                                   .ToList();
 
             return parser.Parse(userControlFiles);

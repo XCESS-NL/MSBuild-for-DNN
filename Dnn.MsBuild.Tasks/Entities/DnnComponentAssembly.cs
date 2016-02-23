@@ -28,6 +28,8 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <summary>
     /// </summary>
     /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/manifest-assembly-component
+    /// http://www.dnnsoftware.com/community-blog/cid/134857/the-new-extension-installer-manifest-ndash-part-4-the-assembly-component
     /// <![CDATA[
     /// <component type="Assembly">
     ///     <assemblies>
@@ -40,6 +42,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// </component>
     /// ]]>
     /// </remarks>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentAssembly : DnnComponent
     {
         #region Constructors

@@ -27,6 +27,25 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// </summary>
     public class DnnLicense
     {
+        #region Constructors
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="DnnLicense"/> class from being created.
+        /// </summary>
+        private DnnLicense()
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnLicense"/> class.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        internal DnnLicense(string filePath)
+        {
+            this.FilePath = filePath;
+        }
+
+        #endregion
+
         /// <summary>
         /// The default package license file name
         /// </summary>

@@ -18,11 +18,30 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
-    [XmlRoot("assembly")]
+    /// <summary>
+    /// </summary>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.FileTypes.FileInfo" />
     public class AssemblyFileInfo : FileInfo
-    {}
+    {
+        #region Constructors
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="AssemblyFileInfo"/> class from being created.
+        /// </summary>
+        private AssemblyFileInfo()
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AssemblyFileInfo"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="path">The path.</param>
+        public AssemblyFileInfo(string name, string path)
+            : base(name, path)
+        {}
+
+        #endregion
+    }
 }

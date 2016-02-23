@@ -30,8 +30,10 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <summary>
     /// </summary>
     /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/cleanup-component
+    /// http://www.dnnsoftware.com/community-blog/cid/135286/the-new-extension-installer-manifest-part-3-the-cleanup-component
     /// <![CDATA[
-    /// <component type="Cleanup" version="05.00.00">
+    /// <component type="Cleanup" version="" fileName="">
     ///   <files>
     ///     <file>
     ///       <path />
@@ -41,6 +43,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// </component>
     /// ]]>
     /// </remarks>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentCleanup : DnnComponent
     {
         #region Constructors
@@ -52,6 +55,20 @@ namespace Dnn.MsBuild.Tasks.Entities
             : base(DnnComponentType.Cleanup)
         {
             this.Files = new List<FileInfo>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnComponentCleanup"/> class.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="version">The version.</param>
+        internal DnnComponentCleanup(string fileName, Version version)
+            : base(DnnComponentType.Cleanup)
+        {
+            this.FileName = fileName;
+            this.Version = version;
+
+            // Notice: this.Files is indeed null
         }
 
         #endregion
@@ -67,6 +84,15 @@ namespace Dnn.MsBuild.Tasks.Entities
         public List<FileInfo> Files { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the file.
+        /// </summary>
+        /// <value>
+        /// The name of the file.
+        /// </value>
+        [XmlAttribute("fileName")]
+        public string FileName { get; set; }
+
+        /// <summary>
         /// Gets or sets the version.
         /// </summary>
         /// <value>
@@ -75,10 +101,17 @@ namespace Dnn.MsBuild.Tasks.Entities
         [XmlIgnore]
         public Version Version { get; set; }
 
-        [XmlElement("version")]
+        /// <summary>
+        /// Gets or sets the version string.
+        /// </summary>
+        /// <value>
+        /// The version string.
+        /// </value>
+        [XmlAttribute("version")]
         public string VersionString
         {
             get { return this.Version.ToDnnVersionString(); }
+            // ReSharper disable once ValueParameterNotUsed
             set { }
         }
     }

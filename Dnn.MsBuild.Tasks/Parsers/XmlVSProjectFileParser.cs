@@ -105,10 +105,7 @@ namespace Dnn.MsBuild.Tasks.Parsers
             // ReSharper disable once InvertIf
             if (!string.IsNullOrWhiteSpace(attribute?.Value))
             {
-                this.References.Add(new AssemblyFileInfo()
-                                    {
-                                        Name = attribute.Value
-                                    });
+                this.References.Add(new AssemblyFileInfo(attribute.Value, null));
             }
         }
 
@@ -169,11 +166,7 @@ namespace Dnn.MsBuild.Tasks.Parsers
                     fileInfo = new ScriptFileInfo(fileName, path, version);
                     break;
                 default:
-                    fileInfo = new ResourceFileInfo()
-                               {
-                                   Name = fileName,
-                                   Path = path,
-                               };
+                    fileInfo = new ResourceFileInfo(fileName, path);
                     break;
             }
 

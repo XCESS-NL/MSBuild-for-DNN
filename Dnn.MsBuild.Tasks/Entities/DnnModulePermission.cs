@@ -25,6 +25,14 @@ namespace Dnn.MsBuild.Tasks.Entities
 {
     /// <summary>
     /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/module-component
+    /// <![CDATA[
+    /// <permissions>
+    ///   <permission code="" key="" name="" />
+    /// </permissions>
+    /// ]]>
+    /// </remarks>
     public class DnnModulePermission
     {
         /// <summary>
@@ -69,7 +77,7 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="DnnModulePermission"/> class.
         /// </summary>
-        internal DnnModulePermission()
+        private DnnModulePermission()
         {}
 
         /// <summary>

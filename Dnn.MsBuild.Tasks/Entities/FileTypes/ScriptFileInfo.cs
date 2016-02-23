@@ -20,6 +20,7 @@
 
 using System;
 using System.Xml.Serialization;
+using Dnn.MsBuild.Tasks.Extensions;
 
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
@@ -28,7 +29,7 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.FileTypes.FileInfo" />
     public class ScriptFileInfo : FileInfo
     {
-        public const string InstallScriptFileName = "install";
+        public const string InstallScriptFileName = "Install";
 
         public const string UninstallScriptFileName = "uninstall";
 
@@ -38,7 +39,7 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         /// Prevents a default instance of the <see cref="ScriptFileInfo"/> class from being created.
         /// </summary>
         private ScriptFileInfo()
-        { }
+        {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScriptFileInfo"/> class.
@@ -46,13 +47,14 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         /// <param name="name">The name.</param>
         /// <param name="path">The path.</param>
         /// <param name="version">The version.</param>
-        internal ScriptFileInfo(string name, string path, Version version)
+        public ScriptFileInfo(string name, string path, Version version)
+            : base(name, path)
         {
-            this.Name = name;
-            this.Path = path;
             this.Version = version;
 
-            this.ScriptType = name.StartsWith(UninstallScriptFileName, StringComparison.InvariantCultureIgnoreCase) ? ScriptType.Uninstall : ScriptType.Install;
+            this.ScriptType = name.StartsWith(UninstallScriptFileName, StringComparison.InvariantCultureIgnoreCase)
+                                  ? ScriptType.Uninstall
+                                  : ScriptType.Install;
         }
 
         #endregion
@@ -68,7 +70,7 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         {
             get
             {
-                return (this.Version != null) ? $"{this.Version.Major:d2}.{this.Version.Minor:d2}.{this.Version.Revision:d2}" : null;
+                return this.Version?.ToDnnVersionString();
             }
             // ReSharper disable once ValueParameterNotUsed
             set { }

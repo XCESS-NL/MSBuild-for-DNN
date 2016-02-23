@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ResourceFileInfo.cs" company="XCESS expertise center b.v.">
+// <copyright file="DnnComponentConfig.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,44 +18,48 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
+using DotNetNuke.Services.Installer.MsBuild;
 
-namespace Dnn.MsBuild.Tasks.Entities.FileTypes
+namespace Dnn.MsBuild.Tasks.Entities
 {
     /// <summary>
     /// </summary>
-    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.FileTypes.FileInfo" />
-    public class ResourceFileInfo : FileInfo
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/manifest-config-component
+    /// <![CDATA[
+    /// <component type="Config">
+    ///   <config>
+    ///     <configFile>web.config</configFile>
+    ///     <install>
+    ///       <configuration>
+    ///         <nodes>
+    ///           <node path="/configuration/system.web/httpHandlers" action="update" key="path" collision="overwrite">
+    ///             <add verb="*" path="Telerik.Web.UI.WebResource.axd" validate="false" type="Telerik.Web.UI.WebResource, Telerik.Web.UI" />
+    ///           </node>
+    ///         </nodes>
+    ///       </configuration>
+    ///     </install>
+    ///     <uninstall>
+    ///       <configuration>
+    ///         <nodes />
+    ///       </configuration>
+    ///     </uninstall>
+    ///   </config>
+    /// </component>
+    /// ]]>
+    /// </remarks>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
+    public class DnnComponentConfig : DnnComponent
     {
         #region Constructors
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="ResourceFileInfo"/> class from being created.
+        /// Initializes a new instance of the <see cref="DnnComponent" /> class.
         /// </summary>
-        private ResourceFileInfo()
+        internal DnnComponentConfig()
+            : base(DnnComponentType.Config)
         {}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceFileInfo" /> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="path">The path.</param>
-        /// <param name="resourceFileName">Name of the resource file.</param>
-        public ResourceFileInfo(string name, string path, string resourceFileName = null)
-            : base(name, path)
-        {
-            this.ResourceSourceFileName = resourceFileName;
-        }
-
         #endregion
-
-        /// <summary>
-        /// Gets or sets the name of the resource source file.
-        /// </summary>
-        /// <value>
-        /// The name of the resource source file.
-        /// </value>
-        [XmlElement("sourceFileName")]
-        public string ResourceSourceFileName { get; set; }
     }
 }

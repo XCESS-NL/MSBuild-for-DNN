@@ -19,10 +19,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Xml;
+using System.Xml.Serialization;
 using Dnn.MsBuild.Tasks.Entities.FileTypes;
 using DotNetNuke.Services.Installer.MsBuild;
-using System.Xml.Serialization;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
@@ -30,6 +29,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// </summary>
     /// <remarks>
     /// http://www.dnnsoftware.com/wiki/script-component
+    /// http://www.dnnsoftware.com/community-blog/cid/135150/the-new-extension-installer-manifest-ndash-part-6-the-script-component
     /// <![CDATA[
     /// <component type="Script">
     ///   <scripts>
@@ -43,8 +43,12 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// </component>
     /// ]]>
     /// </remarks>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentScript : DnnComponent
     {
+        [XmlElement("scripts")]
+        public DnnComponentScripts Scripts { get; set; }
+
         #region Constructors
 
         /// <summary>
@@ -66,8 +70,5 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         #endregion
-
-        [XmlElement("scripts")]
-        public DnnComponentScripts Scripts { get; set; }
     }
 }

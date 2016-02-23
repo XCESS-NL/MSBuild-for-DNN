@@ -42,11 +42,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Component
             if (resourceFiles.Any())
             {
                 // Create a single resources ZIP file.
-                var defaultResourceFile = new ResourceFileInfo()
-                                          {
-                                              Name = "resources.zip",
-                                              ResourceSourceFileName = "resources.zip"
-                                          };
+                var defaultResourceFile = new ResourceFileInfo("resources.zip", null, "resources.zip");
                 return new DnnComponentResourceFile(this.GetBasePath(), new List<ResourceFileInfo>()
                                                                     {
                                                                         defaultResourceFile

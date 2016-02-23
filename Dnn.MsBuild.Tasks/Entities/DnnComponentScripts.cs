@@ -25,6 +25,11 @@ using Dnn.MsBuild.Tasks.Entities.FileTypes;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    /// <summary>
+    /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/script-component
+    /// </remarks>
     public class DnnComponentScripts
     {
         #region Constructors

@@ -23,6 +23,23 @@ using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// http://www.dnnsoftware.com/wiki/manifest-authenticationsystem-component
+    /// <![CDATA[
+    /// <component type="AuthenticationSystem">
+    ///   <authenticationService>
+    ///     <type />
+    ///     <settingsControlSrc />
+    ///     <loginControlSrc />
+    ///     <logoffControlSrc />
+    ///   </authenticationService>
+    /// </component>
+    /// ]]>
+    /// </remarks>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentAuthenticationSystem : DnnComponent
     {
         #region Constructors
@@ -32,7 +49,7 @@ namespace Dnn.MsBuild.Tasks.Entities
         /// </summary>
         public DnnComponentAuthenticationSystem()
             : base(DnnComponentType.AuthenticationSystem)
-        { }
+        {}
 
         #endregion
 
