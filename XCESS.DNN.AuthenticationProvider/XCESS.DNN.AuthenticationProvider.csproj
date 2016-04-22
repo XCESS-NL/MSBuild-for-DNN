@@ -43,9 +43,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke">
-      <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DotNetNuke, Version=7.0.0.1589, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.7.0.0\lib\DotNetNuke.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.7.0.0\lib\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -72,7 +76,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dnn.MsBuild.Attributes\Dnn.MsBuild.Attributes.csproj">
       <Project>{C83F191E-5E56-4E0E-B720-E73B1DEDE0A3}</Project>

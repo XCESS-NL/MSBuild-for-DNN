@@ -3,29 +3,36 @@
   <PropertyGroup>
     <DnnMSBuildTasksPath Condition="'$(DnnMSBuildTasksPath)' == ''">$(MSBuildExtensionsPath)</DnnMSBuildTasksPath>
     <DnnMSBuildTasksLib>$(DnnMSBuildTasksPath)\bin\Dnn.MsBuild.Tasks.dll</DnnMSBuildTasksLib>
-    <MsBuildWorkingFolder>$(MSBuildProjectDirectory)\MsBuild</MsBuildWorkingFolder>
+    <MsBuildWorkingFolder>$(MSBuildProjectDirectory)\Work</MsBuildWorkingFolder>
     <PackagingFolder>$(MSBuildProjectDirectory)\$(PackageFolder)</PackagingFolder>
   </PropertyGroup>
+  
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
   
   <UsingTask AssemblyFile="$(DnnMSBuildTasksLib)" TaskName="BuildDnnManifest" />
 
   <Target Name="AfterBuild">
+    <CallTarget Targets="Logging" />
     <CallTarget Targets="Debug;Release" />
+  </Target>
+
+  <Target Name="Logging">
+    <Message Importance="high" Text="Logging..." />
   </Target>
 
   <!-- Release Target -->
   <Target Name="Release" Condition="'$(ConfigurationName)'=='Release'">
-    <CallTarget Targets="RemovePreviousPackage" />
+    <!--<CallTarget Targets="RemovePreviousPackage" />-->
     <CallTarget Targets="BuildManifest" />
-    <CallTarget Targets="CreatePackage" />
-    <CallTarget Targets="DeployToDnn" />
+    <!--<CallTarget Targets="CreatePackage" />-->
+    <!--<CallTarget Targets="DeployToDnn" />-->
   </Target>
 
   <!-- Debug Target -->
   <Target Name="Debug" Condition="'$(ConfigurationName)'=='Debug'">
     <CallTarget Targets="BuildManifest" />
     <CallTarget Targets="CreatePackage" />
-    <CallTarget Targets="DeployToDnn" />
+    <!--<CallTarget Targets="DeployToDnn" />-->
   </Target>
 
   <!-- Sub Targets -->
@@ -51,8 +58,8 @@
   </Target>
 
   <Target Name="CreatePackage">
-    <Message Text="Create package" />
-    <CallTarget Targets="CreateResourceFile" />
+    <Message Importance="high" Text="Create package" />
+    <!--<CallTarget Targets="CreateResourceFile" />-->
   </Target>
 
   <Target Name="CreateResourceFile">

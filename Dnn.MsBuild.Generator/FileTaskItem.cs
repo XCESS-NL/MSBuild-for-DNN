@@ -22,7 +22,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using Microsoft.Build.Framework;
 
-namespace XCESS.MsBuild.Generator
+namespace Dnn.MsBuild.Generator
 {
     public class FileTaskItem : ITaskItem
     {

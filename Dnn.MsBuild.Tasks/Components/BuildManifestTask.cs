@@ -24,6 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Dnn.MsBuild.Tasks.Composition;
 using Dnn.MsBuild.Tasks.Composition.Manifest;
 using Dnn.MsBuild.Tasks.Entities.Internal;
@@ -34,46 +35,56 @@ namespace Dnn.MsBuild.Tasks.Components
     /// <summary>
     /// </summary>
     /// <typeparam name="TManifest">The type of the manifest.</typeparam>
-    internal class BuildManifestTask<TManifest>
+    internal class BuildManifestTask<TManifest> : IDisposable
         where TManifest : IManifest, new()
     {
-        #region Constructors
+        /// <summary>
+        /// A value which indicates the disposable state. 0 indicates undisposed, 1 indicates disposing
+        /// or disposed.
+        /// </summary>
+        private int _disposableState = 0;
+
+        private ITaskData TaskData { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BuildManifestTask{TManifest}"/> class.
+        /// Gets a value indicating whether the object is undisposed.
         /// </summary>
-        /// <param name="projectFile">The project file.</param>
-        /// <param name="packageAssembly">The package assembly.</param>
-        public BuildManifestTask(string projectFile, string packageAssembly)
-            : this(projectFile, packageAssembly, null)
-        { }
+        public bool IsUndisposed => Thread.VolatileRead(ref this._disposableState) == 0;
+
+        #region Implementation of IDisposable
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BuildManifestTask{TManifest}" /> class.
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="projectFile">The project file.</param>
-        /// <param name="packageAssembly">The manifest assembly.</param>
-        /// <param name="dnnAssemblyPath">The DNN assembly path.</param>
-        public BuildManifestTask(string projectFile, string packageAssembly, string dnnAssemblyPath)
+        public void Dispose()
         {
-            if (string.IsNullOrWhiteSpace(dnnAssemblyPath))
+            // Attempt to move the disposable state from 0 to 1. If successful, we can be assured that
+            // this thread is the first thread to do so, and can safely dispose of the object.
+            if (Interlocked.CompareExchange(ref this._disposableState, 1, 0) == 0)
             {
-                dnnAssemblyPath = this.GetDnnAssemblyPathFromProjectFile(projectFile);
+                // Call the Dispose method with the disposing flag set to true, indicating
+                // that derived classes may release unmanaged resources and dispose of managed resources.
+                this.Dispose(true);
+
+                // Suppress finalization of this object (remove it from the finalization queue and
+                // prevent the destructor from being called).
+                GC.SuppressFinalize(this);
             }
-
-            // Gather the package data needed for building the manifest
-            this.TaskData = new TaskData(packageAssembly, dnnAssemblyPath);
-
-            // Before assigning the UserControls to the TaksData, ensure that the Assembly locators are correctly setup.
-            this.SetupDnnAssemblyLocator();
-
-            this.TaskData.ProjectFileData = this.GetProjectPackageData(projectFile);
-            this.TaskData.ProjectFileData.UserControls = this.GetUserControls(this.TaskData.ProjectFileData);
         }
 
         #endregion
 
-        private ITaskData TaskData { get; }
+        /// <summary>
+        /// Finalizes an instance of the DisposableBase class.
+        /// </summary>
+        ~BuildManifestTask()
+        {
+            // The destructor has been called as a result of finalization, indicating that the object
+            // was not disposed of using the Dispose() method. In this case, call the Dispose
+            // method with the dispoing flag set to false, indicating that derived classes
+            // may only release unmanaged resources.
+            this.Dispose(false);
+        }
 
         public IManifest Build()
         {
@@ -152,5 +163,54 @@ namespace Dnn.MsBuild.Tasks.Components
             // TODO: Extent exception
             throw new FileNotFoundException();
         }
+
+        #region Dispose Pattern
+
+        // For information about the Dispose Pattern see: https://msdn.microsoft.com/en-us/library/b1yfkh5e(v=vs.110).aspx
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {}
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BuildManifestTask{TManifest}"/> class.
+        /// </summary>
+        /// <param name="projectFile">The project file.</param>
+        /// <param name="packageAssembly">The package assembly.</param>
+        public BuildManifestTask(string projectFile, string packageAssembly)
+            : this(projectFile, packageAssembly, null)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BuildManifestTask{TManifest}" /> class.
+        /// </summary>
+        /// <param name="projectFile">The project file.</param>
+        /// <param name="packageAssembly">The manifest assembly.</param>
+        /// <param name="dnnAssemblyPath">The DNN assembly path.</param>
+        public BuildManifestTask(string projectFile, string packageAssembly, string dnnAssemblyPath)
+        {
+            if (string.IsNullOrWhiteSpace(dnnAssemblyPath))
+            {
+                dnnAssemblyPath = this.GetDnnAssemblyPathFromProjectFile(projectFile);
+            }
+
+            // Gather the package data needed for building the manifest
+            this.TaskData = new TaskData(packageAssembly, dnnAssemblyPath);
+
+            // Before assigning the UserControls to the TaksData, ensure that the Assembly locators are correctly setup.
+            this.SetupDnnAssemblyLocator();
+
+            this.TaskData.ProjectFileData = this.GetProjectPackageData(projectFile);
+            this.TaskData.ProjectFileData.UserControls = this.GetUserControls(this.TaskData.ProjectFileData);
+        }
+
+        #endregion
     }
 }

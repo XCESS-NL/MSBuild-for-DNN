@@ -43,20 +43,22 @@ namespace Dnn.MsBuild.Tasks
         public override bool Execute()
         {
             var taskResult = false;
-            var buildTask = new BuildManifestTask<DnnManifest>(this.ProjectFile, this.ProjectTargetAssembly, this.DnnAssemblyPath);
-            var manifest = buildTask.Build();
-
-            // ReSharper disable once AssignmentInConditionalExpression
-            // ReSharper disable once InvertIf
-            if (taskResult = (manifest != null))
+            using (var buildTask = new BuildManifestTask<DnnManifest>(this.ProjectFile, this.ProjectTargetAssembly, this.DnnAssemblyPath))
             {
-                manifest.Extension = this.DnnManifestExtension ?? DnnManifest.DefaultManifestExtension;
+                var manifest = buildTask.Build();
 
-                var serializeTask = new SerializeManifestTask<DnnManifest>();
-                serializeTask.Execute(manifest);
+                // ReSharper disable once AssignmentInConditionalExpression
+                // ReSharper disable once InvertIf
+                if (taskResult = (manifest != null))
+                {
+                    manifest.Extension = this.DnnManifestExtension ?? DnnManifest.DefaultManifestExtension;
 
-                var fullExtension = "." + manifest.Extension;
-                this.InstallFileName = manifest.FileName.Replace(fullExtension, InstallZip);
+                    var serializeTask = new SerializeManifestTask<DnnManifest>();
+                    serializeTask.Execute(manifest);
+
+                    var fullExtension = "." + manifest.Extension;
+                    this.InstallFileName = manifest.FileName.Replace(fullExtension, InstallZip);
+                }
             }
 
             return taskResult;

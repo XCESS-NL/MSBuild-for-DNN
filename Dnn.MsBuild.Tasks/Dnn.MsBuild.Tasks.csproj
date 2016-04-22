@@ -33,8 +33,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke">
-      <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
+    <Reference Include="DotNetNuke, Version=7.0.0.1589, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.7.0.0\lib\DotNetNuke.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.7.0.0\lib\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
@@ -136,7 +141,9 @@
     <None Include="Dnn.MsBuild.Tasks.targets">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
