@@ -190,3 +190,16 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 Website/
+/DevicePreviewManagement
+/DDRMenu
+/HTML
+/CoreMessaging
+/AuthenticationServices/DNN
+/Admin
+/Journal
+/MobileManagement
+/MemberDirectory
+/SocialGroups
+/RazorModules
+/XCESS.DNN.Module/XCESS.DNN.Module_01.00.01.zip
+/XCESS.DNN.Module/XCESS.DNN.Module_01.00.01.dnn

@@ -30,7 +30,7 @@ using DotNetNuke.Services.Installer.MsBuild;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: DnnPackage("XCESS.DNN.AuthenticationProvider", DnnPackageType.Auth_System)]
+[assembly: DnnPackage("XCESS.DNN.AuthenticationProvider", "XCESS.DNN.AuthenticationProvider", DnnPackageType.Auth_System)]
 [assembly: DnnAzureCompliant(true)]
 [assembly: AssemblyCompany("XCESS expertise center b.v.")] // Organisation in DNN manifest
 [assembly: AssemblyOwnerInfo("XCESS", "info@xcess.nl", "http://www.xcess.nl")] // Email and url in DNN manifest

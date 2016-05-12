@@ -18,7 +18,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
 using Dnn.MsBuild.Tasks.Composition.Component;
+using Dnn.MsBuild.Tasks.Entities;
+using Dnn.MsBuild.Tasks.Entities.Internal;
 using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Composition.Package
@@ -44,6 +47,20 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             this.ComponentBuilders.Add(new AssemblyComponentBuilder());
             this.ComponentBuilders.Add(new ScriptComponentBuilder());
             this.ComponentBuilders.Add(new ResourceFileComponentBuilder());
+        }
+
+        #endregion
+
+        #region Overrides of PackageBuilder
+
+        public override DnnPackage Build(ITaskData data)
+        {
+            var package = base.Build(data);
+
+            // Gets the module component.
+            var moduleComponent = package.Components.OfType<DnnComponentModule>().FirstOrDefault();
+
+            return package;
         }
 
         #endregion

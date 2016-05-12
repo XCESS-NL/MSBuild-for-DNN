@@ -23,9 +23,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Dnn.MsBuild.Tasks.Composition.Component;
 using Dnn.MsBuild.Tasks.Extensions;
-using DotNetNuke.Common;
-using Microsoft.Build.Framework;
 
 namespace Dnn.MsBuild.Tasks.Parsers
 {
@@ -40,7 +39,7 @@ namespace Dnn.MsBuild.Tasks.Parsers
         {
             this.UserControls = new Dictionary<string, string>();
             this.UserControlBaseClassPattern = new Regex(@"\s(?i)inherits(?-i)=""[a-zA-Z0-9\.]+""\s", RegexOptions.IgnoreCase);
-        } 
+        }
 
         #endregion
 
@@ -52,7 +51,6 @@ namespace Dnn.MsBuild.Tasks.Parsers
 
         public IDictionary<string, string> Parse(IEnumerable<string> sourceFiles)
         {
-            var desktopModuleFolder = Globals.DesktopModulePath.Replace(@"/", @"\");
             sourceFiles.ForEach(
                 fileName =>
                 {
@@ -72,8 +70,8 @@ namespace Dnn.MsBuild.Tasks.Parsers
                                                      .Last()
                                                      .Trim(new[] {' ', '"'});
 
-                                var startOfDesktopModuleFolder = fileName.IndexOf(desktopModuleFolder);
-                                var relativeUserControlPath = fileName.Substring(startOfDesktopModuleFolder + 1) // Add 1 so the first backslash won't be included.
+                                var startOfDesktopModuleFolder = fileName.IndexOf(ModuleComponentBuilder.DesktopModuleFolderName);
+                                var relativeUserControlPath = fileName.Substring(startOfDesktopModuleFolder)
                                                                       .Replace(@"/", @"\"); // Replace the forward slashes by backslashes in line with relative URIs.
                                 this.UserControls.Add(baseClass, relativeUserControlPath);
                             }

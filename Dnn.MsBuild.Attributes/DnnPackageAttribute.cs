@@ -35,9 +35,10 @@ namespace DotNetNuke.Services.Installer.MsBuild
         /// Initializes a new instance of the <see cref="DnnPackageAttribute" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
+        /// <param name="packageFolder">The package folder.</param>
         /// <param name="packageType">Type of the package.</param>
         /// <exception cref="System.ArgumentException">The package name cannot be null or an empty string.;name.</exception>
-        public DnnPackageAttribute(string name, DnnPackageType packageType = DnnPackageType.Module)
+        public DnnPackageAttribute(string name, string packageFolder, DnnPackageType packageType = DnnPackageType.Module)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -46,6 +47,7 @@ namespace DotNetNuke.Services.Installer.MsBuild
             }
 
             this.Name = name;
+            this.PackageFolder = packageFolder;
             this.PackageType = packageType;
         }
 
@@ -82,6 +84,14 @@ namespace DotNetNuke.Services.Installer.MsBuild
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the package folder.
+        /// </summary>
+        /// <value>
+        /// The package folder.
+        /// </value>
+        public string PackageFolder { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the package.

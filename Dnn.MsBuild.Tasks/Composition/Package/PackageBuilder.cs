@@ -29,6 +29,7 @@ using Dnn.MsBuild.Tasks.Entities.Internal;
 using Dnn.MsBuild.Tasks.Extensions;
 using Dnn.MsBuild.Tasks.Parsers;
 using DotNetNuke.Services.Installer.MsBuild;
+using DotNetNuke.Services.Upgrade.InternalController.Steps;
 
 namespace Dnn.MsBuild.Tasks.Composition.Package
 {
@@ -60,10 +61,14 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
 
         protected override void BuildElement(ITaskData data)
         {
+            // Update the package data in the task data
+            data.Package = this.Element;
+
             this.SetPackageCoreAttributes(data);
-            this.SetPackageLicense(data);
             this.SetPackageOwner(data);
             this.SetPackageDependencies(data);
+
+            this.SetPackageLicense(data);
             this.SetPackageReleaseNotes(data);
         }
 
@@ -111,8 +116,13 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             this.Element.Name = this.Element
                                     .Name
                                     .FirstNotEmpty(packageAttribute?.Name,
-                                                   assemblyTitle?.Title,
                                                    assemblyName.Name);
+
+            this.Element.Folder = this.Element
+                                      .Folder
+                                      .FirstNotEmpty(packageAttribute?.PackageFolder,
+                                                     packageAttribute?.Name,
+                                                     assemblyName.Name);
             this.Element.FriendlyName = this.Element
                                             .FriendlyName
                                             .FirstNotEmpty(packageAttribute?.FriendlyName,
@@ -156,9 +166,12 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             }
 
             var iconFileFullPath = Path.Combine(data.ProjectFileData.BasePath, iconFilePath);
+
+            // ReSharper disable once InvertIf
             if (File.Exists(iconFileFullPath))
             {
-                this.Element.IconFilePath = iconFilePath;
+                var iconPackageFilePath = Path.Combine(ModuleComponentBuilder.DesktopModuleFolderName, this.Element.Folder, iconFilePath);
+                this.Element.IconFilePath = iconPackageFilePath;
             }
         }
 
@@ -168,24 +181,8 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         /// <param name="data">The data.</param>
         protected virtual void SetPackageLicense(ITaskData data)
         {
-            var licenseFilePath = DnnLicense.DefaultFilePath;
-
-            var metaAttributeType = data.ExportedTypes.FirstOrDefault(arg => arg.HasAttribute<DnnPackageMetaAttribute>());
-            if (metaAttributeType != null)
-            {
-                var attribute = metaAttributeType.GetCustomAttribute<DnnPackageMetaAttribute>();
-                licenseFilePath = attribute.LicensePath;
-            }
-
-            var licenseFile = data.ProjectFileData
-                                  .ResourceFiles
-                                  .FirstOrDefault(arg => arg.Name.EndsWith(licenseFilePath, StringComparison.InvariantCultureIgnoreCase));
-
-            if (licenseFile != null)
-            {
-                // TODO: verify existance of license file
-                this.Element.License = new DnnLicense(Path.Combine(licenseFile.Path, licenseFile.Name));
-            }
+            var builder = new LicenseBuilder(this.Element);
+            this.Element.License = builder.Build(data);
         }
 
         /// <summary>

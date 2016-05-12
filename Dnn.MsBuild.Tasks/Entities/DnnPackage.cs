@@ -20,9 +20,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Serialization;
+using Dnn.MsBuild.Tasks.Components.Tokens;
 using Dnn.MsBuild.Tasks.Composition;
 using Dnn.MsBuild.Tasks.Extensions;
+using DotNetNuke.Entities.Users;
 using DotNetNuke.Services.Installer.MsBuild;
 
 namespace Dnn.MsBuild.Tasks.Entities
@@ -47,7 +50,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// ]]>
     /// </remarks>
     [Serializable]
-    public class DnnPackage : IManifestElement, IPackageData
+    public class DnnPackage : IManifestElement, IPackageData, IPropertyAccess
     {
         public static readonly Version DefaultVersion = new Version(0, 0, 0);
 
@@ -214,5 +217,62 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         #endregion
+
+        #region Implementation of IPropertyAccess
+
+        /// <summary>
+        /// Gets the property.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="formatProvider">The format provider.</param>
+        /// <param name="propertyNotFound">if set to <c>true</c> [property not found].</param>
+        /// <returns></returns>
+        public string GetProperty(string propertyName, string format, CultureInfo formatProvider, ref bool propertyNotFound)
+        {
+            propertyNotFound = false;
+
+            var propertyValue = default(string);
+            var outputFormat = string.IsNullOrWhiteSpace(format) ? "G" : format;
+
+            switch (propertyName.ToLowerInvariant())
+            {
+                case "description":
+                    propertyValue = FormatString(this.Description, format);
+                    break;
+                case "email":
+                    propertyValue = FormatString(this.Owner?.Email, format);
+                    break;
+                case "name":
+                    propertyValue = FormatString(this.Name, format);
+                    break;
+                case "compagny":
+                case "organisation":
+                    propertyValue = FormatString(this.Owner?.Organisation, format);
+                    break;
+                case "url":
+                case "website":
+                    propertyValue = FormatString(this.Owner?.Url, format);
+                    break;
+                default:
+                    propertyNotFound = true;
+                    break;
+            }
+
+            return propertyValue ?? string.Empty;
+        }
+
+        #endregion
+
+        private static string FormatString(string value, string format)
+        {
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                return value;
+            }
+
+            return !string.IsNullOrWhiteSpace(value) ? string.Format(format, value) : string.Empty;
+        }
+
     }
 }

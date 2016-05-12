@@ -35,7 +35,7 @@ namespace Dnn.MsBuild.Tasks.Entities
     {
         public const string DefaultManifestExtension = "dnn";
 
-        public const string DnnManifestFileNameFormat = "{0}_{1}.{2}";
+        public const string DnnManifestFileNameFormat = "{0}_{1}";
 
         public const string DnnManifestPackageVersion = "5.0";
 
@@ -120,7 +120,7 @@ namespace Dnn.MsBuild.Tasks.Entities
                     var package = this.Packages.FirstOrDefault();
                     if (package != null)
                     {
-                        this._fileName = string.Format(DnnManifestFileNameFormat, package.Name, package.VersionString, this.Extension);
+                        this._fileName = string.Format(DnnManifestFileNameFormat, package.Name, package.VersionString);
                     }
                 }
 

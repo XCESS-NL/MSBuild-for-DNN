@@ -30,6 +30,8 @@ namespace Dnn.MsBuild.Tasks.Composition.Component
 {
     internal class ModuleComponentBuilder : ComponentBuilder<DnnComponentModule>
     {
+        public const string DesktopModuleFolderName = "DesktopModules";
+
         #region Overrides of ComponentBuilder<DnnComponentModule>
 
         protected override DnnComponentModule BuildElement()
@@ -71,6 +73,10 @@ namespace Dnn.MsBuild.Tasks.Composition.Component
                 desktopModule.AssignSupportedFeature<IPortable>(supportedInterfaces, DnnSupportedFeatureType.Portable);
                 desktopModule.AssignSupportedFeature<ISearchable>(supportedInterfaces, DnnSupportedFeatureType.Searchable);
                 desktopModule.AssignSupportedFeature<IUpgradeable>(supportedInterfaces, DnnSupportedFeatureType.Upgradeable);
+                if (type.IsSubclassOf(typeof(ModuleSearchBase)) && desktopModule.SupportedFeatures.All(arg => arg.Type != DnnSupportedFeatureType.Searchable))
+                {
+                    desktopModule.SupportedFeatures.Add(new DnnSupportedFeature(DnnSupportedFeatureType.Searchable));
+                }
             }
 
             return desktopModule;

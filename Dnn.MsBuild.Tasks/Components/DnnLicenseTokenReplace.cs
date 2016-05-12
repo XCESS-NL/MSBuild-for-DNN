@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReleaseNotesTokenReplace.cs" company="XCESS expertise center b.v.">
+// <copyright file="DnnLicenseTokenReplace.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,10 +18,22 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using DotNetNuke.Services.Tokens;
-
-namespace Dnn.MsBuild.Tasks.Tokens
+namespace Dnn.MsBuild.Tasks.Components.Tokens
 {
-    internal class ReleaseNotesTokenReplace : TokenReplace
-    {}
+    /// <summary>
+    /// </summary>
+    /// <seealso cref="Dnn.MsBuild.Tasks.Components.Tokens.BaseTokenReplace" />
+    internal class DnnLicenseTokenReplace : BaseTokenReplace
+    {
+        public const string PackageToken = "Package";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnnLicenseTokenReplace"/> class.
+        /// </summary>
+        /// <param name="package">The package.</param>
+        public DnnLicenseTokenReplace(IPropertyAccess package)
+        {
+            this.UseObjectLessExpression = false;
+            this.PropertySource[PackageToken.ToLowerInvariant()] = package;
+        }
+    }
 }

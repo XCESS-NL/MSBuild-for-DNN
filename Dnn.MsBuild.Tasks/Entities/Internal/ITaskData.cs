@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IManifestData.cs" company="XCESS expertise center b.v.">
+// <copyright file="ITaskData.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using Dnn.MsBuild.Tasks.Composition;
 
 namespace Dnn.MsBuild.Tasks.Entities.Internal
@@ -38,8 +37,6 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
 
         IPackageData Package { get; set; }
 
-        IProjectFileData ProjectFileData { get; set; }
-
-        IDictionary<string, string> UserControls { get; set; }
+        IProjectFileData ProjectFileData { get; }
     }
 }

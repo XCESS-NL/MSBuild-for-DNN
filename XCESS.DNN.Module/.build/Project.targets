@@ -3,17 +3,15 @@
 
   <!-- Imports and Setup: Do not modify! -->
   <PropertyGroup>
-    <DnnMSBuildTasksPath>$(SolutionDir)\Dnn.MsBuild.Tasks</DnnMSBuildTasksPath>
-    <MSBuildCommunityTasksPath>$(SolutionDir)\.build</MSBuildCommunityTasksPath>
+    <DnnMSBuildTasksPath>$(SolutionDir)Dnn.MsBuild.Tasks</DnnMSBuildTasksPath>
   </PropertyGroup>
 
   <Import Project="$(DnnMSBuildTasksPath)\Dnn.MsBuild.Tasks.targets" />
 
   <!-- Project Settings: can be modified, but the defaults should be just fine! -->
 	<PropertyGroup>
-		<BinFolder>$(MSBuildProjectDirectory)\bin</BinFolder>
     <DnnManifestExtension>dnn</DnnManifestExtension>
+    <DnnPackageExtension>zip</DnnPackageExtension>
     <PackageFolder>packages</PackageFolder>
-    <PackageExtension>zip</PackageExtension>
 	</PropertyGroup>
 </Project>

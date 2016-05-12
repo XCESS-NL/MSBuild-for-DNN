@@ -16,17 +16,20 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Installer.MsBuild;
 using DotNetNuke.Services.Search;
+using DotNetNuke.Services.Search.Entities;
 
 namespace XCESS.DNN.Module.Components
 {
     /// <summary>
     /// </summary>
     [DnnBusinessController]
-    [DnnPackageDependency(DnnPackageDependencyType.CoreVersion, "7.4.0")]
-    public class FeatureController : ISearchable, IUpgradeable
+    [DnnPackageDependency(DnnPackageDependencyType.CoreVersion, "8.0.0")]
+    public class FeatureController : ModuleSearchBase, ISearchable, IUpgradeable
     {
         #region Implementation of ISearchable
 
@@ -42,6 +45,15 @@ namespace XCESS.DNN.Module.Components
         public string UpgradeModule(string Version)
         {
             throw new System.NotImplementedException();
+        }
+
+        #endregion
+
+        #region Overrides of ModuleSearchBase
+
+        public override IList<SearchDocument> GetModifiedSearchDocuments(ModuleInfo moduleInfo, DateTime beginDateUtc)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

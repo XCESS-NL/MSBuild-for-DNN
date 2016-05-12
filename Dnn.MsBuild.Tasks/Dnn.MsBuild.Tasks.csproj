@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,12 +35,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke, Version=7.0.0.1589, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Core.7.0.0\lib\DotNetNuke.dll</HintPath>
+    <Reference Include="DotNetNuke, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.8.0.0.809\lib\net40\DotNetNuke.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Core.7.0.0\lib\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <HintPath>..\packages\DotNetNuke.Core.8.0.0.809\lib\net40\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
@@ -53,13 +55,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildDnnManifest.cs" />
+    <Compile Include="Components\DnnLicenseTokenReplace.cs" />
     <Compile Include="Components\SerializeManifestTask.cs" />
+    <Compile Include="Components\Tokens\BaseTokenReplace.cs" />
+    <Compile Include="Components\Tokens\IPropertyAccess.cs" />
+    <Compile Include="Components\Tokens\PropertyAccess\DateTimePropertyAccess.cs" />
     <Compile Include="Composition\BaseBuilder.cs" />
     <Compile Include="Composition\Component\AssemblyComponentBuilder.cs" />
     <Compile Include="Composition\Component\AuthenticationSystemComponentBuilder.cs" />
     <Compile Include="Composition\Component\ResourceFileComponentBuilder.cs" />
     <Compile Include="Composition\Component\ScriptComponentBuilder.cs" />
     <Compile Include="Composition\Package\AuthenticationProviderPackageBuilder.cs" />
+    <Compile Include="Composition\Package\LicenseBuilder.cs" />
     <Compile Include="Composition\Package\ModulePackageBuilder.cs" />
     <Compile Include="Composition\Package\PackageBuilder.cs" />
     <Compile Include="Composition\Package\ThemePackageBuilder.cs" />
@@ -122,8 +129,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Parsers\UserControlParser.cs" />
-    <Compile Include="Tokens\LicenseTokenReplace.cs" />
-    <Compile Include="Tokens\ReleaseNotesTokenReplace.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

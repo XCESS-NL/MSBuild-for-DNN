@@ -3,26 +3,25 @@
   <PropertyGroup>
     <DnnMSBuildTasksPath Condition="'$(DnnMSBuildTasksPath)' == ''">$(MSBuildExtensionsPath)</DnnMSBuildTasksPath>
     <DnnMSBuildTasksLib>$(DnnMSBuildTasksPath)\bin\Dnn.MsBuild.Tasks.dll</DnnMSBuildTasksLib>
-    <MsBuildWorkingFolder>$(MSBuildProjectDirectory)\Work</MsBuildWorkingFolder>
+    <MSBuildCommunityTasksPath>$(SolutionDir)\.build</MSBuildCommunityTasksPath>
+    <MsBuildWorkingFolder>$(MSBuildProjectDirectory)\tmp</MsBuildWorkingFolder>
     <PackagingFolder>$(MSBuildProjectDirectory)\$(PackageFolder)</PackagingFolder>
   </PropertyGroup>
-  
-  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
-  
+
+  <PropertyGroup>   
+    <!-- The folder were the relevant extension targets are deployed. -->
+    <DeployDnnWebsiteFolder></DeployDnnWebsiteFolder>   
+  </PropertyGroup>
+
   <UsingTask AssemblyFile="$(DnnMSBuildTasksLib)" TaskName="BuildDnnManifest" />
 
   <Target Name="AfterBuild">
-    <CallTarget Targets="Logging" />
+    <Message Importance="high" Text="MsBuild community tasks: $(MSBuildCommunityTasksLib)" />
     <CallTarget Targets="Debug;Release" />
-  </Target>
-
-  <Target Name="Logging">
-    <Message Importance="high" Text="Logging..." />
   </Target>
 
   <!-- Release Target -->
   <Target Name="Release" Condition="'$(ConfigurationName)'=='Release'">
-    <!--<CallTarget Targets="RemovePreviousPackage" />-->
     <CallTarget Targets="BuildManifest" />
     <!--<CallTarget Targets="CreatePackage" />-->
     <!--<CallTarget Targets="DeployToDnn" />-->
@@ -35,42 +34,76 @@
     <!--<CallTarget Targets="DeployToDnn" />-->
   </Target>
 
-  <!-- Sub Targets -->
-  <Target Name="RemovePreviousPackage">
-    <Message Text="Remove previous package" />
-  </Target>
-
-  <!-- 
-    Target: BuildManifest
-    This target creates a DNN manifest file for the specified project file and target assembly.
-  -->
+  <!-- Creates a DNN manifest file for the specified project file and target assembly. -->
   <Target Name="BuildManifest">
     <CreateItem Include="$(MSBuildProjectDirectory)\$(OutputPath)$(AssemblyName).dll">
-      <Output TaskParameter="Include" ItemName="ProjectTargetAssembly"/>
+      <Output TaskParameter="Include" ItemName="projectTargetAssembly"/>
     </CreateItem>
-    <Message Importance="high" Text="Build DNN manifest" />
-    <Message Text="- project file: $(MSBuildProjectFullPath)" />
-    <Message Text="- project target: @(ProjectTargetAssembly)" />
-    <BuildDnnManifest
-      ProjectFile="$(MSBuildProjectFullPath)"
-      ProjectTargetAssembly="@(ProjectTargetAssembly)">
+    <BuildDnnManifest ProjectFile="$(MSBuildProjectFullPath)"
+                      ProjectTargetAssembly="@(projectTargetAssembly)">
+      <Output TaskParameter="Assemblies" ItemName="includeAssemblies" />
+      <Output TaskParameter="License" PropertyName="LicenseFilePath" />
+      <Output TaskParameter="ManifestFileName" PropertyName="ManifestFileName" />
+      <Output TaskParameter="ReleaseNotes" PropertyName="ReleaseNotesFilePath" />
+      <Output TaskParameter="ResourceFiles" ItemName="includeResourceFiles" />
     </BuildDnnManifest>
+    <Message Importance="high" Text="Manifest filename=$(ManifestFileName)" />
+    <Message Importance="high" Text="Assemblies=@(includeAssemblies)" />
+    <Message Importance="high" Text="ResourceFiles=@(includeResourceFiles)" />
   </Target>
 
+  <!-- Creates a DNN installation package. -->
   <Target Name="CreatePackage">
     <Message Importance="high" Text="Create package" />
-    <!--<CallTarget Targets="CreateResourceFile" />-->
+    
+    <CallTarget Targets="CreateFolders" />
+    <CallTarget Targets="CreateResourceFile" />
+    <CallTarget Targets="DeleteAllExistingPackages" />
+    <CallTarget Targets="CreateInstallationPackage" />
+    <CallTarget Targets="DeleteWorkingFolders" />
+  </Target>
+  
+  <!-- Creates the Packaging and the Working folder -->
+  <Target Name="CreateFolders">
+    <MakeDir Directories="$(PackagingFolder);$(MsBuildWorkingFolder)" />
   </Target>
 
+  <!-- Creates a Resources Zip file which should be included in the installation package. This is a sub-target from CreatePackage. -->
   <Target Name="CreateResourceFile">
-    <CreateItem Include="$(MsBuildWorkingFolder)\**\*.*">
-      <Output TaskParameter="Include" ItemName="ZipInstallFiles" />
-    </CreateItem>
-    <Zip Files="@(ZipInstallFiles)" 
+    <Zip Files="@(includeResourceFiles)" 
          WorkingDirectory="$(MsBuildWorkingFolder)"
-         ZipFileName="$(PackagingFolder)\resources.zip" />
+         ZipFileName="$(MsBuildWorkingFolder)\resources.zip" />
+  </Target>
+  
+  <Target Name="CreateInstallationPackage">
+    <ItemGroup>
+      <installationFiles Include="@(includeAssemblies)" />
+      <installationFiles Include="$(MSBuildProjectDirectory)\$(ManifestFileName).$(DnnManifestExtension)" />
+      <installationFiles Include="$(MsBuildWorkingFolder)\resources.zip" />
+      <installationFiles Include="$(LicenseFilePath)" />
+      <installationFiles Include="$(ReleaseNotesFilePath)" />
+    </ItemGroup>       
+    
+    <Message Importance="high" Text="@(installationFiles)" />
+    <Zip Files="@(installationFiles)" 
+         WorkingDirectory="$(MsBuildWorkingFolder)"
+         ZipFileName="$(PackagingFolder)\$(ManifestFileName).$(DnnPackageExtension)" />
   </Target>
 
+  <!-- Deletes any existing - previous - DNN installation packages. -->
+  <Target Name="DeleteAllExistingPackages">
+    <CreateItem Include="$(PackagingFolder)\*.$(DnnPackageExtension);">
+      <Output TaskParameter="Include" ItemName="deleteFiles" />
+    </CreateItem>
+    
+    <Delete ContinueOnError="true" Files="@(deleteFiles)" />
+  </Target>
+
+  <Target Name="DeleteWorkingFolders">
+    <RemoveDir ContinueOnError="true" Directories="$(MsBuildWorkingFolder)" />
+  </Target>
+  
+  <!-- Deploys relevant extension files to the DNN target website folder. -->
   <Target Name="DeployToDnn">
     <Message Importance="high" Text="Deploy to DNN" />
   </Target>

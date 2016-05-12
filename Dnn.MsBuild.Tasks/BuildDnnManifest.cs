@@ -18,8 +18,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Dnn.MsBuild.Tasks.Components;
+using Dnn.MsBuild.Tasks.Composition;
+using Dnn.MsBuild.Tasks.Composition.Component;
 using Dnn.MsBuild.Tasks.Entities;
+using Dnn.MsBuild.Tasks.Entities.FileTypes;
+using Dnn.MsBuild.Tasks.Entities.Internal;
+using Dnn.MsBuild.Tasks.Parsers;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -30,7 +40,9 @@ namespace Dnn.MsBuild.Tasks
     /// <seealso cref="Microsoft.Build.Utilities.Task" />
     public class BuildDnnManifest : Task
     {
-        private const string InstallZip = "_Install.zip";
+        public const string BuildFolder = @".build\";
+
+        public const string NuGetPackagesFile = "packages.config";
 
         #region Overrides of Task
 
@@ -43,25 +55,115 @@ namespace Dnn.MsBuild.Tasks
         public override bool Execute()
         {
             var taskResult = false;
-            using (var buildTask = new BuildManifestTask<DnnManifest>(this.ProjectFile, this.ProjectTargetAssembly, this.DnnAssemblyPath))
+            var taskData = this.CreateTaskData();
+
+            using (var buildTask = new BuildManifestTask<DnnManifest>(taskData))
             {
                 var manifest = buildTask.Build();
+                var package = manifest.Packages.FirstOrDefault();
 
                 // ReSharper disable once AssignmentInConditionalExpression
                 // ReSharper disable once InvertIf
-                if (taskResult = (manifest != null))
+                if (taskResult = (package != null))
                 {
                     manifest.Extension = this.DnnManifestExtension ?? DnnManifest.DefaultManifestExtension;
 
                     var serializeTask = new SerializeManifestTask<DnnManifest>();
                     serializeTask.Execute(manifest);
 
-                    var fullExtension = "." + manifest.Extension;
-                    this.InstallFileName = manifest.FileName.Replace(fullExtension, InstallZip);
+                    // Fill the output parameters
+                    this.ManifestFileName = manifest.FileName;
+
+                    this.Assemblies = GetOutputParameterAssemblies(package);
+                    this.License = package.License.FilePath;
+                    this.ReleaseNotes = package.ReleaseNotes.FilePath;
+                    this.ResourceFiles = GetOutputParameterResourceFiles(taskData, package);
                 }
             }
 
             return taskResult;
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private IProjectFileData CreateProjectPackageData()
+        {
+            var parser = new XmlVsProjectFileParser();
+            var projectDataFile = parser.Parse(this.ProjectFile);
+            projectDataFile.UserControls = GetUserControls(projectDataFile.BasePath, projectDataFile.ResourceFiles);
+
+            return projectDataFile;
+        }
+
+        private ITaskData CreateTaskData()
+        {
+            var dnnAssemblyPath = this.DnnAssemblyPath;
+            if (string.IsNullOrWhiteSpace(dnnAssemblyPath))
+            {
+                dnnAssemblyPath = GetDnnAssemblyPathFromProjectFile(this.ProjectFile);
+            }
+
+            var projectFileData = this.CreateProjectPackageData();
+            return new TaskData(projectFileData, this.ProjectTargetAssembly, dnnAssemblyPath);
+        }
+
+        private static string GetDnnAssemblyPathFromProjectFile(string projectFile)
+        {
+            var dnnAssemblyPath = string.Empty;
+            var desktopModuleRegex = new Regex($@"(?i)\b{ModuleComponentBuilder.DesktopModuleFolderName}\b");
+            var match = desktopModuleRegex.Match(projectFile);
+
+            if (match.Success)
+            {
+                dnnAssemblyPath = Path.Combine(projectFile.Substring(0, match.Index), "bin");
+            }
+
+            return dnnAssemblyPath;
+        }
+
+        private static string[] GetOutputParameterAssemblies(DnnPackage package)
+        {
+            // Find the assembly component in the manifest
+            var assemblyComponent = package?.Components
+                                            .OfType<DnnComponentAssembly>()
+                                            .FirstOrDefault();
+
+            // Return all registered assemblies in the component.
+            return assemblyComponent?.Assemblies
+                                     .Select(arg => Path.Combine(arg.Path, arg.Name))
+                                     .ToArray() ?? new string[0];
+        }
+
+        private static string[] GetOutputParameterResourceFiles(ITaskData taskData, DnnPackage package)
+        {
+            // Gather all relevant resource files
+            return taskData.ProjectFileData
+                           .ResourceFiles
+                           .Select(arg => Path.Combine(arg.Path, arg.Name))
+                           .Where(arg => ResourceFilePredicate(arg, package))
+                           .ToArray();
+        }
+
+        private static IDictionary<string, string> GetUserControls(string basePath, IEnumerable<IFileInfo> resourceFiles)
+        {
+            var parser = new UserControlParser();
+            var userControlFiles = resourceFiles.Where(arg => arg.Name.EndsWith(UserControlParser.UserControlFileExtension))
+                                                .Select(arg => Path.Combine(basePath, arg.Path ?? string.Empty, arg.Name))
+                                                .ToList();
+
+            return parser.Parse(userControlFiles);
+        }
+
+        private static bool ResourceFilePredicate(string filePath, DnnPackage package)
+        {
+            // TODO: Use some kind of config/xml file like .GITIGNORE to exclude files instead of a hardcoded list...
+            var includeResource = !filePath.Equals(package.License.FilePath) && // Exclude the license 
+                                  !filePath.Equals(package.ReleaseNotes.FilePath) && // Exclude the releasenotes
+                                  !filePath.EndsWith(NuGetPackagesFile, StringComparison.InvariantCultureIgnoreCase) && // Exclude the NuGet packages.config files
+                                  !filePath.StartsWith(BuildFolder, StringComparison.InvariantCultureIgnoreCase); // Exclude any files in the .build folder
+            return includeResource;
         }
 
         #endregion
@@ -109,7 +211,43 @@ namespace Dnn.MsBuild.Tasks
         /// The name of the install file.
         /// </value>
         [Output]
-        public string InstallFileName { get; set; }
+        public string ManifestFileName { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets a list of filenames with a relative path of assemblies to should be included in the installation package.
+        /// </summary>
+        /// <value>
+        /// The assemblies.
+        /// </value>
+        [Output]
+        public string[] Assemblies { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the license.
+        /// </summary>
+        /// <value>
+        /// The license.
+        /// </value>
+        [Output]
+        public string License { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the release notes.
+        /// </summary>
+        /// <value>
+        /// The release notes.
+        /// </value>
+        [Output]
+        public string ReleaseNotes { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets a list of filename with a relative path of all resource files that should be included in the installation package.
+        /// </summary>
+        /// <value>
+        /// The resource files.
+        /// </value>
+        [Output]
+        public string[] ResourceFiles { get; protected set; }
 
         #endregion
     }

@@ -32,22 +32,25 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskData" /> class.
         /// </summary>
+        /// <param name="projectFileData">The project file data.</param>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <param name="dnnAssemblyPath">The DNN assembly path.</param>
-        public TaskData(string assemblyPath, string dnnAssemblyPath)
-            : this(Assembly.LoadFrom(assemblyPath), dnnAssemblyPath)
+        public TaskData(IProjectFileData projectFileData, string assemblyPath, string dnnAssemblyPath)
+            : this(projectFileData, Assembly.LoadFrom(assemblyPath), dnnAssemblyPath)
         {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskData" /> class.
         /// </summary>
+        /// <param name="projectFileData">The project file data.</param>
         /// <param name="assembly">The assembly.</param>
         /// <param name="dnnAssemblyPath">The DNN assembly path.</param>
-        public TaskData(Assembly assembly, string dnnAssemblyPath)
+        public TaskData(IProjectFileData projectFileData, Assembly assembly, string dnnAssemblyPath)
         {
             this.Assembly = assembly;
             this.DnnAssemblyPath = dnnAssemblyPath;
             this.ExportedTypes = this.Assembly.GetExportedTypes();
+            this.ProjectFileData = projectFileData;
         }
 
         #endregion
@@ -100,9 +103,7 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         /// <value>
         /// The project file data.
         /// </value>
-        public IProjectFileData ProjectFileData { get; set; }
-
-        public IDictionary<string, string> UserControls { get; set; }
+        public IProjectFileData ProjectFileData { get; }
 
         #endregion
     }

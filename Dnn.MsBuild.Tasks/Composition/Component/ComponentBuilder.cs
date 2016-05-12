@@ -55,8 +55,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Component
 
         protected string GetBasePath()
         {
-            var desktopModuleFolderName = Globals.DesktopModulePath.Trim(new char[] { '/', '\\' });
-            var index = this.Input.ProjectFileData.BasePath.IndexOf(desktopModuleFolderName, StringComparison.InvariantCultureIgnoreCase);
+            var index = this.Input.ProjectFileData.BasePath.IndexOf(ModuleComponentBuilder.DesktopModuleFolderName, StringComparison.InvariantCultureIgnoreCase);
             return this.Input.ProjectFileData.BasePath.Substring(index);
         }
     }

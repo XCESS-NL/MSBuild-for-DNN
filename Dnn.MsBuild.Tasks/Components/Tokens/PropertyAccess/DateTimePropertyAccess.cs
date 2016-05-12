@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DnnLicense.cs" company="XCESS expertise center b.v.">
+// <copyright file="DateTimePropertyAccess.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -19,41 +19,47 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Composition;
+using System.Globalization;
 
-namespace Dnn.MsBuild.Tasks.Entities
+namespace Dnn.MsBuild.Tasks.Components.Tokens.PropertyAccess
 {
     /// <summary>
     /// </summary>
-    public class DnnLicense : IManifestElement
+    /// <seealso cref="Dnn.MsBuild.Tasks.Components.Tokens.IPropertyAccess" />
+    internal class DateTimePropertyAccess : IPropertyAccess
     {
-        #region Constructors
+        #region Implementation of IPropertyAccess
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnLicense"/> class from being created.
+        /// Gets the property.
         /// </summary>
-        private DnnLicense()
-        {}
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DnnLicense"/> class.
-        /// </summary>
-        /// <param name="filePath">The file path.</param>
-        internal DnnLicense(string filePath)
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="formatProvider">The format provider.</param>
+        /// <param name="propertyNotFound">if set to <c>true</c> [property not found].</param>
+        /// <returns></returns>
+        public string GetProperty(string propertyName, string format, CultureInfo formatProvider, ref bool propertyNotFound)
         {
-            this.FilePath = filePath;
+            propertyNotFound = false;
+
+            var propertyValue = default(string);
+            var outputFormat = string.IsNullOrWhiteSpace(format) ? "g" : format;
+
+            switch (propertyName.ToLowerInvariant())
+            {
+                case "system":
+                    propertyValue = DateTime.Now.ToString(outputFormat, formatProvider);
+                    break;
+                case "utc":
+                    propertyValue = DateTime.Now.ToUniversalTime().ToString(outputFormat, formatProvider);
+                    break;
+                default:
+                    propertyNotFound = true;
+                    break;
+            }
+            return propertyValue ?? string.Empty;
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the file path.
-        /// </summary>
-        /// <value>
-        /// The file path.
-        /// </value>
-        [XmlAttribute("src")]
-        public string FilePath { get; set; }
     }
 }

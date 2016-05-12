@@ -29,8 +29,9 @@ namespace Dnn.MsBuild.Tasks.Components
     {
         public void Execute(IManifest manifest)
         {
+            var fileName = manifest.FileName + (manifest.Extension.StartsWith(".") ? manifest.Extension : "." + manifest.Extension);
             var serializer = new XmlSerializer(manifest.GetType());
-            using (var stream = new StreamWriter(manifest.FileName))
+            using (var stream = new StreamWriter(fileName))
             {
                 serializer.Serialize(stream, manifest);
             }

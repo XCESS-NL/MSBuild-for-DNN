@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LicenseTokenReplace.cs" company="XCESS expertise center b.v.">
+// <copyright file="IPropertyAccess.cs" company="XCESS expertise center b.v.">
 //     Copyright (c) 2016-2016 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -18,10 +18,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using DotNetNuke.Services.Tokens;
+using System.Globalization;
 
-namespace Dnn.MsBuild.Tasks.Tokens
+namespace Dnn.MsBuild.Tasks.Components.Tokens
 {
-    internal class LicenseTokenReplace : TokenReplace
-    {}
+    internal interface IPropertyAccess
+    {
+        /// <summary>
+        /// Gets the property.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="formatProvider">The format provider.</param>
+        /// <param name="propertyNotFound">if set to <c>true</c> [property not found].</param>
+        /// <returns></returns>
+        string GetProperty(string propertyName, string format, CultureInfo formatProvider, ref bool propertyNotFound);
+    }
 }

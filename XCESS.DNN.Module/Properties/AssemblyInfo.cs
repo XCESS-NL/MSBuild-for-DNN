@@ -30,7 +30,7 @@ using DotNetNuke.Services.Installer.MsBuild;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: DnnPackage("XCESS.DNN.Module", DnnPackageType.Module, IconFileName = "MyIcon32.png")]
+[assembly: DnnPackage("XCESS.DNN.Module", @"XCESS\XCESS.DNN.Module", DnnPackageType.Module, IconFileName = @"install\MyIcon32.png")]
 [assembly: DnnAzureCompliant(true)]
 [assembly: AssemblyCompany("XCESS expertise center b.v.")] // Organisation in DNN manifest
 [assembly: AssemblyOwnerInfo("XCESS", "info@xcess.nl", "http://www.xcess.nl")] // Email and url in DNN manifest
