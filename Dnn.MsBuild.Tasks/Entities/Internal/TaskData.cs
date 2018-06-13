@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PackageData.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+// <copyright file="TaskData.cs" company="XCESS expertise center b.v.">
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,19 +18,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Dnn.MsBuild.Tasks.Composition;
-
 namespace Dnn.MsBuild.Tasks.Entities.Internal
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Dnn.MsBuild.Tasks.Composition;
+
     internal class TaskData : ITaskData
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskData" /> class.
+        ///     Initializes a new instance of the <see cref="TaskData" /> class.
         /// </summary>
         /// <param name="projectFileData">The project file data.</param>
         /// <param name="assemblyPath">The assembly path.</param>
@@ -40,7 +40,7 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskData" /> class.
+        ///     Initializes a new instance of the <see cref="TaskData" /> class.
         /// </summary>
         /// <param name="projectFileData">The project file data.</param>
         /// <param name="assembly">The assembly.</param>
@@ -58,50 +58,50 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         #region Implementation of ITaskData
 
         /// <summary>
-        /// Gets the assembly.
+        ///     Gets the assembly.
         /// </summary>
         /// <value>
-        /// The assembly.
+        ///     The assembly.
         /// </value>
         public Assembly Assembly { get; }
 
         /// <summary>
-        /// Gets the DNN assembly path.
+        ///     Gets the DNN assembly path.
         /// </summary>
         /// <value>
-        /// The DNN assembly path.
+        ///     The DNN assembly path.
         /// </value>
         public string DnnAssemblyPath { get; }
 
         /// <summary>
-        /// Gets the DNN manifest extension.
+        ///     Gets the DNN manifest extension.
         /// </summary>
         /// <value>
-        /// The DNN manifest extension.
+        ///     The DNN manifest extension.
         /// </value>
         public string DnnManifestExtension { get; set; }
 
         /// <summary>
-        /// Gets the exported types.
+        ///     Gets the exported types.
         /// </summary>
         /// <value>
-        /// The exported types.
+        ///     The exported types.
         /// </value>
         public IEnumerable<Type> ExportedTypes { get; }
 
         /// <summary>
-        /// Gets or sets the package.
+        ///     Gets or sets the package.
         /// </summary>
         /// <value>
-        /// The package.
+        ///     The package.
         /// </value>
         public IPackageData Package { get; set; }
 
         /// <summary>
-        /// Gets or sets the project file data.
+        ///     Gets or sets the project file data.
         /// </summary>
         /// <value>
-        /// The project file data.
+        ///     The project file data.
         /// </value>
         public IProjectFileData ProjectFileData { get; }
 

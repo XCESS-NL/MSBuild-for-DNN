@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnLicense.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,26 +18,34 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Composition;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Composition;
+
     /// <summary>
     /// </summary>
     public class DnnLicense : IManifestElement
     {
-        #region Constructors
+        /// <summary>
+        ///     Gets or sets the file path.
+        /// </summary>
+        /// <value>
+        ///     The file path.
+        /// </value>
+        [XmlAttribute("src")]
+        public string FilePath { get; set; }
+
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnLicense"/> class from being created.
+        ///     Prevents a default instance of the <see cref="DnnLicense" /> class from being created.
         /// </summary>
         private DnnLicense()
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnLicense"/> class.
+        ///     Initializes a new instance of the <see cref="DnnLicense" /> class.
         /// </summary>
         /// <param name="filePath">The file path.</param>
         internal DnnLicense(string filePath)
@@ -46,14 +54,5 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the file path.
-        /// </summary>
-        /// <value>
-        /// The file path.
-        /// </value>
-        [XmlAttribute("src")]
-        public string FilePath { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ResourceFileInfo.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,25 +18,34 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
+    using System.Xml.Serialization;
+
     /// <summary>
     /// </summary>
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.FileTypes.FileInfo" />
     public class ResourceFileInfo : FileInfo
     {
-        #region Constructors
+        /// <summary>
+        ///     Gets or sets the name of the resource source file.
+        /// </summary>
+        /// <value>
+        ///     The name of the resource source file.
+        /// </value>
+        [XmlElement("sourceFileName")]
+        public string ResourceSourceFileName { get; set; }
+
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="ResourceFileInfo"/> class from being created.
+        ///     Prevents a default instance of the <see cref="ResourceFileInfo" /> class from being created.
         /// </summary>
         private ResourceFileInfo()
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceFileInfo" /> class.
+        ///     Initializes a new instance of the <see cref="ResourceFileInfo" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="path">The path.</param>
@@ -48,14 +57,5 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the name of the resource source file.
-        /// </summary>
-        /// <value>
-        /// The name of the resource source file.
-        /// </value>
-        [XmlElement("sourceFileName")]
-        public string ResourceSourceFileName { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="BaseBuilder.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,12 +18,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using Dnn.MsBuild.Tasks.Entities.Internal;
-using Dnn.MsBuild.Tasks.Extensions;
-
 namespace Dnn.MsBuild.Tasks.Composition
 {
+    using System.Collections.Generic;
+    using Dnn.MsBuild.Tasks.Entities.Internal;
+    using Dnn.MsBuild.Tasks.Extensions;
+
     /// <summary>
     /// </summary>
     /// <typeparam name="TElement">The type of the element.</typeparam>
@@ -31,23 +31,23 @@ namespace Dnn.MsBuild.Tasks.Composition
     internal abstract class BaseBuilder<TElement> : IBuilder<TElement>
         where TElement : IManifestElement
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseBuilder{TElement}" /> class.
+        ///     Initializes a new instance of the <see cref="BaseBuilder{TElement}" /> class.
         /// </summary>
         /// <param name="element">The element.</param>
         protected BaseBuilder(TElement element)
         {
             this.ComponentBuilders = new List<IBuilder>();
             this.Element = element;
-        } 
+        }
 
         #endregion
 
         protected IList<IBuilder> ComponentBuilders { get; }
 
-        protected TElement Element { get; private set; }
+        protected TElement Element { get; }
 
         #region Implementation of IBuilder<out TElement>
 

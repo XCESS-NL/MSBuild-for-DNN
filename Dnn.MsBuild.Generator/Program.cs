@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Program.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,13 +18,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using Dnn.MsBuild.Tasks;
-
 namespace Dnn.MsBuild.Generator
 {
+    using System;
+    using System.IO;
+    using System.Text.RegularExpressions;
+    using Dnn.MsBuild.Tasks;
+
     internal class Program
     {
         private const string DesktopModulesFolderName = "DesktopModules";
@@ -43,27 +43,33 @@ namespace Dnn.MsBuild.Generator
                 var websiteBase = setup.ApplicationBase.Substring(0, match.Index);
 
                 // Build DNN module
-                BuildManifest(Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.Module", "XCESS.DNN.Module.csproj"),
-                              Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.Module", "bin", "XCESS.DNN.Module.dll"));
+                var projectFile = Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.Module",
+                                               "XCESS.DNN.Module.csproj");
+                BuildManifest(projectFile,
+                              Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.Module", "bin",
+                                           "XCESS.DNN.Module.dll"));
 
                 // Build DNN Authentication Provider
-                BuildManifest(Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.AuthenticationProvider", "XCESS.DNN.AuthenticationProvider.csproj"),
-                              Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.AuthenticationProvider", "bin", "XCESS.DNN.AuthenticationProvider.dll"));
+                BuildManifest(
+                    Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.AuthenticationProvider",
+                                 "XCESS.DNN.AuthenticationProvider.csproj"),
+                    Path.Combine(websiteBase, DesktopModulesFolderName, "XCESS.DNN.AuthenticationProvider", "bin",
+                                 "XCESS.DNN.AuthenticationProvider.dll"));
             }
         }
 
         /// <summary>
-        /// Builds the manifest.
+        ///     Builds the manifest.
         /// </summary>
         /// <param name="projectFile">The project file.</param>
         /// <param name="assemblyName">Name of the assembly.</param>
         private static void BuildManifest(string projectFile, string assemblyName)
         {
             var entityBuilder = new BuildDnnManifest
-                                {
-                                    ProjectFile = projectFile,
-                                    ProjectTargetAssembly = assemblyName
-                                };
+                                    {
+                                        ProjectFile = projectFile,
+                                        ProjectTargetAssembly = assemblyName
+                                    };
             entityBuilder.Execute();
         }
     }

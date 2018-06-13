@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnAzureCompliantAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,21 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
 
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly)]
     public sealed class DnnAzureCompliantAttribute : DnnManifestAttribute
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnAzureCompliantAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="DnnAzureCompliantAttribute" /> class.
         /// </summary>
         /// <param name="isCompliant">if set to <c>true</c> [is compliant].</param>
         public DnnAzureCompliantAttribute(bool isCompliant)
@@ -43,11 +43,11 @@ namespace DotNetNuke.Services.Installer.MsBuild
         #endregion
 
         /// <summary>
-        /// Gets a value indicating whether this instance is compliant.
+        ///     Gets a value indicating whether this instance is compliant.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is compliant; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is compliant; otherwise, <c>false</c>.
         /// </value>
-        public bool IsCompliant { get; private set; }
+        public bool IsCompliant { get; }
     }
 }

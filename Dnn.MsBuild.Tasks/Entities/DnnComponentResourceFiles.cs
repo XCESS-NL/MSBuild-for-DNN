@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnComponentResourceFiles.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,30 +18,48 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Entities.FileTypes;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Entities.FileTypes;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/manifest-resourcefile-component
+    ///     http://www.dnnsoftware.com/wiki/manifest-resourcefile-component
     /// </remarks>
     public class DnnComponentResourceFiles
     {
-        #region Constructors
+        /// <summary>
+        ///     Gets or sets the base path.
+        /// </summary>
+        /// <value>
+        ///     The base path.
+        /// </value>
+        [XmlElement("basePath")]
+        public string BasePath { get; set; }
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnComponentResourceFiles"/> class from being created.
+        ///     Gets or sets the resource files.
+        /// </summary>
+        /// <value>
+        ///     The resource files.
+        /// </value>
+        [XmlElement("resourceFile")]
+        public List<ResourceFileInfo> ResourceFiles { get; set; }
+
+        #region ctor
+
+        /// <summary>
+        ///     Prevents a default instance of the <see cref="DnnComponentResourceFiles" /> class from being created.
         /// </summary>
         private DnnComponentResourceFiles()
-        { }
+        {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentResourceFiles"/> class.
+        ///     Initializes a new instance of the <see cref="DnnComponentResourceFiles" /> class.
         /// </summary>
         /// <param name="basePath">The base path.</param>
         /// <param name="resourceFiles">The resource files.</param>
@@ -52,23 +70,5 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the base path.
-        /// </summary>
-        /// <value>
-        /// The base path.
-        /// </value>
-        [XmlElement("basePath")]
-        public string BasePath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resource files.
-        /// </summary>
-        /// <value>
-        /// The resource files.
-        /// </value>
-        [XmlElement("resourceFile")]
-        public List<ResourceFileInfo> ResourceFiles { get; set; }
     }
 }

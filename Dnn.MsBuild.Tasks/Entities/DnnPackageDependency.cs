@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnPackageDependency.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,30 +18,30 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Xml.Serialization;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     [XmlRoot("dependency")]
     public class DnnPackageDependency
     {
         /// <summary>
-        /// Gets or sets the type.
+        ///     Gets or sets the type.
         /// </summary>
         /// <value>
-        /// The type.
+        ///     The type.
         /// </value>
         [XmlAttribute("type")]
         public DnnPackageDependencyType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the value.
+        ///     Gets or sets the value.
         /// </summary>
         /// <value>
-        /// The value.
+        ///     The value.
         /// </value>
         [XmlText]
         public string Value { get; set; }
@@ -51,16 +51,16 @@ namespace Dnn.MsBuild.Tasks.Entities
             return new DnnPackageDependency(attribute.Type, attribute.Value);
         }
 
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnPackageDependency"/> class from being created.
+        ///     Prevents a default instance of the <see cref="DnnPackageDependency" /> class from being created.
         /// </summary>
         private DnnPackageDependency()
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnPackageDependency"/> class.
+        ///     Initializes a new instance of the <see cref="DnnPackageDependency" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="value">The value.</param>

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnModuleControl.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,24 +18,24 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Xml.Serialization;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System;
+    using System.Xml.Serialization;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/module-component
+    ///     http://www.dnnsoftware.com/wiki/module-component
     /// </remarks>
     [Serializable]
     public class DnnModuleControl
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnModuleControl"/> class from being created.
+        ///     Prevents a default instance of the <see cref="DnnModuleControl" /> class from being created.
         /// </summary>
         private DnnModuleControl()
         {}
@@ -43,85 +43,86 @@ namespace Dnn.MsBuild.Tasks.Entities
         #endregion
 
         /// <summary>
-        /// Gets or sets the control source.
+        ///     Gets or sets the control source.
         /// </summary>
         /// <value>
-        /// The control source.
+        ///     The control source.
         /// </value>
         [XmlElement("controlSrc")]
         public string ControlSource { get; set; }
 
         /// <summary>
-        /// Gets or sets the control title.
+        ///     Gets or sets the control title.
         /// </summary>
         /// <value>
-        /// The control title.
+        ///     The control title.
         /// </value>
         [XmlElement("controlTitle")]
         public string ControlTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the control.
+        ///     Gets or sets the type of the control.
         /// </summary>
         /// <value>
-        /// The type of the control.
+        ///     The type of the control.
         /// </value>
         [XmlElement("controlType")]
         public DnnControlType ControlType { get; set; }
 
         /// <summary>
-        /// Gets or sets the help URL.
+        ///     Gets or sets the help URL.
         /// </summary>
         /// <value>
-        /// The help URL.
+        ///     The help URL.
         /// </value>
         [XmlElement("helpUrl")]
         public string HelpUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the key.
+        ///     Gets or sets the key.
         /// </summary>
         /// <value>
-        /// The key.
+        ///     The key.
         /// </value>
         [XmlElement("controlKey")]
         public string Key { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [supports partial rendering].
+        ///     Gets or sets a value indicating whether [supports partial rendering].
         /// </summary>
         /// <value>
-        /// <c>true</c> if [supports partial rendering]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [supports partial rendering]; otherwise, <c>false</c>.
         /// </value>
         [XmlElement("supportsPartialRendering")]
         public bool SupportsPartialRendering { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [supports popups].
+        ///     Gets or sets a value indicating whether [supports popups].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [supports popups]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [supports popups]; otherwise, <c>false</c>.
         /// </value>
         [XmlElement("supportsPopUps")]
         public bool SupportsPopups { get; set; }
 
         /// <summary>
-        /// Creates a DnnModuleControl from a DnnModuleControl attribute.
+        ///     Creates a DnnModuleControl from a DnnModuleControl attribute.
         /// </summary>
         /// <param name="attribute">The attribute.</param>
         /// <param name="userControlFilePath">The user control file path.</param>
         /// <returns></returns>
-        public static DnnModuleControl CreateFromAttribute(DnnModuleControlAttribute attribute, string userControlFilePath)
+        public static DnnModuleControl CreateFromAttribute(DnnModuleControlAttribute attribute,
+                                                           string userControlFilePath)
         {
             return new DnnModuleControl()
-                   {
-                       ControlSource = userControlFilePath,
-                       ControlTitle = attribute.ControlTitle,
-                       ControlType = attribute.ControlType,
-                       Key = attribute.Key,
-                       SupportsPartialRendering = attribute.SupportsPartialRendering,
-                       SupportsPopups = attribute.SupportsPopups
-                   };
+                       {
+                           ControlSource = userControlFilePath,
+                           ControlTitle = attribute.ControlTitle,
+                           ControlType = attribute.ControlType,
+                           Key = attribute.Key,
+                           SupportsPartialRendering = attribute.SupportsPartialRendering,
+                           SupportsPopups = attribute.SupportsPopups
+                       };
         }
     }
 }

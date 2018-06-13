@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnPackage.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,22 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Components.Tokens;
-using Dnn.MsBuild.Tasks.Composition;
-using Dnn.MsBuild.Tasks.Extensions;
-using DotNetNuke.Entities.Users;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Components.Tokens;
+    using Dnn.MsBuild.Tasks.Composition;
+    using Dnn.MsBuild.Tasks.Extensions;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// <![CDATA[
+    ///     <![CDATA[
     /// <package name="" type="" version="">
     ///   <friendlyName />
     ///   <description />
@@ -55,180 +54,156 @@ namespace Dnn.MsBuild.Tasks.Entities
         public static readonly Version DefaultVersion = new Version(0, 0, 0);
 
         /// <summary>
-        /// Gets or sets a value indicating whether [azure compatible].
+        ///     Gets or sets a value indicating whether [azure compatible].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [azure compatible]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [azure compatible]; otherwise, <c>false</c>.
         /// </value>
         [XmlElement("azureCompatible")]
         public bool AzureCompatible { get; set; }
 
         /// <summary>
-        /// Gets or sets the description.
+        ///     Gets or sets the description.
         /// </summary>
         /// <value>
-        /// The description.
+        ///     The description.
         /// </value>
         [XmlElement("description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the friendly.
+        ///     Gets or sets the name of the friendly.
         /// </summary>
         /// <value>
-        /// The name of the friendly.
+        ///     The name of the friendly.
         /// </value>
         [XmlElement("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the icon file.
+        ///     Gets or sets the name of the icon file.
         /// </summary>
         /// <value>
-        /// The name of the icon file.
+        ///     The name of the icon file.
         /// </value>
         [XmlElement("iconFile")]
         public string IconFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the owner.
+        ///     Gets or sets the owner.
         /// </summary>
         /// <value>
-        /// The owner.
+        ///     The owner.
         /// </value>
         [XmlElement("owner")]
         public DnnOwner Owner { get; set; }
 
         /// <summary>
-        /// Gets or sets the license.
+        ///     Gets or sets the license.
         /// </summary>
         /// <value>
-        /// The license.
+        ///     The license.
         /// </value>
         [XmlElement("license")]
         public DnnLicense License { get; set; }
 
         /// <summary>
-        /// Gets or sets the release notes.
+        ///     Gets or sets the release notes.
         /// </summary>
         /// <value>
-        /// The release notes.
+        ///     The release notes.
         /// </value>
         [XmlElement("releaseNotes")]
         public DnnReleaseNotes ReleaseNotes { get; set; }
 
         /// <summary>
-        /// Gets or sets the dependencies.
+        ///     Gets or sets the dependencies.
         /// </summary>
         /// <value>
-        /// The dependencies.
+        ///     The dependencies.
         /// </value>
         [XmlArray("dependencies")]
         [XmlArrayItem("dependency")]
         public List<DnnPackageDependency> Dependencies { get; set; }
 
         /// <summary>
-        /// Gets or sets the components.
+        ///     Gets or sets the components.
         /// </summary>
         /// <value>
-        /// The components.
+        ///     The components.
         /// </value>
         [XmlArray("components")]
         [XmlArrayItem("component")]
         public List<DnnComponent> Components { get; set; }
 
         /// <summary>
-        /// Gets or sets the version.
+        ///     Gets or sets the version.
         /// </summary>
         /// <value>
-        /// The version.
+        ///     The version.
         /// </value>
         [XmlAttribute("version")]
         public string VersionString
         {
             get
-            {
-                var version = this.Version ?? DefaultVersion;
-                return version.ToDnnVersionString();
-            }
+                {
+                    var version = this.Version ?? DefaultVersion;
+                    return version.ToDnnVersionString();
+                }
             // ReSharper disable once ValueParameterNotUsed
             set { }
         }
 
 
         /// <summary>
-        /// Gets or sets the folder.
+        ///     Gets or sets the folder.
         /// </summary>
         /// <value>
-        /// The folder.
+        ///     The folder.
         /// </value>
         [XmlIgnore]
         public string Folder { get; set; }
 
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         [XmlAttribute("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the package.
+        ///     Gets or sets the type of the package.
         /// </summary>
         /// <value>
-        /// The type of the package.
+        ///     The type of the package.
         /// </value>
         [XmlAttribute("type")]
         public DnnPackageType PackageType { get; set; }
 
         /// <summary>
-        /// Gets or sets the version.
+        ///     Gets or sets the version.
         /// </summary>
         /// <value>
-        /// The version.
+        ///     The version.
         /// </value>
         [XmlIgnore]
         public Version Version { get; set; }
 
-        #region Constructors
-
-        /// <summary>
-        /// Prevents a default instance of the <see cref="DnnPackage" /> class from being created.
-        /// </summary>
-        internal DnnPackage()
-        {
-            this.Components = new List<DnnComponent>();
-            this.Owner = new DnnOwner();
-            this.Dependencies = new List<DnnPackageDependency>();
-            this.PackageType = DnnPackageType.Module;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DnnPackage"/> class.
-        /// </summary>
-        /// <param name="packageType">Type of the package.</param>
-        internal DnnPackage(DnnPackageType packageType)
-            : this()
-        {
-            this.PackageType = packageType;
-        }
-
-        #endregion
-
         #region Implementation of IPropertyAccess
 
         /// <summary>
-        /// Gets the property.
+        ///     Gets the property.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="format">The format.</param>
         /// <param name="formatProvider">The format provider.</param>
         /// <param name="propertyNotFound">if set to <c>true</c> [property not found].</param>
         /// <returns></returns>
-        public string GetProperty(string propertyName, string format, CultureInfo formatProvider, ref bool propertyNotFound)
+        public string GetProperty(string propertyName, string format, CultureInfo formatProvider,
+                                  ref bool propertyNotFound)
         {
             propertyNotFound = false;
 
@@ -274,5 +249,29 @@ namespace Dnn.MsBuild.Tasks.Entities
             return !string.IsNullOrWhiteSpace(value) ? string.Format(format, value) : string.Empty;
         }
 
+        #region ctor
+
+        /// <summary>
+        ///     Prevents a default instance of the <see cref="DnnPackage" /> class from being created.
+        /// </summary>
+        internal DnnPackage()
+        {
+            this.Components = new List<DnnComponent>();
+            this.Owner = new DnnOwner();
+            this.Dependencies = new List<DnnPackageDependency>();
+            this.PackageType = DnnPackageType.Module;
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DnnPackage" /> class.
+        /// </summary>
+        /// <param name="packageType">Type of the package.</param>
+        internal DnnPackage(DnnPackageType packageType)
+            : this()
+        {
+            this.PackageType = packageType;
+        }
+
+        #endregion
     }
 }

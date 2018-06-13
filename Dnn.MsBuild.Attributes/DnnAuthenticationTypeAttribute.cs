@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnAuthenticationTypeAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,21 +18,22 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
+
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     /// <seealso cref="DotNetNuke.Services.Installer.MsBuild.DnnManifestAttribute" />
     [AttributeUsage(AttributeTargets.Assembly)]
     public class DnnAuthenticationTypeAttribute : DnnManifestAttribute
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnAuthenticationTypeAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="DnnAuthenticationTypeAttribute" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         public DnnAuthenticationTypeAttribute(string type)
@@ -43,10 +44,10 @@ namespace DotNetNuke.Services.Installer.MsBuild
         #endregion
 
         /// <summary>
-        /// Gets the authentication type.
+        ///     Gets the authentication type.
         /// </summary>
         /// <value>
-        /// The type.
+        ///     The type.
         /// </value>
         public string Type { get; }
     }

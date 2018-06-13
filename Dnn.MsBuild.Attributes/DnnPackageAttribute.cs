@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnPackageAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,21 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
 
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly)] // Current version of XCESS MsBuild only supports a single package
     public sealed class DnnPackageAttribute : DnnManifestAttribute
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnPackageAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="DnnPackageAttribute" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="packageFolder">The package folder.</param>
@@ -54,58 +54,58 @@ namespace DotNetNuke.Services.Installer.MsBuild
         #endregion
 
         /// <summary>
-        /// Gets or sets the description.
+        ///     Gets or sets the description.
         /// </summary>
         /// <value>
-        /// The description.
+        ///     The description.
         /// </value>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the friendly.
+        ///     Gets or sets the name of the friendly.
         /// </summary>
         /// <value>
-        /// The name of the friendly.
+        ///     The name of the friendly.
         /// </value>
         public string FriendlyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the icon file.
+        ///     Gets or sets the name of the icon file.
         /// </summary>
         /// <value>
-        /// The name of the icon file.
+        ///     The name of the icon file.
         /// </value>
         public string IconFileName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the package folder.
+        ///     Gets or sets the package folder.
         /// </summary>
         /// <value>
-        /// The package folder.
+        ///     The package folder.
         /// </value>
         public string PackageFolder { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the package.
+        ///     Gets or sets the name of the package.
         /// </summary>
         /// <value>
-        /// The name of the package.
+        ///     The name of the package.
         /// </value>
         public string PackageName { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the package.
+        ///     Gets or sets the type of the package.
         /// </summary>
         /// <value>
-        /// The type of the package.
+        ///     The type of the package.
         /// </value>
         public DnnPackageType PackageType { get; set; }
     }

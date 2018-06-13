@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnComponentModule.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,16 +18,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Xml.Serialization;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/module-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/module-component
+    ///     <![CDATA[
     /// <component type="Module">
     ///   <desktopModule>
     ///     <moduleName/>
@@ -51,17 +51,17 @@ namespace Dnn.MsBuild.Tasks.Entities
         [XmlElement("desktopModule")]
         public DnnDesktopModule DesktopModule { get; set; }
 
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnComponentModule"/> class from being created.
+        ///     Prevents a default instance of the <see cref="DnnComponentModule" /> class from being created.
         /// </summary>
         private DnnComponentModule()
             : base(DnnComponentType.Module)
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentModule"/> class.
+        ///     Initializes a new instance of the <see cref="DnnComponentModule" /> class.
         /// </summary>
         /// <param name="desktopModule">The desktop module.</param>
         internal DnnComponentModule(DnnDesktopModule desktopModule)

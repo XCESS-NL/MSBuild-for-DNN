@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="AssemblyOwnerInfoAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,21 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
 
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly)]
     public sealed class AssemblyOwnerInfoAttribute : Attribute
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AssemblyOwnerInfoAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="AssemblyOwnerInfoAttribute" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="emailAddress">The email address.</param>
@@ -47,26 +47,26 @@ namespace DotNetNuke.Services.Installer.MsBuild
         #endregion
 
         /// <summary>
-        /// Gets the owner email address.
+        ///     Gets the owner email address.
         /// </summary>
         /// <value>
-        /// The email address.
+        ///     The email address.
         /// </value>
         public string EmailAddress { get; }
 
         /// <summary>
-        /// Gets the owner name.
+        ///     Gets the owner name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name { get; }
 
         /// <summary>
-        /// Gets the owner (usually the company) URL.
+        ///     Gets the owner (usually the company) URL.
         /// </summary>
         /// <value>
-        /// The URL.
+        ///     The URL.
         /// </value>
         public string Url { get; }
     }

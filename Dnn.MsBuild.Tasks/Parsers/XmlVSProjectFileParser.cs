@@ -31,7 +31,7 @@ namespace Dnn.MsBuild.Tasks.Parsers
 {
     internal class XmlVsProjectFileParser : IProjectFileParser
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlVsProjectFileParser"/> class.

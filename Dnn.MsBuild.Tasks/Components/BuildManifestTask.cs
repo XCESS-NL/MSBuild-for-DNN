@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="BuildManifestTask.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,24 +18,30 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Threading;
-using Dnn.MsBuild.Tasks.Composition;
-using Dnn.MsBuild.Tasks.Composition.Manifest;
-using Dnn.MsBuild.Tasks.Entities.Internal;
-
 namespace Dnn.MsBuild.Tasks.Components
 {
+    using System;
+    using System.Threading;
+    using Dnn.MsBuild.Tasks.Composition;
+    using Dnn.MsBuild.Tasks.Composition.Manifest;
+    using Dnn.MsBuild.Tasks.Entities.Internal;
+
     /// <summary>
     /// </summary>
     /// <typeparam name="TManifest">The type of the manifest.</typeparam>
     internal class BuildManifestTask<TManifest> : IDisposable
         where TManifest : IManifest, new()
     {
-        #region Constructors
+        /// <summary>
+        ///     A value which indicates the disposable state. 0 indicates undisposed, 1 indicates disposing
+        ///     or disposed.
+        /// </summary>
+        private int _disposableState = 0;
+
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BuildManifestTask{TManifest}" /> class.
+        ///     Initializes a new instance of the <see cref="BuildManifestTask{TManifest}" /> class.
         /// </summary>
         /// <param name="taskData">The task data.</param>
         public BuildManifestTask(ITaskData taskData)
@@ -45,23 +51,17 @@ namespace Dnn.MsBuild.Tasks.Components
 
         #endregion
 
-        /// <summary>
-        /// A value which indicates the disposable state. 0 indicates undisposed, 1 indicates disposing
-        /// or disposed.
-        /// </summary>
-        private int _disposableState = 0;
-
         private ITaskData TaskData { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the object is undisposed.
+        ///     Gets a value indicating whether the object is undisposed.
         /// </summary>
         public bool IsUndisposed => Thread.VolatileRead(ref this._disposableState) == 0;
 
         #region Implementation of IDisposable
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
@@ -82,7 +82,7 @@ namespace Dnn.MsBuild.Tasks.Components
         #endregion
 
         /// <summary>
-        /// Finalizes an instance of the DisposableBase class.
+        ///     Finalizes an instance of the DisposableBase class.
         /// </summary>
         ~BuildManifestTask()
         {
@@ -111,9 +111,12 @@ namespace Dnn.MsBuild.Tasks.Components
         // For information about the Dispose Pattern see: https://msdn.microsoft.com/en-us/library/b1yfkh5e(v=vs.110).aspx
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        ///     Releases unmanaged and - optionally - managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        ///     <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
+        ///     unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {}
 

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnAuthenticationService.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,32 +18,69 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Xml.Serialization;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/manifest-authenticationsystem-component
+    ///     http://www.dnnsoftware.com/wiki/manifest-authenticationsystem-component
     /// </remarks>
     public class DnnAuthenticationService
     {
-        #region Constructors
+        /// <summary>
+        ///     Gets or sets the login control source.
+        /// </summary>
+        /// <value>
+        ///     The login control source.
+        /// </value>
+        [XmlElement("loginControlSrc")]
+        public string LoginControlSource { get; set; }
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnAuthenticationService"/> class from being created.
+        ///     Gets or sets the logoff control source.
+        /// </summary>
+        /// <value>
+        ///     The logoff control source.
+        /// </value>
+        [XmlElement("logoffControlSrc")]
+        public string LogoffControlSource { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the settings control source.
+        /// </summary>
+        /// <value>
+        ///     The settings control source.
+        /// </value>
+        [XmlElement("settingsControlSrc")]
+        public string SettingsControlSource { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the type.
+        /// </summary>
+        /// <value>
+        ///     The type.
+        /// </value>
+        [XmlElement("type")]
+        public string Type { get; set; }
+
+        #region ctor
+
+        /// <summary>
+        ///     Prevents a default instance of the <see cref="DnnAuthenticationService" /> class from being created.
         /// </summary>
         private DnnAuthenticationService()
-        { }
+        {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnAuthenticationService"/> class.
+        ///     Initializes a new instance of the <see cref="DnnAuthenticationService" /> class.
         /// </summary>
         /// <param name="loginControlSource">The login control source.</param>
         /// <param name="logoffControlSource">The logoff control source.</param>
         /// <param name="settingsControlSource">The settings control source.</param>
-        public DnnAuthenticationService(string loginControlSource, string logoffControlSource, string settingsControlSource)
+        public DnnAuthenticationService(string loginControlSource, string logoffControlSource,
+                                        string settingsControlSource)
         {
             this.LoginControlSource = loginControlSource;
             this.LogoffControlSource = logoffControlSource;
@@ -51,41 +88,5 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the login control source.
-        /// </summary>
-        /// <value>
-        /// The login control source.
-        /// </value>
-        [XmlElement("loginControlSrc")]
-        public string LoginControlSource{ get; set; }
-
-        /// <summary>
-        /// Gets or sets the logoff control source.
-        /// </summary>
-        /// <value>
-        /// The logoff control source.
-        /// </value>
-        [XmlElement("logoffControlSrc")]
-        public string LogoffControlSource { get; set; }
-
-        /// <summary>
-        /// Gets or sets the settings control source.
-        /// </summary>
-        /// <value>
-        /// The settings control source.
-        /// </value>
-        [XmlElement("settingsControlSrc")]
-        public string SettingsControlSource { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type.
-        /// </summary>
-        /// <value>
-        /// The type.
-        /// </value>
-        [XmlElement("type")]
-        public string Type { get; set; }
     }
 }

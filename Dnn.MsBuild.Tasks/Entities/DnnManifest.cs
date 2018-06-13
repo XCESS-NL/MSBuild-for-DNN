@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnManifest.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,17 +18,17 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Composition;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Composition;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/page/manifests
+    ///     http://www.dnnsoftware.com/wiki/page/manifests
     /// </remarks>
     [XmlRoot("dotnetnuke")]
     public class DnnManifest : IManifest
@@ -39,10 +39,14 @@ namespace Dnn.MsBuild.Tasks.Entities
 
         public const string DnnManifestPackageVersion = "5.0";
 
-        #region Constructors
+        private string _extension = DefaultManifestExtension;
+
+        private string _fileName = null;
+
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnManifest"/> class.
+        ///     Initializes a new instance of the <see cref="DnnManifest" /> class.
         /// </summary>
         public DnnManifest()
         {
@@ -54,78 +58,75 @@ namespace Dnn.MsBuild.Tasks.Entities
 
         #endregion
 
-        private string _extension = DefaultManifestExtension;
-
-        private string _fileName = null;
-
         /// <summary>
-        /// Gets or sets the manifest extension.
+        ///     Gets or sets the type.
         /// </summary>
         /// <value>
-        /// The manifest extension.
+        ///     The type.
+        /// </value>
+        [XmlAttribute("type")]
+        public DnnManifestType Type { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the version.
+        /// </summary>
+        /// <value>
+        ///     The version.
+        /// </value>
+        [XmlAttribute("version")]
+        public string Version { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the manifest extension.
+        /// </summary>
+        /// <value>
+        ///     The manifest extension.
         /// </value>
         [XmlIgnore]
         public string Extension
         {
-            get { return this._extension;  }
+            get { return this._extension; }
             set
-            {
-                this._extension = value;
-                this._fileName = null;
-            }
+                {
+                    this._extension = value;
+                    this._fileName = null;
+                }
         }
 
         /// <summary>
-        /// Gets or sets the content.
+        ///     Gets or sets the content.
         /// </summary>
         /// <value>
-        /// The content.
+        ///     The content.
         /// </value>
         [XmlArray("packages")]
         [XmlArrayItem("package")]
         public List<DnnPackage> Packages { get; set; }
 
         /// <summary>
-        /// Gets or sets the type.
+        ///     Gets or sets the name of the file.
         /// </summary>
         /// <value>
-        /// The type.
-        /// </value>
-        [XmlAttribute("type")]
-        public DnnManifestType Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        [XmlAttribute("version")]
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the file.
-        /// </summary>
-        /// <value>
-        /// The name of the file.
+        ///     The name of the file.
         /// </value>
         [XmlIgnore]
         public string FileName
         {
             get
-            {
-                // ReSharper disable once InvertIf
-                if (string.IsNullOrWhiteSpace(this._fileName))
                 {
-                    var package = this.Packages.FirstOrDefault();
-                    if (package != null)
+                    // ReSharper disable once InvertIf
+                    if (string.IsNullOrWhiteSpace(this._fileName))
                     {
-                        this._fileName = string.Format(DnnManifestFileNameFormat, package.Name, package.VersionString);
+                        var package = this.Packages.FirstOrDefault();
+                        if (package != null)
+                        {
+                            this._fileName = string.Format(DnnManifestFileNameFormat, package.Name,
+                                                           package.VersionString);
+                        }
                     }
-                }
 
-                return this._fileName;
-            }
+                    return this._fileName;
+                }
             set { this._fileName = value; }
         }
     }

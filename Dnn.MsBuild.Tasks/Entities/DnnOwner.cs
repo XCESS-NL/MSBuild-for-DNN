@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnOwner.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,48 +18,48 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Xml.Serialization;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System;
+    using System.Xml.Serialization;
+
     /// <summary>
     /// </summary>
     [Serializable]
     public class DnnOwner
     {
         /// <summary>
-        /// Gets or sets the email.
+        ///     Gets or sets the email.
         /// </summary>
         /// <value>
-        /// The email.
+        ///     The email.
         /// </value>
         [XmlElement("email")]
         public string Email { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         [XmlElement("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the organisation.
+        ///     Gets or sets the organisation.
         /// </summary>
         /// <value>
-        /// The organisation.
+        ///     The organisation.
         /// </value>
         [XmlElement("organisation")]
         public string Organisation { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL.
+        ///     Gets or sets the URL.
         /// </summary>
         /// <value>
-        /// The URL.
+        ///     The URL.
         /// </value>
         [XmlElement("url")]
         public string Url { get; set; }

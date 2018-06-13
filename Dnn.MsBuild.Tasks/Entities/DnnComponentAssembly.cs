@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnComponentAssembly.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,19 +18,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Entities.FileTypes;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Collections.Generic;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Entities.FileTypes;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/manifest-assembly-component
-    /// http://www.dnnsoftware.com/community-blog/cid/134857/the-new-extension-installer-manifest-ndash-part-4-the-assembly-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/manifest-assembly-component
+    ///     http://www.dnnsoftware.com/community-blog/cid/134857/the-new-extension-installer-manifest-ndash-part-4-the-assembly-component
+    ///     <![CDATA[
     /// <component type="Assembly">
     ///     <assemblies>
     ///         <assembly [Action="UnRegister"]>
@@ -45,10 +45,10 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentAssembly : DnnComponent
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnComponentAssembly"/> class from being created.
+        ///     Prevents a default instance of the <see cref="DnnComponentAssembly" /> class from being created.
         /// </summary>
         internal DnnComponentAssembly()
             : base(DnnComponentType.Assembly)

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnComponentCleanup.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,21 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Entities.FileTypes;
-using Dnn.MsBuild.Tasks.Extensions;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Entities.FileTypes;
+    using Dnn.MsBuild.Tasks.Extensions;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/cleanup-component
-    /// http://www.dnnsoftware.com/community-blog/cid/135286/the-new-extension-installer-manifest-part-3-the-cleanup-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/cleanup-component
+    ///     http://www.dnnsoftware.com/community-blog/cid/135286/the-new-extension-installer-manifest-part-3-the-cleanup-component
+    ///     <![CDATA[
     /// <component type="Cleanup" version="" fileName="">
     ///   <files>
     ///     <file>
@@ -46,10 +46,52 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentCleanup : DnnComponent
     {
-        #region Constructors
+        /// <summary>
+        ///     Gets or sets the files.
+        /// </summary>
+        /// <value>
+        ///     The files.
+        /// </value>
+        [XmlArray("files")]
+        [XmlArrayItem("file")]
+        public List<FileInfo> Files { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentCleanup"/> class.
+        ///     Gets or sets the name of the file.
+        /// </summary>
+        /// <value>
+        ///     The name of the file.
+        /// </value>
+        [XmlAttribute("fileName")]
+        public string FileName { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the version.
+        /// </summary>
+        /// <value>
+        ///     The version.
+        /// </value>
+        [XmlIgnore]
+        public Version Version { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the version string.
+        /// </summary>
+        /// <value>
+        ///     The version string.
+        /// </value>
+        [XmlAttribute("version")]
+        public string VersionString
+        {
+            get { return this.Version.ToDnnVersionString(); }
+            // ReSharper disable once ValueParameterNotUsed
+            set { }
+        }
+
+        #region ctor
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DnnComponentCleanup" /> class.
         /// </summary>
         internal DnnComponentCleanup()
             : base(DnnComponentType.Cleanup)
@@ -58,7 +100,7 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentCleanup"/> class.
+        ///     Initializes a new instance of the <see cref="DnnComponentCleanup" /> class.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <param name="version">The version.</param>
@@ -72,47 +114,5 @@ namespace Dnn.MsBuild.Tasks.Entities
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the files.
-        /// </summary>
-        /// <value>
-        /// The files.
-        /// </value>
-        [XmlArray("files")]
-        [XmlArrayItem("file")]
-        public List<FileInfo> Files { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the file.
-        /// </summary>
-        /// <value>
-        /// The name of the file.
-        /// </value>
-        [XmlAttribute("fileName")]
-        public string FileName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        [XmlIgnore]
-        public Version Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets the version string.
-        /// </summary>
-        /// <value>
-        /// The version string.
-        /// </value>
-        [XmlAttribute("version")]
-        public string VersionString
-        {
-            get { return this.Version.ToDnnVersionString(); }
-            // ReSharper disable once ValueParameterNotUsed
-            set { }
-        }
     }
 }

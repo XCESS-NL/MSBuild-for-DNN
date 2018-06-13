@@ -32,7 +32,7 @@ namespace Dnn.MsBuild.Tasks.Parsers
 
         private const string DefaultCleanupFileExtension = ".txt";
 
-        #region Constructors
+        #region ctor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CleanupComponentBuilder" /> class.

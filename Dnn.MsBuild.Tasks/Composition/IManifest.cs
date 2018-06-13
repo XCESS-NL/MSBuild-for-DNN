@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IManifest.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,37 +18,36 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using Dnn.MsBuild.Tasks.Entities;
-
 namespace Dnn.MsBuild.Tasks.Composition
 {
+    using System.Collections.Generic;
+    using Dnn.MsBuild.Tasks.Entities;
+
     /// <summary>
     /// </summary>
     public interface IManifest : IManifestElement
     {
         /// <summary>
-        /// Gets or sets the extension.
+        ///     Gets or sets the extension.
         /// </summary>
         /// <value>
-        /// The extension.
+        ///     The extension.
         /// </value>
         string Extension { get; set; }
 
         /// <summary>
-        /// Gets the packages.
+        ///     Gets the packages.
         /// </summary>
         /// <value>
-        /// The packages.
+        ///     The packages.
         /// </value>
         List<DnnPackage> Packages { get; }
 
         /// <summary>
-        /// Gets the name of the file.
+        ///     Gets the name of the file.
         /// </summary>
         /// <value>
-        /// The name of the file.
+        ///     The name of the file.
         /// </value>
         string FileName { get; set; }
     }

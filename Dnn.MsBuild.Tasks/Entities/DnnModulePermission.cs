@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnModulePermission.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,16 +18,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Xml.Serialization;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/module-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/module-component
+    ///     <![CDATA[
     /// <permissions>
     ///   <permission code="" key="" name="" />
     /// </permissions>
@@ -36,34 +36,34 @@ namespace Dnn.MsBuild.Tasks.Entities
     public class DnnModulePermission
     {
         /// <summary>
-        /// Gets or sets the code.
+        ///     Gets or sets the code.
         /// </summary>
         /// <value>
-        /// The code.
+        ///     The code.
         /// </value>
         [XmlAttribute("code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the key.
+        ///     Gets or sets the key.
         /// </summary>
         /// <value>
-        /// The key.
+        ///     The key.
         /// </value>
         [XmlAttribute("key")]
         public string Key { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         [XmlAttribute("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Froms the attribute.
+        ///     Froms the attribute.
         /// </summary>
         /// <param name="attribute">The attribute.</param>
         /// <returns></returns>
@@ -72,16 +72,16 @@ namespace Dnn.MsBuild.Tasks.Entities
             return new DnnModulePermission(attribute.Code, attribute.Key, attribute.Name);
         }
 
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModulePermission"/> class.
+        ///     Initializes a new instance of the <see cref="DnnModulePermission" /> class.
         /// </summary>
         private DnnModulePermission()
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModulePermission"/> class.
+        ///     Initializes a new instance of the <see cref="DnnModulePermission" /> class.
         /// </summary>
         /// <param name="code">The code.</param>
         /// <param name="key">The key.</param>

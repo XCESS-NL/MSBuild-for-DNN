@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FileInfo.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,25 +18,25 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
+    using System.Xml.Serialization;
+
     /// <summary>
     /// </summary>
     public abstract class FileInfo : IFileInfo
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileInfo"/> class.
+        ///     Initializes a new instance of the <see cref="FileInfo" /> class.
         /// </summary>
         protected FileInfo()
             : this(null)
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileInfo"/> class.
+        ///     Initializes a new instance of the <see cref="FileInfo" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         protected FileInfo(string name)
@@ -44,7 +44,7 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileInfo"/> class.
+        ///     Initializes a new instance of the <see cref="FileInfo" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="path">The path.</param>
@@ -59,19 +59,19 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         #region Implementation of IFileInfo
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         [XmlElement("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the path.
+        ///     Gets or sets the path.
         /// </summary>
         /// <value>
-        /// The path.
+        ///     The path.
         /// </value>
         [XmlElement("path")]
         public string Path { get; set; }

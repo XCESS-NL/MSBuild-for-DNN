@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <!-- Imports and Setup: Do not modify! -->
-  <PropertyGroup>
-    <DnnMSBuildTasksPath>$(SolutionDir)Dnn.MsBuild.Tasks</DnnMSBuildTasksPath>
-  </PropertyGroup>
-
-  <Import Project="$(DnnMSBuildTasksPath)\Dnn.MsBuild.Tasks.targets" />
-
-  <!-- Project Settings: can be modified, but the defaults should be just fine! -->
+	<!-- Imports and Setup: Do not modify! -->
 	<PropertyGroup>
-    <DnnManifestExtension>dnn</DnnManifestExtension>
-    <DnnPackageExtension>zip</DnnPackageExtension>
-    <PackageFolder>packages</PackageFolder>
+		<DnnMSBuildTasksPath>$(SolutionDir)Dnn.MsBuild.Tasks</DnnMSBuildTasksPath>
+	</PropertyGroup>
+
+	<!--<Import Project="$(DnnMSBuildTasksPath)\Dnn.MsBuild.Tasks.targets" />-->
+
+	<!-- Project Settings: can be modified, but the defaults should be just fine! -->
+	<PropertyGroup>
+		<DnnManifestExtension>dnn</DnnManifestExtension>
+		<DnnPackageExtension>zip</DnnPackageExtension>
+		<PackageFolder>packages</PackageFolder>
 	</PropertyGroup>
 </Project>

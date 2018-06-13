@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SerializeManifestTask.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,18 +18,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.IO;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Composition;
-
 namespace Dnn.MsBuild.Tasks.Components
 {
+    using System.IO;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Composition;
+
     internal class SerializeManifestTask<TManifest>
         where TManifest : IManifest, new()
     {
         public void Execute(IManifest manifest)
         {
-            var fileName = manifest.FileName + (manifest.Extension.StartsWith(".") ? manifest.Extension : "." + manifest.Extension);
+            var fileName = manifest.FileName +
+                           (manifest.Extension.StartsWith(".") ? manifest.Extension : "." + manifest.Extension);
             var serializer = new XmlSerializer(manifest.GetType());
             using (var stream = new StreamWriter(fileName))
             {

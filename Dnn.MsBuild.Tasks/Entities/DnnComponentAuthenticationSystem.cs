@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnComponentAuthenticationSystem.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,17 +18,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Xml.Serialization;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
-    /// 
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/manifest-authenticationsystem-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/manifest-authenticationsystem-component
+    ///     <![CDATA[
     /// <component type="AuthenticationSystem">
     ///   <authenticationService>
     ///     <type />
@@ -42,10 +41,10 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentAuthenticationSystem : DnnComponent
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentAuthenticationSystem"/> class.
+        ///     Initializes a new instance of the <see cref="DnnComponentAuthenticationSystem" /> class.
         /// </summary>
         public DnnComponentAuthenticationSystem()
             : base(DnnComponentType.AuthenticationSystem)

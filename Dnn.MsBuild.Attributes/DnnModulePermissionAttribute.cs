@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnModulePermissionAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,21 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
 
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class DnnModulePermissionAttribute : DnnManifestAttribute
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModulePermissionAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="DnnModulePermissionAttribute" /> class.
         /// </summary>
         /// <param name="code">The code.</param>
         /// <param name="key">The key.</param>
@@ -47,26 +47,26 @@ namespace DotNetNuke.Services.Installer.MsBuild
         #endregion
 
         /// <summary>
-        /// Gets or sets the code.
+        ///     Gets or sets the code.
         /// </summary>
         /// <value>
-        /// The code.
+        ///     The code.
         /// </value>
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the key.
+        ///     Gets or sets the key.
         /// </summary>
         /// <value>
-        /// The key.
+        ///     The key.
         /// </value>
         public string Key { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name { get; set; }
     }

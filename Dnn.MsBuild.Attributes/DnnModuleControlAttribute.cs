@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnModuleControlAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,45 +18,48 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
 
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     public sealed class DnnModuleControlAttribute : DnnBaseModuleControlAttribute
     {
         /// <summary>
-        /// Gets or sets the sub folder.
+        ///     Gets or sets the sub folder.
         /// </summary>
         /// <value>
-        /// The sub folder.
+        ///     The sub folder.
         /// </value>
         public string SubFolder { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the module control (.ascx) supports partial rendering. Partial rendering in DNN is accomplished by wrapping the module control in an AJAX Update Panel. This property is enabled (<c>true</c>) by default.
+        ///     Gets or sets a value indicating whether the module control (.ascx) supports partial rendering. Partial rendering in
+        ///     DNN is accomplished by wrapping the module control in an AJAX Update Panel. This property is enabled (<c>true</c>)
+        ///     by default.
         /// </summary>
         /// <value>
-        /// <c>true</c> if [supports partial rendering]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [supports partial rendering]; otherwise, <c>false</c>.
         /// </value>
         public bool SupportsPartialRendering { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the module control (.ascx) supports (DNN) popups. This property is enabled (<c>true</c>) by default.
+        ///     Gets or sets a value indicating whether the module control (.ascx) supports (DNN) popups. This property is enabled
+        ///     (<c>true</c>) by default.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [supports popups]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [supports popups]; otherwise, <c>false</c>.
         /// </value>
         public bool SupportsPopups { get; set; }
 
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleControlAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="DnnModuleControlAttribute" /> class.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="title">The title.</param>
@@ -66,14 +69,15 @@ namespace DotNetNuke.Services.Installer.MsBuild
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleControlAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="DnnModuleControlAttribute" /> class.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="title">The title.</param>
         /// <param name="controlType">Type of the control.</param>
         /// <param name="supportsPartialRendering">If set to <c>true</c> [supports partial rendering].</param>
         /// <param name="supportsPopups">If set to <c>true</c> [supports popups].</param>
-        public DnnModuleControlAttribute(string key, string title, DnnControlType controlType, bool supportsPartialRendering, bool supportsPopups)
+        public DnnModuleControlAttribute(string key, string title, DnnControlType controlType,
+                                         bool supportsPartialRendering, bool supportsPopups)
         {
             this.ControlTitle = title;
             this.ControlType = controlType;

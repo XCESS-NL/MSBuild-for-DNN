@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnPackageMetaAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,17 +18,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Threading;
-
 // ReSharper disable once CheckNamespace
+
 namespace DotNetNuke.Services.Installer.MsBuild
 {
     public class DnnPackageMetaAttribute : DnnManifestAttribute
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnPackageMetaAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="DnnPackageMetaAttribute" /> class.
         /// </summary>
         /// <param name="licensePath">The license path.</param>
         /// <param name="releaseNotesPath">The release notes path.</param>

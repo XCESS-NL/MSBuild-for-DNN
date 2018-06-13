@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnControlType.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,40 +18,41 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable once CheckNamespace
 namespace DotNetNuke.Services.Installer.MsBuild
 {
     /// <summary>
-    /// The type of controls DNN is using. 
+    ///     The type of controls DNN is using.
     /// </summary>
     public enum DnnControlType
     {
         /// <summary>
-        /// The control is a skin object.
+        ///     The control is a skin object.
         /// </summary>
         SkinObject,
 
         /// <summary>
-        /// The control is an anonymous control.
+        ///     The control is an anonymous control.
         /// </summary>
         Anonymous,
 
         /// <summary>
-        /// The control is a view (the default) control.
+        ///     The control is a view (the default) control.
         /// </summary>
         View,
 
         /// <summary>
-        /// The control is an edit control.
+        ///     The control is an edit control.
         /// </summary>
         Edit,
 
         /// <summary>
-        /// The control is an admin control.
+        ///     The control is an admin control.
         /// </summary>
         Admin,
 
         /// <summary>
-        /// The control is a host control.
+        ///     The control is a host control.
         /// </summary>
         Host
     }

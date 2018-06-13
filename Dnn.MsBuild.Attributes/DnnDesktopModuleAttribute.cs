@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnDesktopModuleAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,21 +18,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
 
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class DnnDesktopModuleAttribute : DnnManifestAttribute
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnDesktopModuleAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="DnnDesktopModuleAttribute" /> class.
         /// </summary>
         /// <param name="moduleName">Name of the module.</param>
         public DnnDesktopModuleAttribute(string moduleName)
@@ -43,35 +43,35 @@ namespace DotNetNuke.Services.Installer.MsBuild
         #endregion
 
         /// <summary>
-        /// Gets or sets the name of the folder.
+        ///     Gets or sets the name of the folder.
         /// </summary>
         /// <value>
-        /// The name of the folder.
+        ///     The name of the folder.
         /// </value>
         public string FolderName { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is admin.
+        ///     Gets or sets a value indicating whether this instance is admin.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is admin; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is admin; otherwise, <c>false</c>.
         /// </value>
         public bool IsAdmin { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is premium.
+        ///     Gets or sets a value indicating whether this instance is premium.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is premium; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is premium; otherwise, <c>false</c>.
         /// </value>
         public bool IsPremium { get; set; }
 
         /// <summary>
-        /// Gets the name of the module.
+        ///     Gets the name of the module.
         /// </summary>
         /// <value>
-        /// The name of the module.
+        ///     The name of the module.
         /// </value>
-        public string ModuleName { get; private set; }
+        public string ModuleName { get; }
     }
 }

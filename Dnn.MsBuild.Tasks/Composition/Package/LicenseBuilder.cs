@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="LicenseBuilder.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,19 +18,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.IO;
-using System.Linq;
-using Dnn.MsBuild.Tasks.Components;
-using Dnn.MsBuild.Tasks.Components.Tokens;
-using Dnn.MsBuild.Tasks.Entities;
-using Dnn.MsBuild.Tasks.Entities.FileTypes;
-using Dnn.MsBuild.Tasks.Entities.Internal;
-using Dnn.MsBuild.Tasks.Extensions;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Composition.Package
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using Dnn.MsBuild.Tasks.Components.Tokens;
+    using Dnn.MsBuild.Tasks.Entities;
+    using Dnn.MsBuild.Tasks.Entities.FileTypes;
+    using Dnn.MsBuild.Tasks.Entities.Internal;
+    using Dnn.MsBuild.Tasks.Extensions;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     internal class LicenseBuilder : IBuilder<DnnLicense>
     {
         public static string DefaultLicenseFilePath = DefaultLicenseFileName + DefaultTextExtension;
@@ -42,7 +41,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         public static string DefaultTextExtension = ".txt";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LicenseBuilder"/> class.
+        ///     Initializes a new instance of the <see cref="LicenseBuilder" /> class.
         /// </summary>
         /// <param name="package">The package.</param>
         public LicenseBuilder(DnnPackage package)
@@ -69,7 +68,9 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             if (fileName.EndsWith(DefaultTemplateExtension, StringComparison.InvariantCultureIgnoreCase))
             {
                 var licenseContent = string.Empty;
-                using (var stream = new StreamReader(Path.Combine(taskData.ProjectFileData.BasePath, licenseFile.Path, fileName)))
+                using (
+                    var stream =
+                        new StreamReader(Path.Combine(taskData.ProjectFileData.BasePath, licenseFile.Path, fileName)))
                 {
                     licenseContent = stream.ReadToEnd();
                 }
@@ -82,7 +83,8 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
                 if (!string.IsNullOrWhiteSpace(actualLicense))
                 {
                     fileName = fileName.Replace(DefaultTemplateExtension, DefaultTextExtension);
-                    var targetLicenseFilePath = Path.Combine(taskData.ProjectFileData.BasePath, licenseFile.Path, fileName);
+                    var targetLicenseFilePath = Path.Combine(taskData.ProjectFileData.BasePath, licenseFile.Path,
+                                                             fileName);
                     File.WriteAllText(targetLicenseFilePath, actualLicense);
                 }
             }
@@ -102,21 +104,27 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             if (attribute != null)
             {
                 // Try to look up the specified license file
-                licenseFile = resourceFiles.FirstOrDefault(arg => arg.Name.EndsWith(attribute.LicensePath, StringComparison.InvariantCultureIgnoreCase));
+                licenseFile =
+                    resourceFiles.FirstOrDefault(
+                        arg => arg.Name.EndsWith(attribute.LicensePath, StringComparison.InvariantCultureIgnoreCase));
             }
 
             if (licenseFile == null)
             {
                 // Try to look up the default license template file
-                var licenseFileName = LicenseBuilder.DefaultLicenseFileName + LicenseBuilder.DefaultTemplateExtension;
-                licenseFile = resourceFiles.FirstOrDefault(arg => arg.Name.EndsWith(licenseFileName, StringComparison.InvariantCultureIgnoreCase));
+                var licenseFileName = DefaultLicenseFileName + DefaultTemplateExtension;
+                licenseFile =
+                    resourceFiles.FirstOrDefault(
+                        arg => arg.Name.EndsWith(licenseFileName, StringComparison.InvariantCultureIgnoreCase));
             }
 
             // ReSharper disable once InvertIf
             if (licenseFile == null)
             {
-                var licenseFileName = LicenseBuilder.DefaultLicenseFileName + LicenseBuilder.DefaultTextExtension;
-                licenseFile = resourceFiles.FirstOrDefault(arg => arg.Name.EndsWith(licenseFileName, StringComparison.InvariantCultureIgnoreCase));
+                var licenseFileName = DefaultLicenseFileName + DefaultTextExtension;
+                licenseFile =
+                    resourceFiles.FirstOrDefault(
+                        arg => arg.Name.EndsWith(licenseFileName, StringComparison.InvariantCultureIgnoreCase));
             }
 
             return licenseFile;

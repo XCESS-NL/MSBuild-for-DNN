@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IProjectFileParser.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,10 +18,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Dnn.MsBuild.Tasks.Entities.Internal;
-
 namespace Dnn.MsBuild.Tasks.Parsers
 {
+    using Dnn.MsBuild.Tasks.Entities.Internal;
+
     public interface IProjectFileParser
     {
         IProjectFileData Parse(string fileName);

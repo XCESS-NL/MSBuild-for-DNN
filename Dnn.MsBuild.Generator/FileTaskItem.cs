@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FileTaskItem.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,12 +18,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections;
-using System.Collections.Specialized;
-using Microsoft.Build.Framework;
-
 namespace Dnn.MsBuild.Generator
 {
+    using System.Collections;
+    using System.Collections.Specialized;
+    using Microsoft.Build.Framework;
+
     public class FileTaskItem : ITaskItem
     {
         public FileTaskItem(string itemSpec)
@@ -55,10 +55,10 @@ namespace Dnn.MsBuild.Generator
         public int MetadataCount
         {
             get
-            {
-                // Ignore...
-                return 0;
-            }
+                {
+                    // Ignore...
+                    return 0;
+                }
         }
 
         public ICollection MetadataNames

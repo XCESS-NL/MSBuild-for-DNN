@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UserControlParser.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,32 +18,33 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Dnn.MsBuild.Tasks.Composition.Component;
-using Dnn.MsBuild.Tasks.Extensions;
-
 namespace Dnn.MsBuild.Tasks.Parsers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using Dnn.MsBuild.Tasks.Composition.Component;
+    using Dnn.MsBuild.Tasks.Extensions;
+
     public class UserControlParser
     {
-        #region Constructors
+        public const string UserControlFileExtension = ".ascx";
+
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserControlParser"/> class.
+        ///     Initializes a new instance of the <see cref="UserControlParser" /> class.
         /// </summary>
         public UserControlParser()
         {
             this.UserControls = new Dictionary<string, string>();
-            this.UserControlBaseClassPattern = new Regex(@"\s(?i)inherits(?-i)=""[a-zA-Z0-9\.]+""\s", RegexOptions.IgnoreCase);
+            this.UserControlBaseClassPattern = new Regex(@"\s(?i)inherits(?-i)=""[a-zA-Z0-9\.]+""\s",
+                                                         RegexOptions.IgnoreCase);
         }
 
         #endregion
-
-        public const string UserControlFileExtension = ".ascx";
 
         public IDictionary<string, string> UserControls { get; }
 
@@ -51,35 +52,45 @@ namespace Dnn.MsBuild.Tasks.Parsers
 
         public IDictionary<string, string> Parse(IEnumerable<string> sourceFiles)
         {
-            sourceFiles.ForEach(
-                fileName =>
-                {
-                    if (fileName.EndsWith(UserControlFileExtension, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        // Only for user controls...
-                        using (var reader = new StreamReader(fileName))
-                        {
-                            // TODO: optimize. Only read until found <> or EOF.
-                            var content = reader.ReadToEnd();
-
-                            var match = this.UserControlBaseClassPattern.Match(content);
-                            if (match.Success)
-                            {
-                                // We know that the match.Value includes a '=' character, because it is part of the Regular Expression.
-                                var baseClass = match.Value.Split('=')
-                                                     .Last()
-                                                     .Trim(new[] {' ', '"'});
-
-                                var startOfDesktopModuleFolder = fileName.IndexOf(ModuleComponentBuilder.DesktopModuleFolderName);
-                                var relativeUserControlPath = fileName.Substring(startOfDesktopModuleFolder)
-                                                                      .Replace(@"/", @"\"); // Replace the forward slashes by backslashes in line with relative URIs.
-                                this.UserControls.Add(baseClass, relativeUserControlPath);
-                            }
-                        }
-                    }
-                });
+            sourceFiles.ForEach(fileName =>
+                                {
+                                    if (fileName.EndsWith(UserControlFileExtension,
+                                                          StringComparison.InvariantCultureIgnoreCase))
+                                    {
+                                        this.ParseUserControl(fileName);
+                                    }
+                                });
 
             return this.UserControls;
+        }
+
+        private void ParseUserControl(string fileName)
+        {
+            // Only for user controls...
+            using (var reader = new StreamReader(fileName))
+            {
+                // TODO: optimize. Only read until found <> or EOF.
+                var content = reader.ReadToEnd();
+
+                var match = this.UserControlBaseClassPattern.Match(content);
+                if (match.Success)
+                {
+                    // We know that the match.Value includes a '=' character, because it is part of the Regular Expression.
+                    var baseClass = match.Value
+                                         .Split('=')
+                                         .Last()
+                                         .Trim(new[] {' ', '"'});
+
+                    var startOfDesktopModuleFolder = fileName.IndexOf(ModuleComponentBuilder.DesktopModuleFolderName);
+                    if (startOfDesktopModuleFolder >= 0)
+                    {
+                        var relativeUserControlPath = fileName.Substring(startOfDesktopModuleFolder)
+                                                              .Replace(@"/", @"\");
+                        // Replace the forward slashes by backslashes in line with relative URIs.
+                        this.UserControls.Add(baseClass, relativeUserControlPath);
+                    }
+                }
+            }
         }
     }
 }

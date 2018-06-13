@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnComponentResourceFile.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,18 +18,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Entities.FileTypes;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System.Collections.Generic;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Entities.FileTypes;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/manifest-resourcefile-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/manifest-resourcefile-component
+    ///     <![CDATA[
     /// <component type="ResourceFile">
     ///   <resourceFiles>
     ///     <basePath />
@@ -44,25 +44,25 @@ namespace Dnn.MsBuild.Tasks.Entities
     public class DnnComponentResourceFile : DnnComponent
     {
         /// <summary>
-        /// Gets or sets the resource files.
+        ///     Gets or sets the resource files.
         /// </summary>
         /// <value>
-        /// The resource files.
+        ///     The resource files.
         /// </value>
         [XmlElement("resourceFiles")]
         public DnnComponentResourceFiles ResourceFiles { get; set; }
 
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentResourceFile"/> class.
+        ///     Initializes a new instance of the <see cref="DnnComponentResourceFile" /> class.
         /// </summary>
         internal DnnComponentResourceFile()
             : base(DnnComponentType.ResourceFile)
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponentResourceFile"/> class.
+        ///     Initializes a new instance of the <see cref="DnnComponentResourceFile" /> class.
         /// </summary>
         /// <param name="basePath">The base path.</param>
         /// <param name="resourceFiles">The resource files.</param>

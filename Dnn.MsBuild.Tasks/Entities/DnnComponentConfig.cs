@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnComponentConfig.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,15 +18,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using DotNetNuke.Services.Installer.MsBuild;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/manifest-config-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/manifest-config-component
+    ///     <![CDATA[
     /// <component type="Config">
     ///   <config>
     ///     <configFile>web.config</configFile>
@@ -51,10 +51,10 @@ namespace Dnn.MsBuild.Tasks.Entities
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.DnnComponent" />
     public class DnnComponentConfig : DnnComponent
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnComponent" /> class.
+        ///     Initializes a new instance of the <see cref="DnnComponent" /> class.
         /// </summary>
         internal DnnComponentConfig()
             : base(DnnComponentType.Config)

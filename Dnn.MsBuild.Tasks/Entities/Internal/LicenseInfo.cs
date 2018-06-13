@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="LicenseInfo.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,15 +18,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using DotNetNuke.Entities.Users;
-using DotNetNuke.Services.Tokens;
-
 namespace Dnn.MsBuild.Tasks.Entities.Internal
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
+    using DotNetNuke.Entities.Users;
+    using DotNetNuke.Services.Tokens;
+
     internal class LicenseInfo : IPropertyAccess
     {
         public string CompanyName { get; set; }
@@ -38,7 +38,7 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         #region Implementation of IPropertyAccess
 
         /// <summary>
-        /// Gets the property.
+        ///     Gets the property.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="format">The format.</param>
@@ -47,14 +47,18 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         /// <param name="accessLevel">The access level.</param>
         /// <param name="propertyNotFound">if set to <c>true</c> [property not found].</param>
         /// <returns></returns>
-        public string GetProperty(string propertyName, string format, CultureInfo formatProvider, UserInfo accessingUser, Scope accessLevel, ref bool propertyNotFound)
+        public string GetProperty(string propertyName, string format, CultureInfo formatProvider, UserInfo accessingUser,
+                                  Scope accessLevel, ref bool propertyNotFound)
         {
             var result = string.Empty;
             var requestedProperty = this.GetType()
                                         .GetProperties(BindingFlags.Public | BindingFlags.GetProperty)
-                                        .FirstOrDefault(arg => arg.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
+                                        .FirstOrDefault(
+                                            arg =>
+                                                arg.Name.Equals(propertyName,
+                                                                StringComparison.InvariantCultureIgnoreCase));
 
-            propertyNotFound = (requestedProperty == null);
+            propertyNotFound = requestedProperty == null;
             if (!propertyNotFound)
             {
                 if (string.IsNullOrWhiteSpace(format))
@@ -83,10 +87,10 @@ namespace Dnn.MsBuild.Tasks.Entities.Internal
         }
 
         /// <summary>
-        /// Gets the cacheability.
+        ///     Gets the cacheability.
         /// </summary>
         /// <value>
-        /// The cacheability.
+        ///     The cacheability.
         /// </value>
         public CacheLevel Cacheability => CacheLevel.fullyCacheable;
 

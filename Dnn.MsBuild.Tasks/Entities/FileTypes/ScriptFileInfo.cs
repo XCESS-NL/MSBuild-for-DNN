@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ScriptFileInfo.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,12 +18,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Xml.Serialization;
-using Dnn.MsBuild.Tasks.Extensions;
-
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
+    using System;
+    using System.Xml.Serialization;
+    using Dnn.MsBuild.Tasks.Extensions;
+
     /// <summary>
     /// </summary>
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.FileTypes.FileInfo" />
@@ -33,16 +33,30 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 
         public const string UninstallScriptFileName = "uninstall";
 
-        #region Constructors
+        [XmlAttribute("type")]
+        public ScriptType ScriptType { get; set; }
+
+        [XmlIgnore]
+        public Version Version { get; set; }
+
+        [XmlElement("version")]
+        public string VersionString
+        {
+            get { return this.Version?.ToDnnVersionString(); }
+            // ReSharper disable once ValueParameterNotUsed
+            set { }
+        }
+
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="ScriptFileInfo"/> class from being created.
+        ///     Prevents a default instance of the <see cref="ScriptFileInfo" /> class from being created.
         /// </summary>
         private ScriptFileInfo()
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScriptFileInfo"/> class.
+        ///     Initializes a new instance of the <see cref="ScriptFileInfo" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="path">The path.</param>
@@ -58,22 +72,5 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         }
 
         #endregion
-
-        [XmlAttribute("type")]
-        public ScriptType ScriptType { get; set; }
-
-        [XmlIgnore]
-        public Version Version { get; set; }
-
-        [XmlElement("version")]
-        public string VersionString
-        {
-            get
-            {
-                return this.Version?.ToDnnVersionString();
-            }
-            // ReSharper disable once ValueParameterNotUsed
-            set { }
-        }
     }
 }

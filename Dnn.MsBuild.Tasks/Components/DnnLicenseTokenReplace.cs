@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnLicenseTokenReplace.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -26,8 +26,9 @@ namespace Dnn.MsBuild.Tasks.Components.Tokens
     internal class DnnLicenseTokenReplace : BaseTokenReplace
     {
         public const string PackageToken = "Package";
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnLicenseTokenReplace"/> class.
+        ///     Initializes a new instance of the <see cref="DnnLicenseTokenReplace" /> class.
         /// </summary>
         /// <param name="package">The package.</param>
         public DnnLicenseTokenReplace(IPropertyAccess package)

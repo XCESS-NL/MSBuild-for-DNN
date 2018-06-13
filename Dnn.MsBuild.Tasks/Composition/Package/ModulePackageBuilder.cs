@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ModulePackageBuilder.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,20 +18,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
-using Dnn.MsBuild.Tasks.Composition.Component;
-using Dnn.MsBuild.Tasks.Entities;
-using Dnn.MsBuild.Tasks.Entities.Internal;
-using DotNetNuke.Services.Installer.MsBuild;
-
 namespace Dnn.MsBuild.Tasks.Composition.Package
 {
+    using System.Linq;
+    using Dnn.MsBuild.Tasks.Composition.Component;
+    using Dnn.MsBuild.Tasks.Entities;
+    using Dnn.MsBuild.Tasks.Entities.Internal;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     internal class ModulePackageBuilder : PackageBuilder
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModulePackageBuilder"/> class.
+        ///     Initializes a new instance of the <see cref="ModulePackageBuilder" /> class.
         /// </summary>
         public ModulePackageBuilder()
             : base(DnnPackageType.Module)

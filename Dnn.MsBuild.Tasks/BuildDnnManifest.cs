@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="BuildDnnManifest.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,23 +18,22 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Dnn.MsBuild.Tasks.Components;
-using Dnn.MsBuild.Tasks.Composition;
-using Dnn.MsBuild.Tasks.Composition.Component;
-using Dnn.MsBuild.Tasks.Entities;
-using Dnn.MsBuild.Tasks.Entities.FileTypes;
-using Dnn.MsBuild.Tasks.Entities.Internal;
-using Dnn.MsBuild.Tasks.Parsers;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-
 namespace Dnn.MsBuild.Tasks
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using Dnn.MsBuild.Tasks.Components;
+    using Dnn.MsBuild.Tasks.Composition.Component;
+    using Dnn.MsBuild.Tasks.Entities;
+    using Dnn.MsBuild.Tasks.Entities.FileTypes;
+    using Dnn.MsBuild.Tasks.Entities.Internal;
+    using Dnn.MsBuild.Tasks.Parsers;
+    using Microsoft.Build.Framework;
+    using Microsoft.Build.Utilities;
+
     /// <summary>
     /// </summary>
     /// <seealso cref="Microsoft.Build.Utilities.Task" />
@@ -47,10 +46,10 @@ namespace Dnn.MsBuild.Tasks
         #region Overrides of Task
 
         /// <summary>
-        /// When overridden in a derived class, executes the task.
+        ///     When overridden in a derived class, executes the task.
         /// </summary>
         /// <returns>
-        /// true if the task successfully executed; otherwise, false.
+        ///     true if the task successfully executed; otherwise, false.
         /// </returns>
         public override bool Execute()
         {
@@ -64,7 +63,7 @@ namespace Dnn.MsBuild.Tasks
 
                 // ReSharper disable once AssignmentInConditionalExpression
                 // ReSharper disable once InvertIf
-                if (taskResult = (package != null))
+                if (taskResult = package != null)
                 {
                     manifest.Extension = this.DnnManifestExtension ?? DnnManifest.DefaultManifestExtension;
 
@@ -127,13 +126,13 @@ namespace Dnn.MsBuild.Tasks
         {
             // Find the assembly component in the manifest
             var assemblyComponent = package?.Components
-                                            .OfType<DnnComponentAssembly>()
-                                            .FirstOrDefault();
+                                           .OfType<DnnComponentAssembly>()
+                                           .FirstOrDefault();
 
             // Return all registered assemblies in the component.
             return assemblyComponent?.Assemblies
-                                     .Select(arg => Path.Combine(arg.Path, arg.Name))
-                                     .ToArray() ?? new string[0];
+                                    .Select(arg => Path.Combine(arg.Path, arg.Name))
+                                    .ToArray() ?? new string[0];
         }
 
         private static string[] GetOutputParameterResourceFiles(ITaskData taskData, DnnPackage package)
@@ -149,9 +148,10 @@ namespace Dnn.MsBuild.Tasks
         private static IDictionary<string, string> GetUserControls(string basePath, IEnumerable<IFileInfo> resourceFiles)
         {
             var parser = new UserControlParser();
-            var userControlFiles = resourceFiles.Where(arg => arg.Name.EndsWith(UserControlParser.UserControlFileExtension))
-                                                .Select(arg => Path.Combine(basePath, arg.Path ?? string.Empty, arg.Name))
-                                                .ToList();
+            var userControlFiles =
+                resourceFiles.Where(arg => arg.Name.EndsWith(UserControlParser.UserControlFileExtension))
+                             .Select(arg => Path.Combine(basePath, arg.Path ?? string.Empty, arg.Name))
+                             .ToList();
 
             return parser.Parse(userControlFiles);
         }
@@ -161,8 +161,10 @@ namespace Dnn.MsBuild.Tasks
             // TODO: Use some kind of config/xml file like .GITIGNORE to exclude files instead of a hardcoded list...
             var includeResource = !filePath.Equals(package.License.FilePath) && // Exclude the license 
                                   !filePath.Equals(package.ReleaseNotes.FilePath) && // Exclude the releasenotes
-                                  !filePath.EndsWith(NuGetPackagesFile, StringComparison.InvariantCultureIgnoreCase) && // Exclude the NuGet packages.config files
-                                  !filePath.StartsWith(BuildFolder, StringComparison.InvariantCultureIgnoreCase); // Exclude any files in the .build folder
+                                  !filePath.EndsWith(NuGetPackagesFile, StringComparison.InvariantCultureIgnoreCase) &&
+                                  // Exclude the NuGet packages.config files
+                                  !filePath.StartsWith(BuildFolder, StringComparison.InvariantCultureIgnoreCase);
+                // Exclude any files in the .build folder
             return includeResource;
         }
 
@@ -171,80 +173,82 @@ namespace Dnn.MsBuild.Tasks
         #region Task Properties
 
         /// <summary>
-        /// Gets or sets the DNN assembly path.
+        ///     Gets or sets the DNN assembly path.
         /// </summary>
         /// <value>
-        /// The DNN assembly path.
+        ///     The DNN assembly path.
         /// </value>
         public string DnnAssemblyPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the DNN manifest extension.
+        ///     Gets or sets the DNN manifest extension.
         /// </summary>
         /// <value>
-        /// The DNN manifest extension.
+        ///     The DNN manifest extension.
         /// </value>
         public string DnnManifestExtension { get; set; }
 
         /// <summary>
-        /// Gets or sets the project file.
+        ///     Gets or sets the project file.
         /// </summary>
         /// <value>
-        /// The project file.
+        ///     The project file.
         /// </value>
         [Required]
         public string ProjectFile { get; set; }
 
         /// <summary>
-        /// Gets or sets the project target assembly.
+        ///     Gets or sets the project target assembly.
         /// </summary>
         /// <value>
-        /// The project target assembly.
+        ///     The project target assembly.
         /// </value>
         [Required]
         public string ProjectTargetAssembly { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the install file.
+        ///     Gets or sets the name of the install file.
         /// </summary>
         /// <value>
-        /// The name of the install file.
+        ///     The name of the install file.
         /// </value>
         [Output]
         public string ManifestFileName { get; protected set; }
 
         /// <summary>
-        /// Gets or sets a list of filenames with a relative path of assemblies to should be included in the installation package.
+        ///     Gets or sets a list of filenames with a relative path of assemblies to should be included in the installation
+        ///     package.
         /// </summary>
         /// <value>
-        /// The assemblies.
+        ///     The assemblies.
         /// </value>
         [Output]
         public string[] Assemblies { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the license.
+        ///     Gets or sets the license.
         /// </summary>
         /// <value>
-        /// The license.
+        ///     The license.
         /// </value>
         [Output]
         public string License { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the release notes.
+        ///     Gets or sets the release notes.
         /// </summary>
         /// <value>
-        /// The release notes.
+        ///     The release notes.
         /// </value>
         [Output]
         public string ReleaseNotes { get; protected set; }
 
         /// <summary>
-        /// Gets or sets a list of filename with a relative path of all resource files that should be included in the installation package.
+        ///     Gets or sets a list of filename with a relative path of all resource files that should be included in the
+        ///     installation package.
         /// </summary>
         /// <value>
-        /// The resource files.
+        ///     The resource files.
         /// </value>
         [Output]
         public string[] ResourceFiles { get; protected set; }

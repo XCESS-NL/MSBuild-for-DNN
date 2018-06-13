@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnBaseModuleControlAttribute.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,54 +18,55 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 // ReSharper disable once CheckNamespace
 
 namespace DotNetNuke.Services.Installer.MsBuild
 {
+    using System;
+
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public abstract class DnnBaseModuleControlAttribute : DnnManifestAttribute
     {
         /// <summary>
-        /// Gets or sets the control title.
+        ///     Gets or sets the control title.
         /// </summary>
         /// <value>
-        /// The control title.
+        ///     The control title.
         /// </value>
         public string ControlTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the control.
+        ///     Gets or sets the type of the control.
         /// </summary>
         /// <value>
-        /// The type of the control.
+        ///     The type of the control.
         /// </value>
         public DnnControlType ControlType { get; set; }
 
         /// <summary>
-        /// Gets or sets the help URL.
+        ///     Gets or sets the help URL.
         /// </summary>
         /// <value>
-        /// The help URL.
+        ///     The help URL.
         /// </value>
         public string HelpUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the key used by DNN to uniquely identify the module control (.ascx) within the DesktopModule. The key is used in functions like NavigateUrl(key).
+        ///     Gets or sets the key used by DNN to uniquely identify the module control (.ascx) within the DesktopModule. The key
+        ///     is used in functions like NavigateUrl(key).
         /// </summary>
         /// <value>
-        /// The key.
+        ///     The key.
         /// </value>
         public string Key { get; set; }
 
         /// <summary>
-        /// Gets or sets the module definition.
+        ///     Gets or sets the module definition.
         /// </summary>
         /// <value>
-        /// The module definition.
+        ///     The module definition.
         /// </value>
         public string ModuleDefinition { get; set; }
     }

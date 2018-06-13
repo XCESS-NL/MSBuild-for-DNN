@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CleanupFileInfo.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,25 +18,27 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 namespace Dnn.MsBuild.Tasks.Entities.FileTypes
 {
+    using System;
+
     /// <summary>
     /// </summary>
     /// <seealso cref="Dnn.MsBuild.Tasks.Entities.FileTypes.FileInfo" />
     public class CleanupFileInfo : FileInfo
     {
-        #region Constructors
+        public Version Version { get; set; }
+
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="CleanupFileInfo"/> class from being created.
+        ///     Prevents a default instance of the <see cref="CleanupFileInfo" /> class from being created.
         /// </summary>
         private CleanupFileInfo()
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CleanupFileInfo"/> class.
+        ///     Initializes a new instance of the <see cref="CleanupFileInfo" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
@@ -47,7 +49,5 @@ namespace Dnn.MsBuild.Tasks.Entities.FileTypes
         }
 
         #endregion
-
-        public Version Version { get; set; }
     }
 }

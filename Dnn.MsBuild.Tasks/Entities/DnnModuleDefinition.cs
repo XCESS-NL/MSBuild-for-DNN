@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnModuleDefinition.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,17 +18,17 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Xml.Serialization;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/module-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/module-component
+    ///     <![CDATA[
     /// <moduleDefinition>
     ///   <friendlyName/>
     ///   <defaultCacheTime/>
@@ -43,63 +43,63 @@ namespace Dnn.MsBuild.Tasks.Entities
         public const string DefaultModuleDefinitionName = "default";
 
         /// <summary>
-        /// Gets or sets the default cache time.
+        ///     Gets or sets the default cache time.
         /// </summary>
         /// <value>
-        /// The default cache time.
+        ///     The default cache time.
         /// </value>
         [XmlElement("defaultCacheTime")]
         public int DefaultCacheTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the friendly.
+        ///     Gets or sets the name of the friendly.
         /// </summary>
         /// <value>
-        /// The name of the friendly.
+        ///     The name of the friendly.
         /// </value>
         [XmlElement("friendlyName")]
         public string FriendlyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the module controls.
+        ///     Gets or sets the module controls.
         /// </summary>
         /// <value>
-        /// The module controls.
+        ///     The module controls.
         /// </value>
         [XmlArray("moduleControls")]
         [XmlArrayItem("moduleControl")]
         public List<DnnModuleControl> ModuleControls { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         [XmlIgnore]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the permissions.
+        ///     Gets or sets the permissions.
         /// </summary>
         /// <value>
-        /// The permissions.
+        ///     The permissions.
         /// </value>
         [XmlArray("permissions")]
         [XmlArrayItem("permission")]
         public List<DnnModulePermission> Permissions { get; set; }
 
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleDefinition"/> class.
+        ///     Initializes a new instance of the <see cref="DnnModuleDefinition" /> class.
         /// </summary>
         internal DnnModuleDefinition()
             : this(DefaultModuleDefinitionName)
         {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DnnModuleDefinition"/> class.
+        ///     Initializes a new instance of the <see cref="DnnModuleDefinition" /> class.
         /// </summary>
         internal DnnModuleDefinition(string name)
         {

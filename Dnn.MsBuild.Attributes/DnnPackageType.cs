@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnPackageType.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,6 +18,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable once CheckNamespace
 namespace DotNetNuke.Services.Installer.MsBuild
 {
     /// <summary>
@@ -25,7 +26,7 @@ namespace DotNetNuke.Services.Installer.MsBuild
     public enum DnnPackageType
     {
         /// <summary>
-        /// The package contains an authentication system.
+        ///     The package contains an authentication system.
         /// </summary>
         Auth_System,
 
@@ -38,7 +39,7 @@ namespace DotNetNuke.Services.Installer.MsBuild
         Library,
 
         /// <summary>
-        /// The package contains one or more module definitions.
+        ///     The package contains one or more module definitions.
         /// </summary>
         Module,
 
@@ -47,7 +48,7 @@ namespace DotNetNuke.Services.Installer.MsBuild
         Skin,
 
         /// <summary>
-        /// The package contains one or more skin objects.
+        ///     The package contains one or more skin objects.
         /// </summary>
         SkinObject
     }

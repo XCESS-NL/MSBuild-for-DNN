@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnDesktopModule.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,18 +18,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
-
 namespace Dnn.MsBuild.Tasks.Entities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Serialization;
+
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// http://www.dnnsoftware.com/wiki/module-component
-    /// <![CDATA[
+    ///     http://www.dnnsoftware.com/wiki/module-component
+    ///     <![CDATA[
     /// <desktopModule>
     ///   <moduleName/>
     ///   <foldername/>
@@ -47,10 +47,10 @@ namespace Dnn.MsBuild.Tasks.Entities
     [Serializable]
     public class DnnDesktopModule
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="DnnDesktopModule"/> class from being created.
+        ///     Prevents a default instance of the <see cref="DnnDesktopModule" /> class from being created.
         /// </summary>
         internal DnnDesktopModule()
         {
@@ -61,80 +61,81 @@ namespace Dnn.MsBuild.Tasks.Entities
         #endregion
 
         /// <summary>
-        /// Gets or sets the fully qualified name of the class that includes the extension methods (search, import/export, ...) as required by DNN.
+        ///     Gets or sets the fully qualified name of the class that includes the extension methods (search, import/export, ...)
+        ///     as required by DNN.
         /// </summary>
         /// <value>
-        /// The fully qualified name of the class.
+        ///     The fully qualified name of the class.
         /// </value>
         [XmlElement("businessControllerClass")]
         public string BusinessControllerClass { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the folder where the module will be installed (relative to DesktopModules)
+        ///     Gets or sets the name of the folder where the module will be installed (relative to DesktopModules)
         /// </summary>
         /// <value>
-        /// The name of the folder.
+        ///     The name of the folder.
         /// </value>
         [XmlElement("folderName")]
         public string FolderName { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this module is an Admin module.
+        ///     Gets or sets a value indicating whether this module is an Admin module.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is admin; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is admin; otherwise, <c>false</c>.
         /// </value>
         [XmlElement("isAdmin")]
         public bool IsAdmin { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this module is a Premium module. Premium modules must be explicitely 
-        /// assigned to portals in order to be available for users to install in the portal. 
-        /// By default, isPremium is set to false.
+        ///     Gets or sets a value indicating whether this module is a Premium module. Premium modules must be explicitely
+        ///     assigned to portals in order to be available for users to install in the portal.
+        ///     By default, isPremium is set to false.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is premium; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is premium; otherwise, <c>false</c>.
         /// </value>
         [XmlElement("isPremium")]
         public bool IsPremium { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the module.
+        ///     Gets or sets the name of the module.
         /// </summary>
         /// <value>
-        /// The name of the module.
+        ///     The name of the module.
         /// </value>
         [XmlElement("moduleName")]
         public string ModuleName { get; set; }
 
         /// <summary>
-        /// Gets or sets whether this module is shareable.
+        ///     Gets or sets whether this module is shareable.
         /// </summary>
         /// <value>
-        /// The shareable.
+        ///     The shareable.
         /// </value>
-        // public ModuleSharing Shareable { get; set; }
         /// <summary>
-        /// Gets or sets the module definitions.
+        ///     Gets or sets the module definitions.
         /// </summary>
         /// <value>
-        /// The module definitions.
+        ///     The module definitions.
         /// </value>
         [XmlArray("moduleDefinitions")]
         [XmlArrayItem("moduleDefinition")]
         public List<DnnModuleDefinition> ModuleDefinitions { get; set; }
 
         /// <summary>
-        /// Gets or sets the supported features.
+        ///     Gets or sets the supported features.
         /// </summary>
         /// <value>
-        /// The supported features.
+        ///     The supported features.
         /// </value>
         [XmlArray("supportedFeatures")]
         [XmlArrayItem("supportedFeature")]
         public List<DnnSupportedFeature> SupportedFeatures { get; set; }
 
-        public void AssignSupportedFeature<TFeatureInterface>(IEnumerable<Type> interfaces, DnnSupportedFeatureType featureType)
+        public void AssignSupportedFeature<TFeatureInterface>(IEnumerable<Type> interfaces,
+                                                              DnnSupportedFeatureType featureType)
         {
             if (interfaces.Any(arg => arg.FullName == typeof(TFeatureInterface).FullName))
             {

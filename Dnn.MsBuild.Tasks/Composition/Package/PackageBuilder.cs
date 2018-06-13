@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PackageBuilder.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,27 +18,26 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Dnn.MsBuild.Tasks.Composition.Component;
-using Dnn.MsBuild.Tasks.Entities;
-using Dnn.MsBuild.Tasks.Entities.Internal;
-using Dnn.MsBuild.Tasks.Extensions;
-using Dnn.MsBuild.Tasks.Parsers;
-using DotNetNuke.Services.Installer.MsBuild;
-using DotNetNuke.Services.Upgrade.InternalController.Steps;
-
 namespace Dnn.MsBuild.Tasks.Composition.Package
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using Dnn.MsBuild.Tasks.Composition.Component;
+    using Dnn.MsBuild.Tasks.Entities;
+    using Dnn.MsBuild.Tasks.Entities.Internal;
+    using Dnn.MsBuild.Tasks.Extensions;
+    using Dnn.MsBuild.Tasks.Parsers;
+    using DotNetNuke.Services.Installer.MsBuild;
+
     internal abstract class PackageBuilder : BaseBuilder<DnnPackage>
     {
-        #region Constructors
+        #region ctor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PackageBuilder"/> class.
+        ///     Initializes a new instance of the <see cref="PackageBuilder" /> class.
         /// </summary>
         /// <param name="packageType">Type of the package.</param>
         protected PackageBuilder(DnnPackageType packageType)
@@ -47,44 +46,8 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
 
         #endregion
 
-        #region Overrides of BaseBuilder<DnnPackage>
-
-        public override DnnPackage Build(ITaskData data)
-        {
-            var element = base.Build(data);
-
-            // Always add cleanup components. Multiple cleanup components can exist.
-            element?.Components.AddRange(this.AddCleanupComponents(data));
-
-            return element;
-        }
-
-        protected override void BuildElement(ITaskData data)
-        {
-            // Update the package data in the task data
-            data.Package = this.Element;
-
-            this.SetPackageCoreAttributes(data);
-            this.SetPackageOwner(data);
-            this.SetPackageDependencies(data);
-
-            this.SetPackageLicense(data);
-            this.SetPackageReleaseNotes(data);
-        }
-
-        protected override void OnComponentCreated(IManifestElement component)
-        {
-            var componentToAdd = component as DnnComponent;
-            if (componentToAdd != null)
-            {
-                this.Element.Components.Add(componentToAdd);
-            }
-        }
-
-        #endregion
-
         /// <summary>
-        /// Adds the cleanup components.
+        ///     Adds the cleanup components.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns></returns>
@@ -99,14 +62,14 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         }
 
         /// <summary>
-        /// Sets the package core attributes.
+        ///     Sets the package core attributes.
         /// </summary>
         /// <param name="data">The data.</param>
         protected virtual void SetPackageCoreAttributes(ITaskData data)
         {
             var assembly = data.Assembly;
             var assemblyName = assembly.GetName();
-            
+
             var packageAttribute = assembly.GetCustomAttribute<DnnPackageAttribute>();
             var assemblyTitle = assembly.GetCustomAttribute<AssemblyTitleAttribute>();
             var assemblyDescription = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
@@ -143,7 +106,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         }
 
         /// <summary>
-        /// Sets the package dependencies.
+        ///     Sets the package dependencies.
         /// </summary>
         /// <param name="data">The data.</param>
         protected virtual void SetPackageDependencies(ITaskData data)
@@ -152,7 +115,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         }
 
         /// <summary>
-        /// Sets the package icon.
+        ///     Sets the package icon.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="packageAttribute">The package attribute.</param>
@@ -170,13 +133,14 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
             // ReSharper disable once InvertIf
             if (File.Exists(iconFileFullPath))
             {
-                var iconPackageFilePath = Path.Combine(ModuleComponentBuilder.DesktopModuleFolderName, this.Element.Folder, iconFilePath);
+                var iconPackageFilePath = Path.Combine(ModuleComponentBuilder.DesktopModuleFolderName,
+                                                       this.Element.Folder, iconFilePath);
                 this.Element.IconFilePath = iconPackageFilePath;
             }
         }
 
         /// <summary>
-        /// Sets the package license.
+        ///     Sets the package license.
         /// </summary>
         /// <param name="data">The data.</param>
         protected virtual void SetPackageLicense(ITaskData data)
@@ -186,7 +150,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         }
 
         /// <summary>
-        /// Sets the package owner.
+        ///     Sets the package owner.
         /// </summary>
         /// <param name="data">The data.</param>
         protected virtual void SetPackageOwner(ITaskData data)
@@ -208,7 +172,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         }
 
         /// <summary>
-        /// Sets the package release notes.
+        ///     Sets the package release notes.
         /// </summary>
         /// <param name="data">The data.</param>
         protected virtual void SetPackageReleaseNotes(ITaskData data)
@@ -224,7 +188,10 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
 
             var releaseFile = data.ProjectFileData
                                   .ResourceFiles
-                                  .FirstOrDefault(arg => arg.Name.EndsWith(releaseNoteFilePath, StringComparison.InvariantCultureIgnoreCase));
+                                  .FirstOrDefault(
+                                      arg =>
+                                          arg.Name.EndsWith(releaseNoteFilePath,
+                                                            StringComparison.InvariantCultureIgnoreCase));
 
             if (releaseFile != null)
             {
@@ -232,11 +199,10 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
                 // TODO: Provide a mechanisme for multiple release notes (version dependant).
                 this.Element.ReleaseNotes = new DnnReleaseNotes(Path.Combine(releaseFile.Path, releaseFile.Name));
             }
-
         }
 
         /// <summary>
-        /// Adds the package dependency.
+        ///     Adds the package dependency.
         /// </summary>
         /// <param name="attribute">The attribute.</param>
         private void AddPackageDependency(DnnPackageDependencyAttribute attribute)
@@ -245,7 +211,7 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         }
 
         /// <summary>
-        /// Tests the package dependency attribte and add matching.
+        ///     Tests the package dependency attribte and add matching.
         /// </summary>
         /// <param name="type">The type.</param>
         private void TestPackageDependencyAttribteAndAddMatching(Type type)
@@ -257,7 +223,8 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
         #region PackageBuilder Creator
 
         /// <summary>
-        /// Creates a concrete DnnPackage builder from the assembly. By default a ModulePackageBuilder is created, unless the assembly defines the DnnPackage attribute.
+        ///     Creates a concrete DnnPackage builder from the assembly. By default a ModulePackageBuilder is created, unless the
+        ///     assembly defines the DnnPackage attribute.
         /// </summary>
         /// <param name="assembly">The assembly.</param>
         /// <returns></returns>
@@ -273,6 +240,42 @@ namespace Dnn.MsBuild.Tasks.Composition.Package
                 case DnnPackageType.Module:
                 default:
                     return new ModulePackageBuilder();
+            }
+        }
+
+        #endregion
+
+        #region Overrides of BaseBuilder<DnnPackage>
+
+        public override DnnPackage Build(ITaskData data)
+        {
+            var element = base.Build(data);
+
+            // Always add cleanup components. Multiple cleanup components can exist.
+            element?.Components.AddRange(this.AddCleanupComponents(data));
+
+            return element;
+        }
+
+        protected override void BuildElement(ITaskData data)
+        {
+            // Update the package data in the task data
+            data.Package = this.Element;
+
+            this.SetPackageCoreAttributes(data);
+            this.SetPackageOwner(data);
+            this.SetPackageDependencies(data);
+
+            this.SetPackageLicense(data);
+            this.SetPackageReleaseNotes(data);
+        }
+
+        protected override void OnComponentCreated(IManifestElement component)
+        {
+            var componentToAdd = component as DnnComponent;
+            if (componentToAdd != null)
+            {
+                this.Element.Components.Add(componentToAdd);
             }
         }
 

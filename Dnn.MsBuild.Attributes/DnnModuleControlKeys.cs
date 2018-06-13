@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DnnModuleControlKeys.cs" company="XCESS expertise center b.v.">
-//     Copyright (c) 2016-2016 XCESS expertise center b.v.
+//     Copyright (c) 2017-2018 XCESS expertise center b.v.
 // 
 //     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
 //     documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -18,6 +18,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable once CheckNamespace
 namespace DotNetNuke.Services.Installer.MsBuild
 {
     /// <summary>
@@ -25,17 +26,17 @@ namespace DotNetNuke.Services.Installer.MsBuild
     public static class DnnModuleControlKeys
     {
         /// <summary>
-        /// The standard DNN edit control key.
+        ///     The standard DNN edit control key.
         /// </summary>
         public const string Edit = "Edit";
 
         /// <summary>
-        /// The standard DNN settings control key.
+        ///     The standard DNN settings control key.
         /// </summary>
         public const string Settings = "Settings";
 
         /// <summary>
-        /// The standard DNN view control key.
+        ///     The standard DNN view control key.
         /// </summary>
         public const string View = "";
     }
